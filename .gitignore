@@ -126,6 +126,8 @@ tools/*/*.i.tmp
 /gcovr
 /build
 /coverage
+/dist
+/docs
 
 # === Rules for Xcode artifacts ===
 *.xcodeproj
