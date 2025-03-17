@@ -10,29 +10,39 @@ export async function handleGetPrice(args: unknown) {
   const { symbol } = GetPriceArgumentsSchema.parse(args);
   const upperSymbol = symbol.toUpperCase();
 
-  const assetsData = await getAssets();
-  if (!assetsData) {
+  try {
+    const assetsData = await getAssets();
+    
+    if (!assetsData) {
+      return {
+        content: [{ type: "text", text: "Failed to retrieve cryptocurrency data" }],
+      };
+    }
+    
+    const asset = assetsData.data.find(
+      (a: { symbol: string; }) => a.symbol.toUpperCase() === upperSymbol
+    );
+
+    if (!asset) {
+      return {
+        content: [
+          {
+            type: "text",
+            text: `Could not find cryptocurrency with symbol ${upperSymbol}`,
+          },
+        ],
+      };
+    }
+
     return {
-      content: [{ type: "text", text: "Failed to retrieve cryptocurrency data" }],
+      content: [{ type: "text", text: formatPriceInfo(asset) }],
+    };
+  } catch (error) {
+    return {
+      content: [{ 
+        type: "text", 
+        text: error instanceof Error ? error.message : `Failed to retrieve cryptocurrency data: ${String(error)}` 
+      }],
     };
   }
-
-  const asset = assetsData.data.find(
-    (a: { symbol: string; }) => a.symbol.toUpperCase() === upperSymbol
-  );
-
-  if (!asset) {
-    return {
-      content: [
-        {
-          type: "text",
-          text: `Could not find cryptocurrency with symbol ${upperSymbol}`,
-        },
-      ],
-    };
-  }
-
-  return {
-    content: [{ type: "text", text: formatPriceInfo(asset) }],
-  };
 }

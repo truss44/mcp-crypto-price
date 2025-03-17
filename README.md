@@ -43,6 +43,11 @@ For higher rate limits, add an API key to your configuration:
 }
 ```
 
+> **Important Note**: CoinCap is sunsetting their v2 API. This MCP supports both v2 and v3 APIs:
+> - If you provide a `COINCAP_API_KEY`, it will attempt to use the v3 API first, falling back to v2 if necessary
+> - Without an API key, it will use the v2 API (which will eventually be discontinued)
+> - It's recommended to obtain an API key from [pro.coincap.io/dashboard](https://pro.coincap.io/dashboard) as the v2 API will be completely deactivated in the future
+
 Launch Claude Desktop to start using the crypto analysis tools.
 
 ## Tools

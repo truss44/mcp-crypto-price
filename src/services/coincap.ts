@@ -1,4 +1,4 @@
-import { COINCAP_API_BASE, CACHE_TTL } from '../config/index.js';
+import { COINCAP_API_V2_BASE, COINCAP_API_V3_BASE, CACHE_TTL } from '../config/index.js';
 import type { AssetsResponse, CacheEntry, HistoricalData, MarketsResponse } from '../types/index.js';
 
 const cache = new Map<string, CacheEntry<any>>();
@@ -28,45 +28,91 @@ function setCacheData<T>(key: string, data: T): void {
   });
 }
 
-async function makeCoinCapRequest<T>(endpoint: string): Promise<T | null> {
+/**
+ * Makes a request to the CoinCap API with fallback logic:
+ * 1. If API key is provided, tries v3 API first
+ * 2. If v3 fails or no API key is provided, falls back to v2
+ * 3. If both fail, throws an error
+ */
+async function makeCoinCapRequest<T>(endpoint: string): Promise<T> {
   // Check cache first
-  const cachedData = getCachedData<T>(endpoint);
+  const cacheKey = endpoint;
+  const cachedData = getCachedData<T>(cacheKey);
   if (cachedData) {
     return cachedData;
   }
 
-  const headers: HeadersInit = {};
   const apiKey = process.env.COINCAP_API_KEY;
+  let error: Error | null = null;
   
+  // Try v3 API if API key is provided
   if (apiKey) {
-    headers['Authorization'] = `Bearer ${apiKey}`;
-  }
-
-  try {
-    const response = await fetch(`${COINCAP_API_BASE}${endpoint}`, {
-      headers
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    try {
+      const v3Response = await fetch(`${COINCAP_API_V3_BASE}${endpoint}`, {
+        headers: {
+          'Authorization': `Bearer ${apiKey}`
+        }
+      });
+      
+      if (v3Response.ok) {
+        const data = await v3Response.json() as T;
+        setCacheData(cacheKey, data);
+        return data;
+      } else {
+        error = new Error(`V3 API error: ${v3Response.status} - ${v3Response.statusText}`);
+        console.warn("V3 API request failed, falling back to V2:", error.message);
+      }
+    } catch (e) {
+      error = e instanceof Error ? e : new Error(String(e));
+      console.warn("V3 API request failed, falling back to V2:", error.message);
     }
-    const data = await response.json() as T;
+  }
+  
+  // Fall back to v2 API
+  try {
+    const headers: HeadersInit = {};
+    if (apiKey) {
+      headers['Authorization'] = `Bearer ${apiKey}`;
+    }
     
-    // Cache the successful response
-    setCacheData(endpoint, data);
+    const v2Response = await fetch(`${COINCAP_API_V2_BASE}${endpoint}`, { headers });
     
-    return data;
-  } catch (error) {
-    console.error("Error making CoinCap request:", error);
-    return null;
+    if (v2Response.ok) {
+      const data = await v2Response.json() as T;
+      setCacheData(cacheKey, data);
+      return data;
+    } else {
+      throw new Error(`V2 API error: ${v2Response.status} - ${v2Response.statusText}`);
+    }
+  } catch (e) {
+    const v2Error = e instanceof Error ? e : new Error(String(e));
+    console.error("V2 API request failed:", v2Error.message);
+    
+    // If we have both errors, combine them for better debugging
+    if (error) {
+      throw new Error(`API requests failed. V3: ${error.message}, V2: ${v2Error.message}`);
+    } else {
+      throw v2Error;
+    }
   }
 }
 
 export async function getAssets(): Promise<AssetsResponse | null> {
-  return makeCoinCapRequest<AssetsResponse>('/assets');
+  try {
+    return await makeCoinCapRequest<AssetsResponse>('/assets');
+  } catch (error) {
+    console.error("Failed to get assets:", error);
+    return null;
+  }
 }
 
 export async function getMarkets(assetId: string): Promise<MarketsResponse | null> {
-  return makeCoinCapRequest<MarketsResponse>(`/assets/${assetId}/markets`);
+  try {
+    return await makeCoinCapRequest<MarketsResponse>(`/assets/${assetId}/markets`);
+  } catch (error) {
+    console.error(`Failed to get markets for asset ${assetId}:`, error);
+    return null;
+  }
 }
 
 export async function getHistoricalData(
@@ -75,7 +121,12 @@ export async function getHistoricalData(
   start: number,
   end: number
 ): Promise<HistoricalData | null> {
-  return makeCoinCapRequest<HistoricalData>(
-    `/assets/${assetId}/history?interval=${interval}&start=${start}&end=${end}`
-  );
+  try {
+    return await makeCoinCapRequest<HistoricalData>(
+      `/assets/${assetId}/history?interval=${interval}&start=${start}&end=${end}`
+    );
+  } catch (error) {
+    console.error(`Failed to get historical data for asset ${assetId}:`, error);
+    return null;
+  }
 }

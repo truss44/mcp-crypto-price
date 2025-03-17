@@ -16,8 +16,8 @@ export default {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   testMatch: [
-    '**/__tests__/**/*.[jt]s?(x)',
-    '**/?(*.)+(spec|test).[jt]s?(x)'
+    '**/src/**/__tests__/**/*.[jt]s?(x)',
+    '**/src/**/?(*.)+(spec|test).[jt]s?(x)'
   ],
   transformIgnorePatterns: [
     'node_modules/(?!(jest-mock|@modelcontextprotocol)/)'
