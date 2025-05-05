@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/truss44-mcp-crypto-price-badge.png)](https://mseep.ai/app/truss44-mcp-crypto-price)
+
 # Crypto Price & Market Analysis MCP Server
 [![smithery badge](https://smithery.ai/badge/@truss44/mcp-crypto-price)](https://smithery.ai/server/@truss44/mcp-crypto-price) [![NPM Downloads](https://img.shields.io/npm/d18m/mcp-crypto-price)](https://www.npmjs.com/package/mcp-crypto-price)
 
