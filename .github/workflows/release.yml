@@ -34,8 +34,11 @@ jobs:
       - name: Test
         run: npm test 
         
-      - name: Build
-        run: npm run build
+      - name: Build (Streamable HTTP)
+        run: npm run build:http
+
+      - name: Build (STDIO)
+        run: npm run build:stdio
 
       - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
         run: npm audit signatures
