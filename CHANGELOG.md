@@ -1,3 +1,24 @@
+## [2.0.0](https://github.com/truss44/mcp-crypto-price/compare/v1.2.0...v2.0.0) (2025-09-08)
+
+### ⚠ BREAKING CHANGES
+
+* add conventional-changelog-conventionalcommits dependency for… (#53)
+* enable debug logs and use conventionalcommits preset for semantic-release (#52)
+* add SSH commit signing configuration to release workflow (#51)
+* **deps:** bump the github-actions group across 1 directory with 2 updates (#49)
+* add HTTP server support and upgrade to MCP SDK v1.17.3 (#50)
+
+### Features
+
+* add HTTP server support and upgrade to MCP SDK v1.17.3 ([#50](https://github.com/truss44/mcp-crypto-price/issues/50)) ([890d5c5](https://github.com/truss44/mcp-crypto-price/commit/890d5c5adf0d0972a199d548a1eebb1830f91cdb))
+* add SSH commit signing configuration to release workflow ([#51](https://github.com/truss44/mcp-crypto-price/issues/51)) ([a9cd461](https://github.com/truss44/mcp-crypto-price/commit/a9cd461683a5b090ea32f8db74b2b5059dde2158))
+
+### Miscellaneous Chores
+
+* add conventional-changelog-conventionalcommits dependency for… ([#53](https://github.com/truss44/mcp-crypto-price/issues/53)) ([008fce2](https://github.com/truss44/mcp-crypto-price/commit/008fce270a392f11dc783337d197367f89d5283d))
+* **deps:** bump the github-actions group across 1 directory with 2 updates ([#49](https://github.com/truss44/mcp-crypto-price/issues/49)) ([be77ee9](https://github.com/truss44/mcp-crypto-price/commit/be77ee9803e54613219b1ed94eab0aa12a31f17b))
+* enable debug logs and use conventionalcommits preset for semantic-release ([#52](https://github.com/truss44/mcp-crypto-price/issues/52)) ([3024d1d](https://github.com/truss44/mcp-crypto-price/commit/3024d1d9244ac27f973292fc636c63f30ff34828))
+
 # [1.2.0](https://github.com/truss44/mcp-crypto-price/compare/v1.1.1...v1.2.0) (2025-05-18)
 
 
