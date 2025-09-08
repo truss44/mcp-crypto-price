@@ -7,6 +7,7 @@
     "name": "Tracey Russell"
   },
   "type": "module",
+  "module": "src/index.ts",
   "bin": {
     "mcp-crypto-price": "./dist/index.js"
   },
@@ -16,17 +17,23 @@
   ],
   "main": "./dist/index.js",
   "scripts": {
-    "build": "tsc && shx chmod +x dist/*.js",
-    "prepare": "npm run build",
-    "start": "node dist/index.js",
+    "dev": "npx @smithery/cli dev",
+    "build": "npm run build:http",
+    "build:stdio": "tsc && shx chmod +x dist/*.js",
+    "build:http": "npx @smithery/cli build",
+    "start": "npm run start:http",
+    "start:http": "node .smithery/index.cjs",
+    "start:stdio": "node dist/index.js",
+    "prepare": "npm run build:stdio",
     "watch": "tsc --watch",
     "inspector": "npx @modelcontextprotocol/inspector dist/index.js",
     "test": "jest",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "prepublishOnly": "npm run build:stdio"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.4.1",
-    "zod": "^3.22.4"
+    "@modelcontextprotocol/sdk": "^1.17.3",
+    "zod": "^3.25.46"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",

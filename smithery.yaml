@@ -2,15 +2,18 @@
 
 startCommand:
   type: stdio
+  commandFunction: |-
+    (config) => ({
+      command: 'npx',
+      args: ['tsx', 'src/index.ts'],
+      env: config?.coincapApiKey ? { COINCAP_API_KEY: config.coincapApiKey } : {}
+    })
   configSchema:
-    # JSON Schema defining the configuration options for the MCP.
     type: object
     required: []
     properties:
       coincapApiKey:
         type: string
         description: Optional API key for CoinCap to increase rate limits.
-  commandFunction:
-    # A function that produces the CLI command to start the MCP on stdio.
-    |-
-    config => ({command: 'node', args: ['dist/index.js'], env: config.coincapApiKey ? { COINCAP_API_KEY: config.coincapApiKey } : {}})
+  exampleConfig:
+    coincapApiKey: ""

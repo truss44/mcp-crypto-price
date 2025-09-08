@@ -28,8 +28,11 @@ jobs:
     - name: Install dependencies
       run: npm ci
       
-    - name: Build
-      run: npm run build
+    - name: Build (Streamable HTTP)
+      run: npm run build:http
+      
+    - name: Build (STDIO)
+      run: npm run build:stdio
       
     - name: Test
       run: npm test

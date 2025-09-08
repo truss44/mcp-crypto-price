@@ -1,11 +1,8 @@
 #!/usr/bin/env node
 
-import { Server } from "@modelcontextprotocol/sdk/server/index.js";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import {
-  CallToolRequestSchema,
-  ListToolsRequestSchema,
-} from "@modelcontextprotocol/sdk/types.js";
+import { z } from "zod";
 
 import { SERVER_CONFIG } from './config/index.js';
 import {
@@ -14,101 +11,91 @@ import {
   handleGetHistoricalAnalysis
 } from './tools/index.js';
 
-// Create server instance
-const server = new Server(
-  SERVER_CONFIG,
-  {
-    capabilities: {
-      tools: {},
+export const configSchema = z.object({
+  coincapApiKey: z
+    .string()
+    .optional()
+    .describe("Optional API key for CoinCap to increase rate limits"),
+});
+
+export default function createServer({
+  config,
+}: {
+  config: z.infer<typeof configSchema>;
+}) {
+  if (config?.coincapApiKey && !process.env.COINCAP_API_KEY) {
+    process.env.COINCAP_API_KEY = config.coincapApiKey;
+  }
+
+  const server = new McpServer({
+    name: SERVER_CONFIG.name,
+    version: SERVER_CONFIG.version,
+  });
+
+  server.registerTool(
+    "get-crypto-price",
+    {
+      title: "Get Crypto Price",
+      description: "Get current price and 24h stats for a cryptocurrency",
+      inputSchema: {
+        symbol: z.string().describe("Cryptocurrency symbol (e.g., BTC, ETH)"),
+      },
     },
-  }
-);
-
-// List available tools
-server.setRequestHandler(ListToolsRequestSchema, async () => {
-  return {
-    tools: [
-      {
-        name: "get-crypto-price",
-        description: "Get current price and 24h stats for a cryptocurrency",
-        inputSchema: {
-          type: "object",
-          properties: {
-            symbol: {
-              type: "string",
-              description: "Cryptocurrency symbol (e.g., BTC, ETH)",
-            },
-          },
-          required: ["symbol"],
-        },
-      },
-      {
-        name: "get-market-analysis",
-        description: "Get detailed market analysis including top exchanges and volume distribution",
-        inputSchema: {
-          type: "object",
-          properties: {
-            symbol: {
-              type: "string",
-              description: "Cryptocurrency symbol (e.g., BTC, ETH)",
-            },
-          },
-          required: ["symbol"],
-        },
-      },
-      {
-        name: "get-historical-analysis",
-        description: "Get historical price analysis with customizable timeframe",
-        inputSchema: {
-          type: "object",
-          properties: {
-            symbol: {
-              type: "string",
-              description: "Cryptocurrency symbol (e.g., BTC, ETH)",
-            },
-            interval: {
-              type: "string",
-              description: "Time interval (m5, m15, m30, h1, h2, h6, h12, d1)",
-              default: "h1",
-            },
-            days: {
-              type: "number",
-              description: "Number of days to analyze (1-30)",
-              default: 7,
-            },
-          },
-          required: ["symbol"],
-        },
-      },
-    ],
-  };
-});
-
-// Handle execution
-server.setRequestHandler(CallToolRequestSchema, async (request) => {
-  const { name, arguments: args } = request.params;
-
-  try {
-    switch (name) {
-      case "get-crypto-price":
-        return await handleGetPrice(args);
-      case "get-market-analysis":
-        return await handleGetMarketAnalysis(args);
-      case "get-historical-analysis":
-        return await handleGetHistoricalAnalysis(args);
-      default:
-        throw new Error(`Unknown tool: ${name}`);
+    async (args, _extra) => {
+      const result = await handleGetPrice(args);
+      return result as any;
     }
-  } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(`Tool execution failed: ${error.message}`);
-    }
-    throw error;
-  }
-});
+  );
 
-// Start the server
+  server.registerTool(
+    "get-market-analysis",
+    {
+      title: "Get Market Analysis",
+      description:
+        "Get detailed market analysis including top exchanges and volume distribution",
+      inputSchema: {
+        symbol: z.string().describe("Cryptocurrency symbol (e.g., BTC, ETH)"),
+      },
+    },
+    async (args, _extra) => {
+      const result = await handleGetMarketAnalysis(args);
+      return result as any;
+    }
+  );
+
+  server.registerTool(
+    "get-historical-analysis",
+    {
+      title: "Get Historical Analysis",
+      description:
+        "Get historical price analysis with customizable timeframe",
+      inputSchema: {
+        symbol: z.string().describe("Cryptocurrency symbol (e.g., BTC, ETH)"),
+        interval: z
+          .enum(["m5", "m15", "m30", "h1", "h2", "h6", "h12", "d1"]) 
+          .default("h1")
+          .describe("Time interval"),
+        days: z
+          .number()
+          .min(1)
+          .max(30)
+          .default(7)
+          .describe("Number of days to analyze"),
+      },
+    },
+    async (args, _extra) => {
+      const result = await handleGetHistoricalAnalysis(args);
+      return result as any;
+    }
+  );
+
+  return server.server;
+}
+
 async function main() {
+  const server = createServer({
+    config: { coincapApiKey: process.env.COINCAP_API_KEY },
+  });
   const transport = new StdioServerTransport();
   await server.connect(transport);
   console.error("Crypto Price MCP Server running on stdio");
