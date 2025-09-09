@@ -8,7 +8,10 @@ import { SERVER_CONFIG } from './config/index.js';
 import {
   handleGetPrice,
   handleGetMarketAnalysis,
-  handleGetHistoricalAnalysis
+  handleGetHistoricalAnalysis,
+  GetPriceArgumentsSchema,
+  GetMarketAnalysisSchema,
+  GetHistoricalAnalysisSchema,
 } from './tools/index.js';
 
 export const configSchema = z.object({
@@ -37,9 +40,7 @@ export default function createServer({
     {
       title: "Get Crypto Price",
       description: "Get current price and 24h stats for a cryptocurrency",
-      inputSchema: {
-        symbol: z.string().describe("Cryptocurrency symbol (e.g., BTC, ETH)"),
-      },
+      inputSchema: GetPriceArgumentsSchema.shape,
     },
     async (args, _extra) => {
       const result = await handleGetPrice(args);
@@ -53,9 +54,7 @@ export default function createServer({
       title: "Get Market Analysis",
       description:
         "Get detailed market analysis including top exchanges and volume distribution",
-      inputSchema: {
-        symbol: z.string().describe("Cryptocurrency symbol (e.g., BTC, ETH)"),
-      },
+      inputSchema: GetMarketAnalysisSchema.shape,
     },
     async (args, _extra) => {
       const result = await handleGetMarketAnalysis(args);
@@ -69,19 +68,7 @@ export default function createServer({
       title: "Get Historical Analysis",
       description:
         "Get historical price analysis with customizable timeframe",
-      inputSchema: {
-        symbol: z.string().describe("Cryptocurrency symbol (e.g., BTC, ETH)"),
-        interval: z
-          .enum(["m5", "m15", "m30", "h1", "h2", "h6", "h12", "d1"]) 
-          .default("h1")
-          .describe("Time interval"),
-        days: z
-          .number()
-          .min(1)
-          .max(30)
-          .default(7)
-          .describe("Number of days to analyze"),
-      },
+      inputSchema: GetHistoricalAnalysisSchema.shape,
     },
     async (args, _extra) => {
       const result = await handleGetHistoricalAnalysis(args);
@@ -101,7 +88,11 @@ async function main() {
   console.error("Crypto Price MCP Server running on stdio");
 }
 
-main().catch((error) => {
-  console.error("Fatal error in main():", error);
-  process.exit(1);
-});
+// Only start the STDIO transport when explicitly requested.
+// This prevents auto-starting during HTTP bundling/scanning.
+if (process.env.MCP_TRANSPORT === "stdio") {
+  main().catch((error) => {
+    console.error("Fatal error in main():", error);
+    process.exit(1);
+  });
+}
