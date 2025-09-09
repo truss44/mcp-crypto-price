@@ -1,3 +1,9 @@
+## [2.1.0](https://github.com/truss44/mcp-crypto-price/compare/v2.0.0...v2.1.0) (2025-09-09)
+
+### Features
+
+* add HTTP transport support with build configs and SSH signing docs ([#54](https://github.com/truss44/mcp-crypto-price/issues/54)) ([692aced](https://github.com/truss44/mcp-crypto-price/commit/692aced77ae4153636176e96dc5d7d756408995f))
+
 ## [2.0.0](https://github.com/truss44/mcp-crypto-price/compare/v1.2.0...v2.0.0) (2025-09-08)
 
 ### ⚠ BREAKING CHANGES
