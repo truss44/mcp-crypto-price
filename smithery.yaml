@@ -6,7 +6,10 @@ startCommand:
     (config) => ({
       command: 'npx',
       args: ['tsx', 'src/index.ts'],
-      env: config?.coincapApiKey ? { COINCAP_API_KEY: config.coincapApiKey } : {}
+      env: {
+        MCP_TRANSPORT: 'stdio',
+        ...(config?.coincapApiKey ? { COINCAP_API_KEY: config.coincapApiKey } : {})
+      }
     })
   configSchema:
     type: object
