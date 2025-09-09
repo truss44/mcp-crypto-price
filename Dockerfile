@@ -15,7 +15,7 @@ COPY src ./src
 COPY tsconfig.json ./
 
 # Build the application
-RUN npm run build
+RUN npm run build:http && npm run build:stdio
 
 # Production stage
 FROM node:24-alpine AS release
