@@ -1,3 +1,9 @@
+## [2.1.1](https://github.com/truss44/mcp-crypto-price/compare/v2.1.0...v2.1.1) (2025-10-02)
+
+### Bug Fixes
+
+* update Jest config and dependencies for ESM support ([#63](https://github.com/truss44/mcp-crypto-price/issues/63)) ([618ce84](https://github.com/truss44/mcp-crypto-price/commit/618ce84aae409f5e945ff130d16858daf43e97f8))
+
 ## [2.1.0](https://github.com/truss44/mcp-crypto-price/compare/v2.0.0...v2.1.0) (2025-09-09)
 
 ### Features
