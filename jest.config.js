@@ -11,6 +11,10 @@ export default {
       'ts-jest',
       {
         useESM: true,
+        tsconfig: {
+          module: 'ES2022',
+          moduleResolution: 'node',
+        },
       },
     ],
   },
@@ -20,6 +24,6 @@ export default {
     '**/src/**/?(*.)+(spec|test).[jt]s?(x)'
   ],
   transformIgnorePatterns: [
-    'node_modules/(?!(jest-mock|@modelcontextprotocol)/)'
+    'node_modules/(?!(@modelcontextprotocol)/)'
   ]
 };
