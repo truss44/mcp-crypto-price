@@ -88,9 +88,12 @@ async function main() {
   console.error("Crypto Price MCP Server running on stdio");
 }
 
-// Only start the STDIO transport when explicitly requested.
-// This prevents auto-starting during HTTP bundling/scanning.
-if (process.env.MCP_TRANSPORT === "stdio") {
+// Start stdio transport when:
+// 1. Explicitly requested via MCP_TRANSPORT=stdio, OR
+// 2. Run directly from CLI (not imported as a module)
+const isDirectRun = process.argv[1]?.includes('mcp-crypto-price');
+
+if (process.env.MCP_TRANSPORT === "stdio" || isDirectRun) {
   main().catch((error) => {
     console.error("Fatal error in main():", error);
     process.exit(1);
