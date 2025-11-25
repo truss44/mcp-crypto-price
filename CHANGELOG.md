@@ -1,3 +1,9 @@
+## [2.1.2](https://github.com/truss44/mcp-crypto-price/compare/v2.1.1...v2.1.2) (2025-11-25)
+
+### Bug Fixes
+
+* improve stdio transport startup detection with CLI run check ([6ac7376](https://github.com/truss44/mcp-crypto-price/commit/6ac7376138d6fe1cce590a54f7435430c711ee42))
+
 ## [2.1.1](https://github.com/truss44/mcp-crypto-price/compare/v2.1.0...v2.1.1) (2025-10-02)
 
 ### Bug Fixes
