@@ -1,3 +1,9 @@
+## [2.1.3](https://github.com/truss44/mcp-crypto-price/compare/v2.1.2...v2.1.3) (2025-12-05)
+
+### Bug Fixes
+
+* **security:** bump semantic-release from 24.2.3 to 25.0.2 ([314a9a3](https://github.com/truss44/mcp-crypto-price/commit/314a9a34a0a5b921e2153854192070d42997dd18))
+
 ## [2.1.2](https://github.com/truss44/mcp-crypto-price/compare/v2.1.1...v2.1.2) (2025-11-25)
 
 ### Bug Fixes
