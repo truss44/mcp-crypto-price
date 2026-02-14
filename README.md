@@ -31,6 +31,19 @@ Add this configuration to your Claude Desktop config file:
 }
 ```
 
+If your MCP client requires launching via `cmd.exe` on Windows:
+
+```json
+{
+  "mcpServers": {
+    "mcp-crypto-price": {
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "mcp-crypto-price"]
+    }
+  }
+}
+```
+
 ### Run as Streamable HTTP server
 
 You can run the server over HTTP for environments that support MCP over HTTP streaming.
@@ -80,6 +93,12 @@ For higher rate limits, add an API key to your configuration:
   }
 }
 ```
+
+## Note for Smithery CLI users
+
+This MCP server works directly via `npx` (configs above) and does not require Smithery.
+
+If you do use the Smithery CLI, authenticate with `smithery auth login` or by setting `SMITHERY_API_KEY` in your environment. Recent versions of the Smithery CLI do not support passing API keys via `--key` (or older `--profile` patterns).
 
 > **Important Note**: CoinCap is sunsetting their v2 API. This MCP supports both v2 and v3 APIs:
 > - If you provide a `COINCAP_API_KEY`, it will attempt to use the v3 API first, falling back to v2 if necessary

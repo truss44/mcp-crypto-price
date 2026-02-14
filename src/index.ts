@@ -3,6 +3,8 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 import { SERVER_CONFIG } from './config/index.js';
 import {
@@ -91,7 +93,12 @@ async function main() {
 // Start stdio transport when:
 // 1. Explicitly requested via MCP_TRANSPORT=stdio, OR
 // 2. Run directly from CLI (not imported as a module)
-const isDirectRun = process.argv[1]?.includes('mcp-crypto-price');
+const thisFilePath = fileURLToPath(import.meta.url);
+const isEntrypoint =
+  typeof process.argv[1] === "string" &&
+  path.resolve(process.argv[1]) === path.resolve(thisFilePath);
+
+const isDirectRun = isEntrypoint || process.argv[1]?.includes('mcp-crypto-price');
 
 if (process.env.MCP_TRANSPORT === "stdio" || isDirectRun) {
   main().catch((error) => {
