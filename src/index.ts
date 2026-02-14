@@ -23,7 +23,7 @@ export const configSchema = z.object({
     .describe("Optional API key for CoinCap to increase rate limits"),
 });
 
-export default function createServer({
+export function createServer({
   config,
 }: {
   config: z.infer<typeof configSchema>;
@@ -81,6 +81,14 @@ export default function createServer({
   return server.server;
 }
 
+export default createServer;
+
+export function createSandboxServer() {
+  return createServer({
+    config: { coincapApiKey: undefined },
+  });
+}
+
 async function main() {
   const server = createServer({
     config: { coincapApiKey: process.env.COINCAP_API_KEY },
@@ -93,8 +101,18 @@ async function main() {
 // Start stdio transport when:
 // 1. Explicitly requested via MCP_TRANSPORT=stdio, OR
 // 2. Run directly from CLI (not imported as a module)
-const thisFilePath = fileURLToPath(import.meta.url);
+let thisFilePath: string | undefined;
+try {
+  const importMetaUrl = (import.meta as any)?.url;
+  if (typeof importMetaUrl === "string") {
+    thisFilePath = fileURLToPath(importMetaUrl);
+  }
+} catch {
+  // no-op
+}
+
 const isEntrypoint =
+  typeof thisFilePath === "string" &&
   typeof process.argv[1] === "string" &&
   path.resolve(process.argv[1]) === path.resolve(thisFilePath);
 
