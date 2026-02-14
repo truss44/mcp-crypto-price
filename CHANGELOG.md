@@ -1,3 +1,11 @@
+## [2.1.4](https://github.com/truss44/mcp-crypto-price/compare/v2.1.3...v2.1.4) (2026-02-14)
+
+### Bug Fixes
+
+* add Windows cmd.exe config and Smithery CLI usage notes ([d210cdb](https://github.com/truss44/mcp-crypto-price/commit/d210cdbbfecfd0fe411a38724379d11d9c6aee76))
+* disable GitHub release labels in semantic-release config ([6947c17](https://github.com/truss44/mcp-crypto-price/commit/6947c179b7448cfbd0d8deee29527bc18b0c64f2))
+* improve module exports and add sandbox server support ([a6212b3](https://github.com/truss44/mcp-crypto-price/commit/a6212b38eaca2029f951957403440e730ecd88c9))
+
 ## [2.1.3](https://github.com/truss44/mcp-crypto-price/compare/v2.1.2...v2.1.3) (2025-12-05)
 
 ### Bug Fixes
