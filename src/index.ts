@@ -2,7 +2,7 @@
 
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { ListResourcesRequestSchema, ListPromptsRequestSchema } from "@modelcontextprotocol/sdk/types.js";
+
 import { z } from "zod";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -79,15 +79,30 @@ export function createServer({
     }
   );
 
-  // Register empty handlers for resources/list and prompts/list so
-  // clients don't receive -32601 "Method not found" errors and retry in a loop.
-  server.server.setRequestHandler(ListResourcesRequestSchema, async () => ({
-    resources: [],
-  }));
-
-  server.server.setRequestHandler(ListPromptsRequestSchema, async () => ({
-    prompts: [],
-  }));
+  // Register a no-op resource so the server advertises resources capability
+  // during the MCP initialize handshake. Without this, clients may receive
+  // -32601 "Method not found" errors for resources/list.
+  server.registerResource(
+    "server-info",
+    "info://server",
+    {
+      title: "Server Info",
+      description: "Basic server information",
+      mimeType: "application/json",
+    },
+    async (uri) => ({
+      contents: [
+        {
+          uri: uri.href,
+          mimeType: "application/json",
+          text: JSON.stringify({
+            name: SERVER_CONFIG.name,
+            version: SERVER_CONFIG.version,
+          }),
+        },
+      ],
+    })
+  );
 
   return server.server;
 }
