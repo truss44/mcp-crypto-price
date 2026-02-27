@@ -2,6 +2,7 @@
 
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { ListResourcesRequestSchema, ListPromptsRequestSchema } from "@modelcontextprotocol/sdk/types.js";
 import { z } from "zod";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -77,6 +78,16 @@ export function createServer({
       return result as any;
     }
   );
+
+  // Register empty handlers for resources/list and prompts/list so
+  // clients don't receive -32601 "Method not found" errors and retry in a loop.
+  server.server.setRequestHandler(ListResourcesRequestSchema, async () => ({
+    resources: [],
+  }));
+
+  server.server.setRequestHandler(ListPromptsRequestSchema, async () => ({
+    prompts: [],
+  }));
 
   return server.server;
 }
