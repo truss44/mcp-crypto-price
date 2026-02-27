@@ -1,3 +1,10 @@
+## [2.1.5](https://github.com/truss44/mcp-crypto-price/compare/v2.1.4...v2.1.5) (2026-02-27)
+
+### Bug Fixes
+
+* bump semantic-release packages and add empty resource/prompt handlers ([f82c856](https://github.com/truss44/mcp-crypto-price/commit/f82c8560b46891f5e2828fe4355c5a103e9c182d))
+* replace empty resource/prompt handlers with server-info resource ([6525679](https://github.com/truss44/mcp-crypto-price/commit/6525679a0846d4702e6edeef92ba17ebae37a296))
+
 ## [2.1.4](https://github.com/truss44/mcp-crypto-price/compare/v2.1.3...v2.1.4) (2026-02-14)
 
 ### Bug Fixes
