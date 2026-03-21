@@ -1,3 +1,9 @@
+## [2.6.1](https://github.com/truss44/mcp-crypto-price/compare/v2.6.0...v2.6.1) (2026-03-21)
+
+### Bug Fixes
+
+* update smithery.yaml to use HTTP transport and icon field ([4815fc0](https://github.com/truss44/mcp-crypto-price/commit/4815fc078270718aefd15653a5d73452e9898824))
+
 ## [2.6.0](https://github.com/truss44/mcp-crypto-price/compare/v2.5.0...v2.6.0) (2026-03-21)
 
 ### Features
