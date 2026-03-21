@@ -1,3 +1,15 @@
+## [3.0.0](https://github.com/truss44/mcp-crypto-price/compare/v2.6.1...v3.0.0) (2026-03-21)
+
+### ⚠ BREAKING CHANGES
+
+* COINCAP_API_KEY environment variable is now required.
+The CoinCap v2 API has been sunset. All requests now use v3 exclusively.
+A free API key can be obtained at https://pro.coincap.io/dashboard
+
+### Features
+
+* remove CoinCap v2 API support, require API key for v3 ([#136](https://github.com/truss44/mcp-crypto-price/issues/136)) ([cab9710](https://github.com/truss44/mcp-crypto-price/commit/cab971017838b88df3dfcb2d9a91a031038dab9b)), closes [#135](https://github.com/truss44/mcp-crypto-price/issues/135)
+
 ## [2.6.1](https://github.com/truss44/mcp-crypto-price/compare/v2.6.0...v2.6.1) (2026-03-21)
 
 ### Bug Fixes
