@@ -1,3 +1,9 @@
+## [2.4.0](https://github.com/truss44/mcp-crypto-price/compare/v2.3.2...v2.4.0) (2026-03-21)
+
+### Features
+
+* improve Smithery quality score ([#130](https://github.com/truss44/mcp-crypto-price/issues/130)) ([28b4df8](https://github.com/truss44/mcp-crypto-price/commit/28b4df8b173b1791995155f4acd8a90863de990e))
+
 ## [2.3.2](https://github.com/truss44/mcp-crypto-price/compare/v2.3.1...v2.3.2) (2026-03-21)
 
 ### Bug Fixes
