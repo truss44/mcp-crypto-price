@@ -7,9 +7,10 @@ import { SERVER_CONFIG } from './config/index.js';
 
 const PORT = parseInt(process.env.PORT ?? '3000', 10);
 
-async function handleMcp(req: http.IncomingMessage, res: http.ServerResponse) {
+async function handleMcp(req: http.IncomingMessage, res: http.ServerResponse, searchParams: URLSearchParams) {
+  const coincapApiKey = searchParams.get('coincapApiKey') ?? process.env.COINCAP_API_KEY;
   const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined });
-  const server = createServer({ config: { coincapApiKey: process.env.COINCAP_API_KEY } });
+  const server = createServer({ config: { coincapApiKey } });
   await server.connect(transport);
 
   if (req.method === 'POST') {
@@ -93,23 +94,26 @@ const serverCard = {
 };
 
 const httpServer = http.createServer(async (req, res) => {
+  const parsed = new URL(req.url ?? '/', `http://localhost`);
+  const pathname = parsed.pathname;
+
   // MCP server card for discovery (required by Smithery)
-  if (req.url === '/.well-known/mcp/server-card.json' && req.method === 'GET') {
+  if (pathname === '/.well-known/mcp/server-card.json' && req.method === 'GET') {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(serverCard));
     return;
   }
 
   // Health check: GET / or GET /health
-  if ((req.url === '/' || req.url === '/health') && req.method === 'GET') {
+  if ((pathname === '/' || pathname === '/health') && req.method === 'GET') {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ status: 'ok' }));
     return;
   }
 
-  // MCP protocol: /mcp or / (POST/GET for SSE)
-  if (req.url === '/mcp' || req.url === '/') {
-    await handleMcp(req, res);
+  // MCP protocol: /mcp (POST/GET for SSE)
+  if (pathname === '/mcp') {
+    await handleMcp(req, res, parsed.searchParams);
     return;
   }
 
