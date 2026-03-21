@@ -8,9 +8,9 @@ import { SERVER_CONFIG } from './config/index.js';
 const PORT = parseInt(process.env.PORT ?? '3000', 10);
 
 async function handleMcp(req: http.IncomingMessage, res: http.ServerResponse, searchParams: URLSearchParams) {
-  const coincapApiKey = searchParams.get('coincapApiKey') ?? process.env.COINCAP_API_KEY;
+  const coincapApiKey = searchParams.get('COINCAP_API_KEY') ?? process.env.COINCAP_API_KEY;
   const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined });
-  const server = createServer({ config: { coincapApiKey } });
+  const server = createServer({ config: { COINCAP_API_KEY: coincapApiKey } });
   await server.connect(transport);
 
   if (req.method === 'POST') {

@@ -9,12 +9,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 npm run dev
 
 # Build
-npm run build          # HTTP bundle → .smithery/index.cjs
-npm run build:stdio    # STDIO bundle → dist/
+npm run build          # Compile TypeScript → dist/
 
 # Run
-npm run start:http     # Start HTTP server
-npm run start:stdio    # Start STDIO server
+npm run start:http     # Start HTTP server (dist/http.js)
+npm run start:stdio    # Start STDIO server (dist/index.js)
 
 # Test
 npm test               # Run all tests
@@ -36,7 +35,7 @@ NODE_OPTIONS='--experimental-vm-modules --no-warnings' npx jest src/services/__t
 
 This is an MCP (Model Context Protocol) server for cryptocurrency data. It supports two transports:
 - **STDIO**: built to `dist/` via `tsc`, entry point `dist/index.js`
-- **Streamable HTTP**: built to `.smithery/index.cjs` via Smithery CLI
+- **Streamable HTTP**: built to `dist/` via `tsc`, entry point `dist/http.js`. API key is passed as a query parameter: `/mcp?COINCAP_API_KEY={key}`
 
 ### Request flow
 
@@ -55,13 +54,14 @@ MCP client → transport (stdio or HTTP) → src/index.ts (createServer)
 - **`src/services/formatters.ts`** — pure formatting functions for tool output text.
 - **`src/types/index.ts`** — shared TypeScript interfaces for CoinCap API responses.
 
-### Three registered MCP tools
+### Four registered MCP tools
 
 | Tool | Handler | API endpoint |
 |------|---------|--------------|
 | `get-crypto-price` | `handleGetPrice` | `/assets` |
 | `get-market-analysis` | `handleGetMarketAnalysis` | `/assets/{id}/markets` |
 | `get-historical-analysis` | `handleGetHistoricalAnalysis` | `/assets/{id}/history` |
+| `get-top-assets` | `handleGetTopAssets` | `/assets` |
 
 ### Releases & commits
 
