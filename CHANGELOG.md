@@ -1,3 +1,19 @@
+## [2.5.0](https://github.com/truss44/mcp-crypto-price/compare/v2.4.0...v2.5.0) (2026-03-21)
+
+### Features
+
+* improve Smithery quality score ([b94054e](https://github.com/truss44/mcp-crypto-price/commit/b94054e705d85f5eb5a4f4952e8d1bb49fb5ff89))
+
+### Bug Fixes
+
+* rename iconUrl to icon in smithery.yaml ([a0f0757](https://github.com/truss44/mcp-crypto-price/commit/a0f0757438967ab5dc4cdaca7736cfaccfbe43dc))
+
+## [2.4.0](https://github.com/truss44/mcp-crypto-price/compare/v2.3.2...v2.4.0) (2026-03-21)
+
+### Features
+
+* improve Smithery quality score ([#130](https://github.com/truss44/mcp-crypto-price/issues/130)) ([28b4df8](https://github.com/truss44/mcp-crypto-price/commit/28b4df8b173b1791995155f4acd8a90863de990e))
+
 ## [2.3.2](https://github.com/truss44/mcp-crypto-price/compare/v2.3.1...v2.3.2) (2026-03-21)
 
 ### Bug Fixes
