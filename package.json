@@ -1,6 +1,6 @@
 {
   "name": "mcp-crypto-price",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "A Model Context Protocol (MCP) server that provides real-time cryptocurrency data and analysis through CoinCap's API. Features include price tracking, market analysis, and historical trends.",
   "license": "MIT",
   "author": {

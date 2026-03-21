@@ -1,3 +1,9 @@
+## [3.0.3](https://github.com/truss44/mcp-crypto-price/compare/v3.0.2...v3.0.3) (2026-03-21)
+
+### Bug Fixes
+
+* resolve HTTP 404 and COINCAP_API_KEY not applied when connecting via query params ([#140](https://github.com/truss44/mcp-crypto-price/issues/140)) ([8f333ff](https://github.com/truss44/mcp-crypto-price/commit/8f333ffef6cb0a6c3be5e28f3605839324c8ff18)), closes [#138](https://github.com/truss44/mcp-crypto-price/issues/138)
+
 ## [3.0.2](https://github.com/truss44/mcp-crypto-price/compare/v3.0.1...v3.0.2) (2026-03-21)
 
 ### Bug Fixes
