@@ -46,6 +46,7 @@ export function createServer({
       title: "Get Crypto Price",
       description: "Get current price and 24h stats for a cryptocurrency",
       inputSchema: GetPriceArgumentsSchema.shape,
+      annotations: { readOnlyHint: true, openWorldHint: true },
     },
     async (args, _extra) => {
       const result = await handleGetPrice(args);
@@ -60,6 +61,7 @@ export function createServer({
       description:
         "Get detailed market analysis including top exchanges and volume distribution",
       inputSchema: GetMarketAnalysisSchema.shape,
+      annotations: { readOnlyHint: true, openWorldHint: true },
     },
     async (args, _extra) => {
       const result = await handleGetMarketAnalysis(args);
@@ -74,6 +76,7 @@ export function createServer({
       description:
         "Get historical price analysis with customizable timeframe",
       inputSchema: GetHistoricalAnalysisSchema.shape,
+      annotations: { readOnlyHint: true, openWorldHint: true },
     },
     async (args, _extra) => {
       const result = await handleGetHistoricalAnalysis(args);
@@ -88,11 +91,40 @@ export function createServer({
       description:
         "Get top cryptocurrencies ranked by market cap",
       inputSchema: GetTopAssetsSchema.shape,
+      annotations: { readOnlyHint: true, openWorldHint: true },
     },
     async (args, _extra) => {
       const result = await handleGetTopAssets(args);
       return result as any;
     }
+  );
+
+  server.registerPrompt(
+    "analyze-crypto",
+    {
+      title: "Analyze Cryptocurrency",
+      description:
+        "Generate a comprehensive analysis of a cryptocurrency covering price, market, and historical trends",
+      argsSchema: {
+        symbol: z.string().describe("Cryptocurrency symbol or name (e.g. BTC, ETH, Bitcoin)"),
+      },
+    },
+    ({ symbol }) => ({
+      messages: [
+        {
+          role: "user",
+          content: {
+            type: "text",
+            text: `Please provide a comprehensive analysis of ${symbol}. Use the available tools to:
+1. Get the current price and 24-hour stats
+2. Analyze the top exchanges and trading volume distribution
+3. Review historical price trends over the past 7 days
+
+Summarize the findings including price performance, market liquidity, and any notable trends.`,
+          },
+        },
+      ],
+    })
   );
 
   // Register a no-op resource so the server advertises resources capability

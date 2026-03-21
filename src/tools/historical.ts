@@ -4,8 +4,8 @@ import { formatHistoricalAnalysis } from '../services/formatters.js';
 
 export const GetHistoricalAnalysisSchema = z.object({
   symbol: z.string().min(1).describe("Cryptocurrency symbol or name (e.g. BTC or Bitcoin)"),
-  interval: z.enum(['m5', 'm15', 'm30', 'h1', 'h2', 'h6', 'h12', 'd1']).default('h1'),
-  days: z.number().min(1).max(30).default(7),
+  interval: z.enum(['m5', 'm15', 'm30', 'h1', 'h2', 'h6', 'h12', 'd1']).default('h1').describe("Data interval: m5=5min, m15=15min, m30=30min, h1=1hr, h2=2hr, h6=6hr, h12=12hr, d1=daily"),
+  days: z.number().min(1).max(30).default(7).describe("Number of days of historical data to retrieve (1-30)"),
 });
 
 export async function handleGetHistoricalAnalysis(args: unknown) {

@@ -3,7 +3,7 @@ import { getAssets } from '../services/coincap.js';
 import { formatTopAssets } from '../services/formatters.js';
 
 export const GetTopAssetsSchema = z.object({
-  limit: z.number().min(1).max(50).default(10),
+  limit: z.number().min(1).max(50).default(10).describe("Number of top assets to return, ranked by market cap (1-50)"),
 });
 
 export async function handleGetTopAssets(args: unknown) {
