@@ -15,7 +15,7 @@ COPY src ./src
 COPY tsconfig.json ./
 
 # Build the application
-RUN npm run build:http && npm run build:stdio
+RUN npm run build
 
 # Production stage
 FROM node:24-alpine AS release
@@ -33,8 +33,10 @@ ENV NODE_ENV=production
 # Install production dependencies without running scripts
 RUN npm ci --omit=dev --ignore-scripts
 
-# Set environment variables if needed
+# Optional: set your CoinCap API key for higher rate limits
 # ENV COINCAP_API_KEY=<YOUR_API_KEY>
 
-# Command to run the application
-CMD ["node", "dist/index.js"]
+EXPOSE 3000
+
+# Start the HTTP server
+CMD ["node", "dist/http.js"]

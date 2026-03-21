@@ -4,18 +4,11 @@ import { dirname, resolve } from 'path';
 
 function readVersion(): string {
   try {
-    // ESM context — import.meta.url is available
     const dir = dirname(fileURLToPath(import.meta.url));
     const pkg = JSON.parse(readFileSync(resolve(dir, '../../package.json'), 'utf-8'));
     return pkg.version;
   } catch {
-    // CJS context (e.g. Smithery esbuild bundle) — import.meta is empty
-    try {
-      const pkg = JSON.parse(readFileSync(resolve(__dirname, '../../package.json'), 'utf-8'));
-      return pkg.version;
-    } catch {
-      return '0.0.0';
-    }
+    return '0.0.0';
   }
 }
 
