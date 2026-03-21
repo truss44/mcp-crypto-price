@@ -6,19 +6,7 @@ import { createServer } from './index.js';
 
 const PORT = parseInt(process.env.PORT ?? '3000', 10);
 
-const httpServer = http.createServer(async (req, res) => {
-  if (req.url === '/health' || req.url === '/') {
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ status: 'ok' }));
-    return;
-  }
-
-  if (req.url !== '/mcp') {
-    res.writeHead(404);
-    res.end('Not Found');
-    return;
-  }
-
+async function handleMcp(req: http.IncomingMessage, res: http.ServerResponse) {
   const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined });
   const server = createServer({ config: { coincapApiKey: process.env.COINCAP_API_KEY } });
   await server.connect(transport);
@@ -33,6 +21,24 @@ const httpServer = http.createServer(async (req, res) => {
   } else {
     await transport.handleRequest(req, res);
   }
+}
+
+const httpServer = http.createServer(async (req, res) => {
+  // Health check: GET / or GET /health
+  if ((req.url === '/' || req.url === '/health') && req.method === 'GET') {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ status: 'ok' }));
+    return;
+  }
+
+  // MCP protocol: /mcp or / (POST/GET for SSE)
+  if (req.url === '/mcp' || req.url === '/') {
+    await handleMcp(req, res);
+    return;
+  }
+
+  res.writeHead(404);
+  res.end('Not Found');
 });
 
 httpServer.listen(PORT, () => {
