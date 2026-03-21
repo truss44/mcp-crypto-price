@@ -19,4 +19,10 @@ export const SERVER_CONFIG = {
   version: readVersion(),
 } as const;
 
-export const CACHE_TTL = 60000; // 1 minute cache
+export const CACHE_TTL = 60000; // default fallback (ms)
+
+/** Returns the active cache TTL in ms, reading CACHE_TTL_SECONDS from env at call time. */
+export function getCacheTtl(): number {
+  const s = parseInt(process.env.CACHE_TTL_SECONDS ?? '60', 10);
+  return Number.isFinite(s) && s >= 10 ? s * 1000 : CACHE_TTL;
+}

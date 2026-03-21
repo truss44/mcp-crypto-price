@@ -13,6 +13,17 @@ startCommand:
     properties:
       COINCAP_API_KEY:
         type: string
-        description: "API key for CoinCap v3 API (required). Free tier available at https://pro.coincap.io/dashboard"
+        title: "CoinCap API Key"
+        description: "API key for CoinCap v3 API. Free tier available at https://pro.coincap.io/dashboard"
+      CACHE_TTL_SECONDS:
+        type: integer
+        title: "Cache Duration (seconds)"
+        description: "How long to cache API responses in seconds. Lower values return fresher data; higher values reduce API usage."
+        default: 60
+        minimum: 10
+        maximum: 3600
     required:
       - COINCAP_API_KEY
+  exampleConfig:
+    COINCAP_API_KEY: "your-coincap-api-key-here"
+    CACHE_TTL_SECONDS: 60

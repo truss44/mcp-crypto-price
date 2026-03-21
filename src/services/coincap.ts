@@ -1,4 +1,4 @@
-import { COINCAP_API_BASE, CACHE_TTL } from '../config/index.js';
+import { COINCAP_API_BASE, getCacheTtl } from '../config/index.js';
 import type { AssetsResponse, CacheEntry, CryptoAsset, HistoricalData, MarketsResponse } from '../types/index.js';
 import { AssetsResponseSchema, HistoricalDataSchema, MarketsResponseSchema } from './schemas.js';
 import type { ZodType } from 'zod';
@@ -27,7 +27,7 @@ function getCachedData<T>(key: string): T | null {
   if (!entry) return null;
 
   const now = Date.now();
-  if (now - entry.timestamp > CACHE_TTL) {
+  if (now - entry.timestamp > getCacheTtl()) {
     cache.delete(key);
     return null;
   }
