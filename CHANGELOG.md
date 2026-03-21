@@ -1,3 +1,14 @@
+## [2.2.0](https://github.com/truss44/mcp-crypto-price/compare/v2.1.5...v2.2.0) (2026-03-21)
+
+### Features
+
+* add get-top-assets tool and support asset lookup by name ([2c113d1](https://github.com/truss44/mcp-crypto-price/commit/2c113d146605bfb3ed5145fb9ad8c56bb4e41f2f))
+
+### Bug Fixes
+
+* resolve 4 high-priority bugs ([#114](https://github.com/truss44/mcp-crypto-price/issues/114), [#115](https://github.com/truss44/mcp-crypto-price/issues/115), [#116](https://github.com/truss44/mcp-crypto-price/issues/116), [#117](https://github.com/truss44/mcp-crypto-price/issues/117)) ([#122](https://github.com/truss44/mcp-crypto-price/issues/122)) ([fe77be7](https://github.com/truss44/mcp-crypto-price/commit/fe77be7f35bb9eaab4f8d49bb2ffe3e1b33fc8f6))
+* resolve 4 high-priority issues ([#118](https://github.com/truss44/mcp-crypto-price/issues/118), [#119](https://github.com/truss44/mcp-crypto-price/issues/119), [#120](https://github.com/truss44/mcp-crypto-price/issues/120), [#121](https://github.com/truss44/mcp-crypto-price/issues/121)) ([#123](https://github.com/truss44/mcp-crypto-price/issues/123)) ([1d7e3ae](https://github.com/truss44/mcp-crypto-price/commit/1d7e3ae3b515c569e6e289b66515873eb168287c))
+
 ## [2.1.5](https://github.com/truss44/mcp-crypto-price/compare/v2.1.4...v2.1.5) (2026-02-27)
 
 ### Bug Fixes
