@@ -64,7 +64,7 @@ npm run dev
 - Build and run the HTTP server:
 
 ```bash
-# Build the HTTP bundle (outputs to .smithery/)
+# Build (outputs to dist/)
 npm run build
 
 # Start the HTTP server
@@ -74,21 +74,33 @@ npm run start:http
 - Build and run the STDIO server:
 
 ```bash
-# Build the STDIO bundle (outputs to dist/)
-npm run build:stdio
+# Build (outputs to dist/)
+npm run build
 
 # Start the STDIO server
 npm run start:stdio
 ```
 
-The dev/build commands will print the server address to the console. Use that URL in clients that support MCP over HTTP (for example, Smithery). You must provide an API key via `COINCAP_API_KEY` (see below).
+The server listens on port 3000 by default (override with `PORT`). For clients that connect over HTTP (e.g. Smithery, Claude.ai), pass your API key as a query parameter:
+
+```
+http://localhost:3000/mcp?COINCAP_API_KEY=YOUR_API_KEY_HERE
+```
+
+For remote deployments:
+
+```
+https://your-server-host/mcp?COINCAP_API_KEY=YOUR_API_KEY_HERE
+```
 
 ## Required: CoinCap API Key
 
 This server uses the CoinCap v3 API, which requires an API key. A **free tier** is available.
 
 1. Sign up and get your API key at [pro.coincap.io/dashboard](https://pro.coincap.io/dashboard)
-2. Add the key to your MCP client configuration via the `COINCAP_API_KEY` environment variable (see Usage examples above)
+2. Add the key to your MCP client configuration:
+   - **STDIO**: via the `COINCAP_API_KEY` environment variable (see Usage examples above)
+   - **HTTP**: via the `COINCAP_API_KEY` query parameter in the connection URL (e.g. `/mcp?COINCAP_API_KEY=your_key`)
 
 Without a valid API key, all tools will return an error with instructions on how to obtain one.
 
@@ -160,6 +172,14 @@ Analyzes historical price data with:
 - Price trend analysis
 - Volatility metrics
 - High/low price ranges
+
+#### get-top-assets
+
+Lists top cryptocurrencies ranked by market cap, including:
+- Current price in USD
+- 24-hour price change
+- Market cap and rank
+- Configurable result count (1–50, default 10)
 
 ## Sample Prompts
 
