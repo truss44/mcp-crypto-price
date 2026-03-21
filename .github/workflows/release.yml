@@ -51,11 +51,8 @@ jobs:
           git config user.signingkey ~/.ssh/id_ed25519.pub
           git config commit.gpgsign true
         
-      - name: Build (Streamable HTTP)
-        run: npm run build:http
-
-      - name: Build (STDIO)
-        run: npm run build:stdio
+      - name: Build
+        run: npm run build
 
       - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
         run: npm audit signatures
