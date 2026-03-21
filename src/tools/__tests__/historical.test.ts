@@ -30,8 +30,8 @@ describe('handleGetHistoricalAnalysis', () => {
     mockSearchAsset.mockResolvedValueOnce(mockAsset);
     mockGetHistoricalData.mockResolvedValueOnce({
       data: [
-        { time: 1609459200000, priceUsd: '45000.00', circulatingSupply: '18900000', date: '2021-01-01' },
-        { time: 1609545600000, priceUsd: '47000.00', circulatingSupply: '18900000', date: '2021-01-02' },
+        { time: 1609459200000, priceUsd: '45000.00', date: '2021-01-01' },
+        { time: 1609545600000, priceUsd: '47000.00', date: '2021-01-02' },
       ],
     });
 

@@ -32,7 +32,7 @@ describe('handleGetMarketAnalysis', () => {
       data: [{
         exchangeId: 'binance', baseSymbol: 'BTC', quoteSymbol: 'USDT',
         priceUsd: '50000.00', volumeUsd24Hr: '5000000000',
-        percentExchangeVolume: '25.00',
+        volumePercent: '25.00',
       }],
     });
 

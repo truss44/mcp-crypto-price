@@ -71,7 +71,7 @@ describe('Formatters', () => {
           quoteSymbol: 'USD',
           priceUsd: '50100.00',
           volumeUsd24Hr: '10000000000',
-          percentExchangeVolume: '33.33'
+          volumePercent: '33.33'
         },
         {
           exchangeId: 'coinbase',
@@ -79,7 +79,7 @@ describe('Formatters', () => {
           quoteSymbol: 'USD',
           priceUsd: '50000.00',
           volumeUsd24Hr: '8000000000',
-          percentExchangeVolume: '26.67'
+          volumePercent: '26.67'
         }
       ];
 
