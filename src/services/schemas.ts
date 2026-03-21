@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const CryptoAssetSchema = z.object({
   id: z.string(),
-  rank: z.string(),
+  rank: z.string().nullable(),
   symbol: z.string(),
   name: z.string(),
   priceUsd: z.string(),
@@ -21,7 +21,6 @@ export const AssetsResponseSchema = z.object({
 export const HistoryPointSchema = z.object({
   time: z.number(),
   priceUsd: z.string(),
-  circulatingSupply: z.string().optional(),
   date: z.string(),
 });
 
@@ -35,7 +34,7 @@ export const MarketSchema = z.object({
   quoteSymbol: z.string(),
   priceUsd: z.string(),
   volumeUsd24Hr: z.string(),
-  percentExchangeVolume: z.string().nullable().optional(),
+  volumePercent: z.string().optional(),
 });
 
 export const MarketsResponseSchema = z.object({

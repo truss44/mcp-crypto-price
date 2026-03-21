@@ -19,7 +19,7 @@ export function formatPriceInfo(asset: CryptoAsset): string {
     `24h Change: ${change}%`,
     `24h Volume: $${volume}M`,
     `Market Cap: $${marketCap}B`,
-    `Rank: #${asset.rank}`,
+    `Rank: ${asset.rank != null ? `#${asset.rank}` : 'N/A'}`,
   ].join('\n');
 }
 
@@ -50,7 +50,8 @@ export function formatTopAssets(assets: CryptoAsset[]): string {
     const price = formatPrice(parseFloat(asset.priceUsd));
     const change = parseFloat(asset.changePercent24Hr || '0').toFixed(2);
     const marketCap = (parseFloat(asset.marketCapUsd || '0') / 1000000000).toFixed(2);
-    return `#${asset.rank} ${asset.name} (${asset.symbol}): $${price} (24h: ${change}%, MCap: $${marketCap}B)`;
+    const rankStr = asset.rank != null ? `#${asset.rank} ` : '';
+    return `${rankStr}${asset.name} (${asset.symbol}): $${price} (24h: ${change}%, MCap: $${marketCap}B)`;
   });
 
   return ['Top Cryptocurrencies by Market Cap', '', ...lines].join('\n');

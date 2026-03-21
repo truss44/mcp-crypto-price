@@ -4,7 +4,7 @@ description: >
   Includes price tracking, market analysis across exchanges, and historical trends.
 icon: "https://raw.githubusercontent.com/truss44/mcp-crypto-price/main/logo.png"
 license: MIT
-homepage: https://github.com/truss44/mcp-crypto-price
+homepage: "https://github.com/truss44/mcp-crypto-price"
 
 startCommand:
   type: http

@@ -4,7 +4,7 @@ export interface CacheEntry<T> {
 }
 export interface CryptoAsset {
   id: string;
-  rank: string;
+  rank: string | null;
   symbol: string;
   name: string;
   priceUsd: string;
@@ -24,7 +24,6 @@ export interface HistoricalData {
   data: Array<{
     time: number;
     priceUsd: string;
-    circulatingSupply?: string;
     date: string;
   }>;
 }
@@ -35,7 +34,7 @@ export interface Market {
   quoteSymbol: string;
   priceUsd: string;
   volumeUsd24Hr: string;
-  percentExchangeVolume?: string | null;
+  volumePercent?: string;
 }
 
 export interface MarketsResponse {
