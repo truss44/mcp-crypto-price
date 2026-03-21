@@ -1,3 +1,9 @@
+## [3.0.1](https://github.com/truss44/mcp-crypto-price/compare/v3.0.0...v3.0.1) (2026-03-21)
+
+### Bug Fixes
+
+* add .well-known/mcp/server-card.json endpoint for Smithery discovery ([#137](https://github.com/truss44/mcp-crypto-price/issues/137)) ([94546e0](https://github.com/truss44/mcp-crypto-price/commit/94546e094dc2de6d90303aed9053afb254bab105))
+
 ## [3.0.0](https://github.com/truss44/mcp-crypto-price/compare/v2.6.1...v3.0.0) (2026-03-21)
 
 ### ⚠ BREAKING CHANGES
