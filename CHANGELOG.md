@@ -1,3 +1,13 @@
+## [2.3.0](https://github.com/truss44/mcp-crypto-price/compare/v2.2.0...v2.3.0) (2026-03-21)
+
+### Features
+
+* replace Smithery with native MCP HTTP transport for Coolify deployment ([#125](https://github.com/truss44/mcp-crypto-price/issues/125)) ([2863561](https://github.com/truss44/mcp-crypto-price/commit/28635613edcbee6be776b36ea117dc0a15df0ec3)), closes [#124](https://github.com/truss44/mcp-crypto-price/issues/124)
+
+### Bug Fixes
+
+* update release workflow to use unified build script ([#126](https://github.com/truss44/mcp-crypto-price/issues/126)) ([063f161](https://github.com/truss44/mcp-crypto-price/commit/063f161361bd85af450a013f6b712bf7c63bd8d2))
+
 ## [2.2.0](https://github.com/truss44/mcp-crypto-price/compare/v2.1.5...v2.2.0) (2026-03-21)
 
 ### Features
