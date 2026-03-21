@@ -38,6 +38,12 @@ export function createServer({
   const server = new McpServer({
     name: SERVER_CONFIG.name,
     version: SERVER_CONFIG.version,
+    icons: [
+      {
+        src: "https://raw.githubusercontent.com/truss44/mcp-crypto-price/main/logo.png",
+        mimeType: "image/png",
+      },
+    ],
   });
 
   server.registerTool(
