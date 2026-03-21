@@ -1,5 +1,5 @@
 import { COINCAP_API_V2_BASE, COINCAP_API_V3_BASE, CACHE_TTL } from '../config/index.js';
-import type { AssetsResponse, CacheEntry, HistoricalData, MarketsResponse } from '../types/index.js';
+import type { AssetsResponse, CacheEntry, CryptoAsset, HistoricalData, MarketsResponse } from '../types/index.js';
 
 const cache = new Map<string, CacheEntry<any>>();
 
@@ -102,6 +102,20 @@ export async function getAssets(): Promise<AssetsResponse | null> {
     return await makeCoinCapRequest<AssetsResponse>('/assets');
   } catch (error) {
     console.error("Failed to get assets:", error);
+    return null;
+  }
+}
+
+export async function searchAsset(symbol: string): Promise<CryptoAsset | null> {
+  try {
+    const upperSymbol = symbol.toUpperCase();
+    const data = await makeCoinCapRequest<AssetsResponse>(`/assets?search=${encodeURIComponent(symbol)}`);
+    const asset = data.data.find(
+      (a) => a.symbol.toUpperCase() === upperSymbol
+    );
+    return asset ?? null;
+  } catch (error) {
+    console.error(`Failed to search for asset ${symbol}:`, error);
     return null;
   }
 }

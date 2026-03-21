@@ -1,7 +1,14 @@
 import type { CryptoAsset, Market, HistoricalData } from '../types/index.js';
 
+function formatPrice(value: number): string {
+  if (value >= 1) return value.toFixed(2);
+  if (value >= 0.01) return value.toFixed(4);
+  if (value >= 0.0001) return value.toFixed(6);
+  return value.toFixed(8);
+}
+
 export function formatPriceInfo(asset: CryptoAsset): string {
-  const price = parseFloat(asset.priceUsd).toFixed(2);
+  const price = formatPrice(parseFloat(asset.priceUsd));
   const change = parseFloat(asset.changePercent24Hr).toFixed(2);
   const volume = (parseFloat(asset.volumeUsd24Hr) / 1000000).toFixed(2);
   const marketCap = (parseFloat(asset.marketCapUsd) / 1000000000).toFixed(2);
@@ -25,14 +32,14 @@ export function formatMarketAnalysis(asset: CryptoAsset, markets: Market[]): str
   const marketInfo = topMarkets.map(market => {
     const volumePercent = (parseFloat(market.volumeUsd24Hr) / totalVolume * 100).toFixed(2);
     const volume = (parseFloat(market.volumeUsd24Hr) / 1000000).toFixed(2);
-    return `${market.exchangeId}: $${market.priceUsd} (Volume: $${volume}M, ${volumePercent}% of total)`;
+    return `${market.exchangeId}: $${formatPrice(parseFloat(market.priceUsd))} (Volume: $${volume}M, ${volumePercent}% of total)`;
   }).join('\n');
 
   return [
     `Market Analysis for ${asset.name} (${asset.symbol})`,
-    `Current Price: $${parseFloat(asset.priceUsd).toFixed(2)}`,
+    `Current Price: $${formatPrice(parseFloat(asset.priceUsd))}`,
     `24h Volume: $${(parseFloat(asset.volumeUsd24Hr) / 1000000).toFixed(2)}M`,
-    `VWAP (24h): $${parseFloat(asset.vwap24Hr || '0').toFixed(2)}`,
+    `VWAP (24h): $${formatPrice(parseFloat(asset.vwap24Hr || '0'))}`,
     '\nTop 5 Markets by Volume:',
     marketInfo
   ].join('\n');
@@ -47,13 +54,13 @@ export function formatHistoricalAnalysis(asset: CryptoAsset, history: Historical
 
   return [
     `Historical Analysis for ${asset.name} (${asset.symbol})`,
-    `Period High: $${highestPrice.toFixed(2)}`,
-    `Period Low: $${lowestPrice.toFixed(2)}`,
+    `Period High: $${formatPrice(highestPrice)}`,
+    `Period Low: $${formatPrice(lowestPrice)}`,
     `Price Change: ${priceChange}%`,
-    `Current Price: $${currentPrice.toFixed(2)}`,
-    `Starting Price: $${oldestPrice.toFixed(2)}`,
+    `Current Price: $${formatPrice(currentPrice)}`,
+    `Starting Price: $${formatPrice(oldestPrice)}`,
     '\nVolatility Analysis:',
-    `Price Range: $${(highestPrice - lowestPrice).toFixed(2)}`,
+    `Price Range: $${formatPrice(highestPrice - lowestPrice)}`,
     `Range Percentage: ${((highestPrice - lowestPrice) / lowestPrice * 100).toFixed(2)}%`
   ].join('\n');
 }

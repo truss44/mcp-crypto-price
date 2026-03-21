@@ -26,6 +26,26 @@ describe('Formatters', () => {
       expect(formatted).toContain('Market Cap: $1000.00B');
       expect(formatted).toContain('Rank: #1');
     });
+
+    it('should use adaptive precision for low-value coins', () => {
+      const asset: CryptoAsset = {
+        id: 'shiba-inu',
+        rank: '15',
+        symbol: 'SHIB',
+        name: 'Shiba Inu',
+        priceUsd: '0.00001234',
+        changePercent24Hr: '2.50',
+        volumeUsd24Hr: '500000000',
+        marketCapUsd: '7000000000',
+        supply: '589000000000000',
+        maxSupply: '',
+        vwap24Hr: '0.00001200'
+      };
+
+      const formatted = formatPriceInfo(asset);
+      expect(formatted).toContain('Price: $0.00001234');
+      expect(formatted).not.toContain('Price: $0.00\n');
+    });
   });
 
   describe('formatMarketAnalysis', () => {

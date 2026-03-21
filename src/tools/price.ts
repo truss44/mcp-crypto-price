@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { getAssets } from '../services/coincap.js';
+import { searchAsset } from '../services/coincap.js';
 import { formatPriceInfo } from '../services/formatters.js';
 
 export const GetPriceArgumentsSchema = z.object({
@@ -11,26 +11,11 @@ export async function handleGetPrice(args: unknown) {
   const upperSymbol = symbol.toUpperCase();
 
   try {
-    const assetsData = await getAssets();
-    
-    if (!assetsData) {
-      return {
-        content: [{ type: "text", text: "Failed to retrieve cryptocurrency data" }],
-      };
-    }
-    
-    const asset = assetsData.data.find(
-      (a: { symbol: string; }) => a.symbol.toUpperCase() === upperSymbol
-    );
+    const asset = await searchAsset(upperSymbol);
 
     if (!asset) {
       return {
-        content: [
-          {
-            type: "text",
-            text: `Could not find cryptocurrency with symbol ${upperSymbol}`,
-          },
-        ],
+        content: [{ type: "text", text: `Could not find cryptocurrency with symbol ${upperSymbol}` }],
       };
     }
 
@@ -39,9 +24,9 @@ export async function handleGetPrice(args: unknown) {
     };
   } catch (error) {
     return {
-      content: [{ 
-        type: "text", 
-        text: error instanceof Error ? error.message : `Failed to retrieve cryptocurrency data: ${String(error)}` 
+      content: [{
+        type: "text",
+        text: error instanceof Error ? error.message : `Failed to retrieve cryptocurrency data: ${String(error)}`
       }],
     };
   }
