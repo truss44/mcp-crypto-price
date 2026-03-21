@@ -12,9 +12,11 @@ import {
   handleGetPrice,
   handleGetMarketAnalysis,
   handleGetHistoricalAnalysis,
+  handleGetTopAssets,
   GetPriceArgumentsSchema,
   GetMarketAnalysisSchema,
   GetHistoricalAnalysisSchema,
+  GetTopAssetsSchema,
 } from './tools/index.js';
 
 export const configSchema = z.object({
@@ -75,6 +77,20 @@ export function createServer({
     },
     async (args, _extra) => {
       const result = await handleGetHistoricalAnalysis(args);
+      return result as any;
+    }
+  );
+
+  server.registerTool(
+    "get-top-assets",
+    {
+      title: "Get Top Assets",
+      description:
+        "Get top cryptocurrencies ranked by market cap",
+      inputSchema: GetTopAssetsSchema.shape,
+    },
+    async (args, _extra) => {
+      const result = await handleGetTopAssets(args);
       return result as any;
     }
   );

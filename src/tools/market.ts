@@ -3,7 +3,7 @@ import { searchAsset, getMarkets } from '../services/coincap.js';
 import { formatMarketAnalysis } from '../services/formatters.js';
 
 export const GetMarketAnalysisSchema = z.object({
-  symbol: z.string().min(1),
+  symbol: z.string().min(1).describe("Cryptocurrency symbol or name (e.g. BTC or Bitcoin)"),
 });
 
 export async function handleGetMarketAnalysis(args: unknown) {

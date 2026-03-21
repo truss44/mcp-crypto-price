@@ -9,9 +9,9 @@ function formatPrice(value: number): string {
 
 export function formatPriceInfo(asset: CryptoAsset): string {
   const price = formatPrice(parseFloat(asset.priceUsd));
-  const change = parseFloat(asset.changePercent24Hr).toFixed(2);
-  const volume = (parseFloat(asset.volumeUsd24Hr) / 1000000).toFixed(2);
-  const marketCap = (parseFloat(asset.marketCapUsd) / 1000000000).toFixed(2);
+  const change = parseFloat(asset.changePercent24Hr || '0').toFixed(2);
+  const volume = (parseFloat(asset.volumeUsd24Hr || '0') / 1000000).toFixed(2);
+  const marketCap = (parseFloat(asset.marketCapUsd || '0') / 1000000000).toFixed(2);
   
   return [
     `${asset.name} (${asset.symbol})`,
@@ -38,11 +38,22 @@ export function formatMarketAnalysis(asset: CryptoAsset, markets: Market[]): str
   return [
     `Market Analysis for ${asset.name} (${asset.symbol})`,
     `Current Price: $${formatPrice(parseFloat(asset.priceUsd))}`,
-    `24h Volume: $${(parseFloat(asset.volumeUsd24Hr) / 1000000).toFixed(2)}M`,
+    `24h Volume: $${(parseFloat(asset.volumeUsd24Hr || '0') / 1000000).toFixed(2)}M`,
     `VWAP (24h): $${formatPrice(parseFloat(asset.vwap24Hr || '0'))}`,
     '\nTop 5 Markets by Volume:',
     marketInfo
   ].join('\n');
+}
+
+export function formatTopAssets(assets: CryptoAsset[]): string {
+  const lines = assets.map((asset) => {
+    const price = formatPrice(parseFloat(asset.priceUsd));
+    const change = parseFloat(asset.changePercent24Hr || '0').toFixed(2);
+    const marketCap = (parseFloat(asset.marketCapUsd || '0') / 1000000000).toFixed(2);
+    return `#${asset.rank} ${asset.name} (${asset.symbol}): $${price} (24h: ${change}%, MCap: $${marketCap}B)`;
+  });
+
+  return ['Top Cryptocurrencies by Market Cap', '', ...lines].join('\n');
 }
 
 export function formatHistoricalAnalysis(asset: CryptoAsset, history: HistoricalData['data']): string {

@@ -3,7 +3,7 @@ import { searchAsset } from '../services/coincap.js';
 import { formatPriceInfo } from '../services/formatters.js';
 
 export const GetPriceArgumentsSchema = z.object({
-  symbol: z.string().min(1),
+  symbol: z.string().min(1).describe("Cryptocurrency symbol or name (e.g. BTC or Bitcoin)"),
 });
 
 export async function handleGetPrice(args: unknown) {

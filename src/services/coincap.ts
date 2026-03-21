@@ -1,5 +1,7 @@
 import { COINCAP_API_V2_BASE, COINCAP_API_V3_BASE, CACHE_TTL } from '../config/index.js';
 import type { AssetsResponse, CacheEntry, CryptoAsset, HistoricalData, MarketsResponse } from '../types/index.js';
+import { AssetsResponseSchema, HistoricalDataSchema, MarketsResponseSchema } from './schemas.js';
+import type { ZodType } from 'zod';
 
 const cache = new Map<string, CacheEntry<any>>();
 
@@ -34,7 +36,7 @@ function setCacheData<T>(key: string, data: T): void {
  * 2. If v3 fails or no API key is provided, falls back to v2
  * 3. If both fail, throws an error
  */
-async function makeCoinCapRequest<T>(endpoint: string): Promise<T> {
+async function makeCoinCapRequest<T>(endpoint: string, schema?: ZodType<T>): Promise<T> {
   // Check cache first
   const cacheKey = endpoint;
   const cachedData = getCachedData<T>(cacheKey);
@@ -55,7 +57,8 @@ async function makeCoinCapRequest<T>(endpoint: string): Promise<T> {
       });
       
       if (v3Response.ok) {
-        const data = await v3Response.json() as T;
+        const raw = await v3Response.json();
+        const data = schema ? schema.parse(raw) : raw as T;
         setCacheData(cacheKey, data);
         return data;
       } else {
@@ -78,7 +81,8 @@ async function makeCoinCapRequest<T>(endpoint: string): Promise<T> {
     const v2Response = await fetch(`${COINCAP_API_V2_BASE}${endpoint}`, { headers });
     
     if (v2Response.ok) {
-      const data = await v2Response.json() as T;
+      const raw = await v2Response.json();
+      const data = schema ? schema.parse(raw) : raw as T;
       setCacheData(cacheKey, data);
       return data;
     } else {
@@ -99,7 +103,7 @@ async function makeCoinCapRequest<T>(endpoint: string): Promise<T> {
 
 export async function getAssets(): Promise<AssetsResponse | null> {
   try {
-    return await makeCoinCapRequest<AssetsResponse>('/assets');
+    return await makeCoinCapRequest<AssetsResponse>('/assets', AssetsResponseSchema);
   } catch (error) {
     console.error("Failed to get assets:", error);
     return null;
@@ -109,10 +113,10 @@ export async function getAssets(): Promise<AssetsResponse | null> {
 export async function searchAsset(symbol: string): Promise<CryptoAsset | null> {
   try {
     const upperSymbol = symbol.toUpperCase();
-    const data = await makeCoinCapRequest<AssetsResponse>(`/assets?search=${encodeURIComponent(symbol)}`);
-    const asset = data.data.find(
-      (a) => a.symbol.toUpperCase() === upperSymbol
-    );
+    const data = await makeCoinCapRequest<AssetsResponse>(`/assets?search=${encodeURIComponent(symbol)}`, AssetsResponseSchema);
+    const asset =
+      data.data.find((a) => a.symbol.toUpperCase() === upperSymbol) ??
+      data.data.find((a) => a.name.toUpperCase() === upperSymbol);
     return asset ?? null;
   } catch (error) {
     console.error(`Failed to search for asset ${symbol}:`, error);
@@ -122,7 +126,7 @@ export async function searchAsset(symbol: string): Promise<CryptoAsset | null> {
 
 export async function getMarkets(assetId: string): Promise<MarketsResponse | null> {
   try {
-    return await makeCoinCapRequest<MarketsResponse>(`/assets/${assetId}/markets`);
+    return await makeCoinCapRequest<MarketsResponse>(`/assets/${assetId}/markets`, MarketsResponseSchema);
   } catch (error) {
     console.error(`Failed to get markets for asset ${assetId}:`, error);
     return null;
@@ -137,7 +141,8 @@ export async function getHistoricalData(
 ): Promise<HistoricalData | null> {
   try {
     return await makeCoinCapRequest<HistoricalData>(
-      `/assets/${assetId}/history?interval=${interval}&start=${start}&end=${end}`
+      `/assets/${assetId}/history?interval=${interval}&start=${start}&end=${end}`,
+      HistoricalDataSchema
     );
   } catch (error) {
     console.error(`Failed to get historical data for asset ${assetId}:`, error);

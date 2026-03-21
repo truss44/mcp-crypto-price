@@ -8,12 +8,12 @@ export interface CryptoAsset {
   symbol: string;
   name: string;
   priceUsd: string;
-  changePercent24Hr: string;
-  volumeUsd24Hr: string;
-  marketCapUsd: string;
-  supply: string;
-  maxSupply: string;
-  vwap24Hr: string;
+  changePercent24Hr: string | null;
+  volumeUsd24Hr: string | null;
+  marketCapUsd: string | null;
+  supply: string | null;
+  maxSupply: string | null;
+  vwap24Hr: string | null;
 }
 
 export interface AssetsResponse {
@@ -24,7 +24,7 @@ export interface HistoricalData {
   data: Array<{
     time: number;
     priceUsd: string;
-    circulatingSupply: string;
+    circulatingSupply?: string;
     date: string;
   }>;
 }
@@ -35,7 +35,7 @@ export interface Market {
   quoteSymbol: string;
   priceUsd: string;
   volumeUsd24Hr: string;
-  percentExchangeVolume: string;
+  percentExchangeVolume?: string | null;
 }
 
 export interface MarketsResponse {
