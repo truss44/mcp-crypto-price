@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { getAssets, getHistoricalData } from '../services/coincap.js';
+import { searchAsset, getHistoricalData } from '../services/coincap.js';
 import { formatHistoricalAnalysis } from '../services/formatters.js';
 
 export const GetHistoricalAnalysisSchema = z.object({
@@ -13,17 +13,7 @@ export async function handleGetHistoricalAnalysis(args: unknown) {
   const upperSymbol = symbol.toUpperCase();
 
   try {
-    const assetsData = await getAssets();
-    
-    if (!assetsData) {
-      return {
-        content: [{ type: "text", text: "Failed to retrieve cryptocurrency data" }],
-      };
-    }
-    
-    const asset = assetsData.data.find(
-      (a: { symbol: string; }) => a.symbol.toUpperCase() === upperSymbol
-    );
+    const asset = await searchAsset(upperSymbol);
 
     if (!asset) {
       return {
@@ -31,7 +21,10 @@ export async function handleGetHistoricalAnalysis(args: unknown) {
       };
     }
 
-    const end = Date.now();
+    // Round timestamps to the nearest minute so the cache key stays stable
+    // across calls made within the same 60-second TTL window
+    const now = Date.now();
+    const end = now - (now % 60000);
     const start = end - (days * 24 * 60 * 60 * 1000);
     const historyData = await getHistoricalData(asset.id, interval, start, end);
 
