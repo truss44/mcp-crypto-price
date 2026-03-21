@@ -1,3 +1,9 @@
+## [3.0.4](https://github.com/truss44/mcp-crypto-price/compare/v3.0.3...v3.0.4) (2026-03-21)
+
+### Bug Fixes
+
+* align schemas with CoinCap v3 API drift ([#142](https://github.com/truss44/mcp-crypto-price/issues/142)) ([f92158b](https://github.com/truss44/mcp-crypto-price/commit/f92158b258832f7725db3d4c3ffc89b013851d49)), closes [#141](https://github.com/truss44/mcp-crypto-price/issues/141)
+
 ## [3.0.3](https://github.com/truss44/mcp-crypto-price/compare/v3.0.2...v3.0.3) (2026-03-21)
 
 ### Bug Fixes
