@@ -13,6 +13,6 @@ startCommand:
     properties:
       coincapApiKey:
         type: string
-        description: Optional API key for CoinCap to increase rate limits
-        nullable: true
-    required: []
+        description: "API key for CoinCap v3 API (required). Free tier available at https://pro.coincap.io/dashboard"
+    required:
+      - coincapApiKey

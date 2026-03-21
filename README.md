@@ -9,6 +9,7 @@ A Model Context Protocol (MCP) server that provides comprehensive cryptocurrency
 
 ## What's New
 
+- **BREAKING**: CoinCap v2 API removed. Now uses v3 API exclusively. A `COINCAP_API_KEY` is required (free tier available at [pro.coincap.io/dashboard](https://pro.coincap.io/dashboard))
 - Streamable HTTP transport added (while keeping STDIO compatibility)
 - Release workflow signs commits via SSH for Verified releases
 - Smithery CLI scripts to build and run the HTTP server
@@ -25,7 +26,10 @@ Add this configuration to your Claude Desktop config file:
   "mcpServers": {
     "mcp-crypto-price": {
       "command": "npx",
-      "args": ["-y", "mcp-crypto-price"]
+      "args": ["-y", "mcp-crypto-price"],
+      "env": {
+        "COINCAP_API_KEY": "YOUR_API_KEY_HERE"
+      }
     }
   }
 }
@@ -38,7 +42,10 @@ If your MCP client requires launching via `cmd.exe` on Windows:
   "mcpServers": {
     "mcp-crypto-price": {
       "command": "cmd",
-      "args": ["/c", "npx", "-y", "mcp-crypto-price"]
+      "args": ["/c", "npx", "-y", "mcp-crypto-price"],
+      "env": {
+        "COINCAP_API_KEY": "YOUR_API_KEY_HERE"
+      }
     }
   }
 }
@@ -74,36 +81,22 @@ npm run build:stdio
 npm run start:stdio
 ```
 
-The dev/build commands will print the server address to the console. Use that URL in clients that support MCP over HTTP (for example, Smithery). You can optionally provide an API key via `COINCAP_API_KEY` for higher rate limits.
+The dev/build commands will print the server address to the console. Use that URL in clients that support MCP over HTTP (for example, Smithery). You must provide an API key via `COINCAP_API_KEY` (see below).
 
-## Optional: CoinCap API Key
+## Required: CoinCap API Key
 
-For higher rate limits, add an API key to your configuration:
+This server uses the CoinCap v3 API, which requires an API key. A **free tier** is available.
 
-```json
-{
-  "mcpServers": {
-    "mcp-crypto-price": {
-      "command": "npx",
-      "args": ["-y", "mcp-crypto-price"],
-      "env": {
-        "COINCAP_API_KEY": "YOUR_API_KEY_HERE"
-      }
-    }
-  }
-}
-```
+1. Sign up and get your API key at [pro.coincap.io/dashboard](https://pro.coincap.io/dashboard)
+2. Add the key to your MCP client configuration via the `COINCAP_API_KEY` environment variable (see Usage examples above)
+
+Without a valid API key, all tools will return an error with instructions on how to obtain one.
 
 ## Note for Smithery CLI users
 
 This MCP server works directly via `npx` (configs above) and does not require Smithery.
 
 If you do use the Smithery CLI, authenticate with `smithery auth login` or by setting `SMITHERY_API_KEY` in your environment. Recent versions of the Smithery CLI do not support passing API keys via `--key` (or older `--profile` patterns).
-
-> **Important Note**: CoinCap is sunsetting their v2 API. This MCP supports both v2 and v3 APIs:
-> - If you provide a `COINCAP_API_KEY`, it will attempt to use the v3 API first, falling back to v2 if necessary
-> - Without an API key, it will use the v2 API (which will eventually be discontinued)
-> - It's recommended to obtain an API key from [pro.coincap.io/dashboard](https://pro.coincap.io/dashboard) as the v2 API will be completely deactivated in the future
 
 Launch Claude Desktop to start using the crypto analysis tools.
 

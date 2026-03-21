@@ -1,5 +1,5 @@
 import { jest } from '@jest/globals';
-import { getAssets, getMarkets, getHistoricalData, clearCache } from '../coincap.js';
+import { getAssets, getMarkets, getHistoricalData, clearCache, MissingApiKeyError } from '../coincap.js';
 
 // Mock global fetch
 const mockFetch = jest.fn() as jest.MockedFunction<typeof fetch>;
@@ -9,14 +9,27 @@ global.fetch = mockFetch;
 console.error = jest.fn();
 
 describe('CoinCap Service', () => {
+  const originalEnv = process.env;
+
   beforeEach(() => {
     jest.clearAllMocks();
     mockFetch.mockReset();
     clearCache();
+    process.env = { ...originalEnv, COINCAP_API_KEY: 'test-api-key' };
   });
 
   afterEach(() => {
     clearCache();
+    process.env = originalEnv;
+  });
+
+  describe('API key validation', () => {
+    it('should throw MissingApiKeyError when no API key is set', async () => {
+      delete process.env.COINCAP_API_KEY;
+
+      await expect(getAssets()).rejects.toThrow(MissingApiKeyError);
+      await expect(getAssets()).rejects.toThrow('https://pro.coincap.io/dashboard');
+    });
   });
 
   describe('getAssets', () => {
@@ -47,8 +60,10 @@ describe('CoinCap Service', () => {
       const result = await getAssets();
       expect(result).toEqual(mockResponse);
       expect(mockFetch).toHaveBeenCalledWith(
-        'https://api.coincap.io/v2/assets',
-        expect.any(Object)
+        'https://rest.coincap.io/v3/assets',
+        expect.objectContaining({
+          headers: { Authorization: 'Bearer test-api-key' }
+        })
       );
     });
 
@@ -96,8 +111,10 @@ describe('CoinCap Service', () => {
       const result = await getMarkets('bitcoin');
       expect(result).toEqual(mockResponse);
       expect(mockFetch).toHaveBeenCalledWith(
-        'https://api.coincap.io/v2/assets/bitcoin/markets',
-        expect.any(Object)
+        'https://rest.coincap.io/v3/assets/bitcoin/markets',
+        expect.objectContaining({
+          headers: { Authorization: 'Bearer test-api-key' }
+        })
       );
     });
 
@@ -130,8 +147,10 @@ describe('CoinCap Service', () => {
       const result = await getHistoricalData('bitcoin', 'h1', 1609459200000, 1609545600000);
       expect(result).toEqual(mockResponse);
       expect(mockFetch).toHaveBeenCalledWith(
-        expect.stringContaining('https://api.coincap.io/v2/assets/bitcoin/history'),
-        expect.any(Object)
+        expect.stringContaining('https://rest.coincap.io/v3/assets/bitcoin/history'),
+        expect.objectContaining({
+          headers: { Authorization: 'Bearer test-api-key' }
+        })
       );
     });
 

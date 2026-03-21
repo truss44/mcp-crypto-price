@@ -23,7 +23,7 @@ export const configSchema = z.object({
   coincapApiKey: z
     .string()
     .optional()
-    .describe("Optional API key for CoinCap to increase rate limits"),
+    .describe("API key for CoinCap v3 API (required). Free tier available at https://pro.coincap.io/dashboard"),
 });
 
 export function createServer({
