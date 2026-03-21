@@ -53,12 +53,6 @@ export function createServer({
       description: "Get current price and 24h stats for a cryptocurrency",
       inputSchema: GetPriceArgumentsSchema.shape,
       annotations: { readOnlyHint: true, openWorldHint: true },
-      icons: [
-        {
-          src: "https://raw.githubusercontent.com/truss44/mcp-crypto-price/main/logo.png",
-          mimeType: "image/png",
-        },
-      ],
     },
     async (args, _extra) => {
       const result = await handleGetPrice(args);
@@ -74,12 +68,6 @@ export function createServer({
         "Get detailed market analysis including top exchanges and volume distribution",
       inputSchema: GetMarketAnalysisSchema.shape,
       annotations: { readOnlyHint: true, openWorldHint: true },
-      icons: [
-        {
-          src: "https://raw.githubusercontent.com/truss44/mcp-crypto-price/main/logo.png",
-          mimeType: "image/png",
-        },
-      ],
     },
     async (args, _extra) => {
       const result = await handleGetMarketAnalysis(args);
@@ -95,12 +83,6 @@ export function createServer({
         "Get historical price analysis with customizable timeframe",
       inputSchema: GetHistoricalAnalysisSchema.shape,
       annotations: { readOnlyHint: true, openWorldHint: true },
-      icons: [
-        {
-          src: "https://raw.githubusercontent.com/truss44/mcp-crypto-price/main/logo.png",
-          mimeType: "image/png",
-        },
-      ],
     },
     async (args, _extra) => {
       const result = await handleGetHistoricalAnalysis(args);
@@ -116,12 +98,6 @@ export function createServer({
         "Get top cryptocurrencies ranked by market cap",
       inputSchema: GetTopAssetsSchema.shape,
       annotations: { readOnlyHint: true, openWorldHint: true },
-      icons: [
-        {
-          src: "https://raw.githubusercontent.com/truss44/mcp-crypto-price/main/logo.png",
-          mimeType: "image/png",
-        },
-      ],
     },
     async (args, _extra) => {
       const result = await handleGetTopAssets(args);
