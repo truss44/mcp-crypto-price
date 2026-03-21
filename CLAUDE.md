@@ -44,13 +44,13 @@ This is an MCP (Model Context Protocol) server for cryptocurrency data. It suppo
 MCP client → transport (stdio or HTTP) → src/index.ts (createServer)
   → tool handlers in src/tools/ (price.ts, market.ts, historical.ts)
     → src/services/coincap.ts (API + in-memory cache)
-      → CoinCap v3 API (if COINCAP_API_KEY set) with v2 fallback
+      → CoinCap v3 API (COINCAP_API_KEY required)
 ```
 
 ### Key design points
 
 - **`src/index.ts`** exports `createServer(config)` (used by Smithery HTTP transport) and also runs STDIO transport when invoked directly as a CLI or when `MCP_TRANSPORT=stdio`.
-- **`src/services/coincap.ts`** handles all CoinCap API calls. It tries the v3 API first (when `COINCAP_API_KEY` is set), then falls back to v2. Results are cached in-memory for 60 seconds (`CACHE_TTL`).
+- **`src/services/coincap.ts`** handles all CoinCap API calls via the v3 API. Requires `COINCAP_API_KEY`. Results are cached in-memory for 60 seconds (`CACHE_TTL`).
 - **`src/tools/`** — one file per MCP tool. Each exports a Zod schema (`*Schema`) and a handler (`handle*(args)`). Tools are registered in `src/index.ts`.
 - **`src/services/formatters.ts`** — pure formatting functions for tool output text.
 - **`src/types/index.ts`** — shared TypeScript interfaces for CoinCap API responses.
@@ -78,5 +78,5 @@ git config --global commit.gpgsign true
 
 | Variable | Purpose |
 |----------|---------|
-| `COINCAP_API_KEY` | Optional. Enables CoinCap v3 API with higher rate limits. |
+| `COINCAP_API_KEY` | Required. API key for CoinCap v3 API. Free tier available at https://pro.coincap.io/dashboard |
 | `MCP_TRANSPORT` | Set to `stdio` to force STDIO transport when running programmatically. |

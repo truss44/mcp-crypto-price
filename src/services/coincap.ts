@@ -1,7 +1,19 @@
-import { COINCAP_API_V2_BASE, COINCAP_API_V3_BASE, CACHE_TTL } from '../config/index.js';
+import { COINCAP_API_BASE, CACHE_TTL } from '../config/index.js';
 import type { AssetsResponse, CacheEntry, CryptoAsset, HistoricalData, MarketsResponse } from '../types/index.js';
 import { AssetsResponseSchema, HistoricalDataSchema, MarketsResponseSchema } from './schemas.js';
 import type { ZodType } from 'zod';
+
+const API_KEY_ERROR_MESSAGE =
+  'CoinCap API key is required. The v2 API has been sunset and all requests now use the v3 API, which requires an API key.\n\n' +
+  'A free tier is available! Get your API key at: https://pro.coincap.io/dashboard\n\n' +
+  'Then set the COINCAP_API_KEY environment variable in your MCP client configuration.';
+
+export class MissingApiKeyError extends Error {
+  constructor() {
+    super(API_KEY_ERROR_MESSAGE);
+    this.name = 'MissingApiKeyError';
+  }
+}
 
 const cache = new Map<string, CacheEntry<any>>();
 
@@ -30,12 +42,6 @@ function setCacheData<T>(key: string, data: T): void {
   });
 }
 
-/**
- * Makes a request to the CoinCap API with fallback logic:
- * 1. If API key is provided, tries v3 API first
- * 2. If v3 fails or no API key is provided, falls back to v2
- * 3. If both fail, throws an error
- */
 async function makeCoinCapRequest<T>(endpoint: string, schema?: ZodType<T>): Promise<T> {
   // Check cache first
   const cacheKey = endpoint;
@@ -45,66 +51,31 @@ async function makeCoinCapRequest<T>(endpoint: string, schema?: ZodType<T>): Pro
   }
 
   const apiKey = process.env.COINCAP_API_KEY;
-  let error: Error | null = null;
-  
-  // Try v3 API if API key is provided
-  if (apiKey) {
-    try {
-      const v3Response = await fetch(`${COINCAP_API_V3_BASE}${endpoint}`, {
-        headers: {
-          'Authorization': `Bearer ${apiKey}`
-        }
-      });
-      
-      if (v3Response.ok) {
-        const raw = await v3Response.json();
-        const data = schema ? schema.parse(raw) : raw as T;
-        setCacheData(cacheKey, data);
-        return data;
-      } else {
-        error = new Error(`V3 API error: ${v3Response.status} - ${v3Response.statusText}`);
-        console.warn("V3 API request failed, falling back to V2:", error.message);
-      }
-    } catch (e) {
-      error = e instanceof Error ? e : new Error(String(e));
-      console.warn("V3 API request failed, falling back to V2:", error.message);
-    }
+  if (!apiKey) {
+    throw new MissingApiKeyError();
   }
-  
-  // Fall back to v2 API
-  try {
-    const headers: HeadersInit = {};
-    if (apiKey) {
-      headers['Authorization'] = `Bearer ${apiKey}`;
+
+  const response = await fetch(`${COINCAP_API_BASE}${endpoint}`, {
+    headers: {
+      'Authorization': `Bearer ${apiKey}`
     }
-    
-    const v2Response = await fetch(`${COINCAP_API_V2_BASE}${endpoint}`, { headers });
-    
-    if (v2Response.ok) {
-      const raw = await v2Response.json();
-      const data = schema ? schema.parse(raw) : raw as T;
-      setCacheData(cacheKey, data);
-      return data;
-    } else {
-      throw new Error(`V2 API error: ${v2Response.status} - ${v2Response.statusText}`);
-    }
-  } catch (e) {
-    const v2Error = e instanceof Error ? e : new Error(String(e));
-    console.error("V2 API request failed:", v2Error.message);
-    
-    // If we have both errors, combine them for better debugging
-    if (error) {
-      throw new Error(`API requests failed. V3: ${error.message}, V2: ${v2Error.message}`);
-    } else {
-      throw v2Error;
-    }
+  });
+
+  if (!response.ok) {
+    throw new Error(`CoinCap API error: ${response.status} - ${response.statusText}`);
   }
+
+  const raw = await response.json();
+  const data = schema ? schema.parse(raw) : raw as T;
+  setCacheData(cacheKey, data);
+  return data;
 }
 
 export async function getAssets(): Promise<AssetsResponse | null> {
   try {
     return await makeCoinCapRequest<AssetsResponse>('/assets', AssetsResponseSchema);
   } catch (error) {
+    if (error instanceof MissingApiKeyError) throw error;
     console.error("Failed to get assets:", error);
     return null;
   }
@@ -119,6 +90,7 @@ export async function searchAsset(symbol: string): Promise<CryptoAsset | null> {
       data.data.find((a) => a.name.toUpperCase() === upperSymbol);
     return asset ?? null;
   } catch (error) {
+    if (error instanceof MissingApiKeyError) throw error;
     console.error(`Failed to search for asset ${symbol}:`, error);
     return null;
   }
@@ -128,13 +100,14 @@ export async function getMarkets(assetId: string): Promise<MarketsResponse | nul
   try {
     return await makeCoinCapRequest<MarketsResponse>(`/assets/${assetId}/markets`, MarketsResponseSchema);
   } catch (error) {
+    if (error instanceof MissingApiKeyError) throw error;
     console.error(`Failed to get markets for asset ${assetId}:`, error);
     return null;
   }
 }
 
 export async function getHistoricalData(
-  assetId: string, 
+  assetId: string,
   interval: string,
   start: number,
   end: number
@@ -145,6 +118,7 @@ export async function getHistoricalData(
       HistoricalDataSchema
     );
   } catch (error) {
+    if (error instanceof MissingApiKeyError) throw error;
     console.error(`Failed to get historical data for asset ${assetId}:`, error);
     return null;
   }
