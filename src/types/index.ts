@@ -24,7 +24,7 @@ export interface HistoricalData {
   data: Array<{
     time: number;
     priceUsd: string;
-    circulatingSupply: string;
+    circulatingSupply?: string;
     date: string;
   }>;
 }
@@ -35,7 +35,7 @@ export interface Market {
   quoteSymbol: string;
   priceUsd: string;
   volumeUsd24Hr: string;
-  percentExchangeVolume: string;
+  percentExchangeVolume?: string | null;
 }
 
 export interface MarketsResponse {
