@@ -1,3 +1,9 @@
+## [3.0.2](https://github.com/truss44/mcp-crypto-price/compare/v3.0.1...v3.0.2) (2026-03-21)
+
+### Bug Fixes
+
+* resolve 404 and missing API key when connecting via query params ([#139](https://github.com/truss44/mcp-crypto-price/issues/139)) ([6a6a842](https://github.com/truss44/mcp-crypto-price/commit/6a6a8421c9f1f07ff228ed62346900870e3d7649)), closes [#138](https://github.com/truss44/mcp-crypto-price/issues/138)
+
 ## [3.0.1](https://github.com/truss44/mcp-crypto-price/compare/v3.0.0...v3.0.1) (2026-03-21)
 
 ### Bug Fixes
