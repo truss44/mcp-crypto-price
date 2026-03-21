@@ -23,7 +23,15 @@ export const configSchema = z.object({
   COINCAP_API_KEY: z
     .string()
     .optional()
-    .describe("API key for CoinCap v3 API (required). Free tier available at https://pro.coincap.io/dashboard"),
+    .describe("API key for CoinCap v3 API. Free tier available at https://pro.coincap.io/dashboard"),
+  CACHE_TTL_SECONDS: z
+    .number()
+    .int()
+    .min(10)
+    .max(3600)
+    .default(60)
+    .optional()
+    .describe("How long to cache API responses in seconds (default: 60). Lower values return fresher data; higher values reduce API usage."),
 });
 
 export function createServer({
@@ -33,6 +41,9 @@ export function createServer({
 }) {
   if (config?.COINCAP_API_KEY && !process.env.COINCAP_API_KEY) {
     process.env.COINCAP_API_KEY = config.COINCAP_API_KEY;
+  }
+  if (config?.CACHE_TTL_SECONDS != null) {
+    process.env.CACHE_TTL_SECONDS = String(config.CACHE_TTL_SECONDS);
   }
 
   const server = new McpServer({
@@ -50,9 +61,15 @@ export function createServer({
     "get-crypto-price",
     {
       title: "Get Crypto Price",
-      description: "Get current price and 24h stats for a cryptocurrency",
+      description: "Get real-time price, 24-hour change percentage, trading volume, and market cap for any cryptocurrency by symbol or name.",
       inputSchema: GetPriceArgumentsSchema.shape,
-      annotations: { readOnlyHint: true, openWorldHint: true },
+      annotations: {
+        title: "Get Crypto Price",
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: true,
+      },
     },
     async (args, _extra) => {
       const result = await handleGetPrice(args);
@@ -64,10 +81,15 @@ export function createServer({
     "get-market-analysis",
     {
       title: "Get Market Analysis",
-      description:
-        "Get detailed market analysis including top exchanges and volume distribution",
+      description: "Get detailed market analysis for a cryptocurrency including the top 5 exchanges by volume, price per exchange, and volume distribution percentages.",
       inputSchema: GetMarketAnalysisSchema.shape,
-      annotations: { readOnlyHint: true, openWorldHint: true },
+      annotations: {
+        title: "Get Market Analysis",
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: true,
+      },
     },
     async (args, _extra) => {
       const result = await handleGetMarketAnalysis(args);
@@ -79,10 +101,15 @@ export function createServer({
     "get-historical-analysis",
     {
       title: "Get Historical Analysis",
-      description:
-        "Get historical price analysis with customizable timeframe",
+      description: "Get historical price data for a cryptocurrency with trend analysis including period high/low, price change percentage, and volatility metrics over a customizable timeframe.",
       inputSchema: GetHistoricalAnalysisSchema.shape,
-      annotations: { readOnlyHint: true, openWorldHint: true },
+      annotations: {
+        title: "Get Historical Analysis",
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: true,
+      },
     },
     async (args, _extra) => {
       const result = await handleGetHistoricalAnalysis(args);
@@ -94,10 +121,15 @@ export function createServer({
     "get-top-assets",
     {
       title: "Get Top Assets",
-      description:
-        "Get top cryptocurrencies ranked by market cap",
+      description: "Get the top cryptocurrencies ranked by market cap, with real-time price, 24-hour change percentage, and market cap for each asset.",
       inputSchema: GetTopAssetsSchema.shape,
-      annotations: { readOnlyHint: true, openWorldHint: true },
+      annotations: {
+        title: "Get Top Assets",
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: true,
+      },
     },
     async (args, _extra) => {
       const result = await handleGetTopAssets(args);
