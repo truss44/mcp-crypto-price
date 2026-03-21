@@ -20,7 +20,7 @@ import {
 } from './tools/index.js';
 
 export const configSchema = z.object({
-  coincapApiKey: z
+  COINCAP_API_KEY: z
     .string()
     .optional()
     .describe("API key for CoinCap v3 API (required). Free tier available at https://pro.coincap.io/dashboard"),
@@ -31,8 +31,8 @@ export function createServer({
 }: {
   config: z.infer<typeof configSchema>;
 }) {
-  if (config?.coincapApiKey && !process.env.COINCAP_API_KEY) {
-    process.env.COINCAP_API_KEY = config.coincapApiKey;
+  if (config?.COINCAP_API_KEY && !process.env.COINCAP_API_KEY) {
+    process.env.COINCAP_API_KEY = config.COINCAP_API_KEY;
   }
 
   const server = new McpServer({
@@ -165,13 +165,13 @@ export default createServer;
 
 export function createSandboxServer() {
   return createServer({
-    config: { coincapApiKey: undefined },
+    config: { COINCAP_API_KEY: undefined },
   });
 }
 
 async function main() {
   const server = createServer({
-    config: { coincapApiKey: process.env.COINCAP_API_KEY },
+    config: { COINCAP_API_KEY: process.env.COINCAP_API_KEY },
   });
   const transport = new StdioServerTransport();
   await server.connect(transport);

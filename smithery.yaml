@@ -11,8 +11,8 @@ startCommand:
   configSchema:
     type: object
     properties:
-      coincapApiKey:
+      COINCAP_API_KEY:
         type: string
         description: "API key for CoinCap v3 API (required). Free tier available at https://pro.coincap.io/dashboard"
     required:
-      - coincapApiKey
+      - COINCAP_API_KEY
