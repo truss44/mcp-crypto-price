@@ -28,7 +28,13 @@ describe('CoinCap Service', () => {
             rank: '1',
             symbol: 'BTC',
             name: 'Bitcoin',
-            priceUsd: '50000.00'
+            priceUsd: '50000.00',
+            changePercent24Hr: '2.50',
+            volumeUsd24Hr: '30000000000',
+            marketCapUsd: '950000000000',
+            supply: '19000000',
+            maxSupply: '21000000',
+            vwap24Hr: '49500.00',
           }
         ]
       };
@@ -74,7 +80,10 @@ describe('CoinCap Service', () => {
           {
             exchangeId: 'binance',
             baseSymbol: 'BTC',
-            priceUsd: '50000.00'
+            quoteSymbol: 'USDT',
+            priceUsd: '50000.00',
+            volumeUsd24Hr: '5000000000',
+            percentExchangeVolume: '25.00',
           }
         ]
       };

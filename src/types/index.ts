@@ -8,12 +8,12 @@ export interface CryptoAsset {
   symbol: string;
   name: string;
   priceUsd: string;
-  changePercent24Hr: string;
-  volumeUsd24Hr: string;
-  marketCapUsd: string;
-  supply: string;
-  maxSupply: string;
-  vwap24Hr: string;
+  changePercent24Hr: string | null;
+  volumeUsd24Hr: string | null;
+  marketCapUsd: string | null;
+  supply: string | null;
+  maxSupply: string | null;
+  vwap24Hr: string | null;
 }
 
 export interface AssetsResponse {
