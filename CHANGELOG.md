@@ -1,3 +1,14 @@
+## [2.6.0](https://github.com/truss44/mcp-crypto-price/compare/v2.5.0...v2.6.0) (2026-03-21)
+
+### Features
+
+* add icon to mcp server ([#133](https://github.com/truss44/mcp-crypto-price/issues/133)) ([809e333](https://github.com/truss44/mcp-crypto-price/commit/809e3335df46e697e5ebb25db117a9f24ad6e452)), closes [#131](https://github.com/truss44/mcp-crypto-price/issues/131) [#130](https://github.com/truss44/mcp-crypto-price/issues/130)
+* update icon ([#134](https://github.com/truss44/mcp-crypto-price/issues/134)) ([a852c19](https://github.com/truss44/mcp-crypto-price/commit/a852c198d90e17dfb5108ea68ded2e89f763be07)), closes [#131](https://github.com/truss44/mcp-crypto-price/issues/131) [#130](https://github.com/truss44/mcp-crypto-price/issues/130)
+
+### Bug Fixes
+
+* remove unsupported MCP tool icons metadata ([9b16dbb](https://github.com/truss44/mcp-crypto-price/commit/9b16dbb2597f4df0f88d3b4efecdabbab78994e3))
+
 ## [2.5.0](https://github.com/truss44/mcp-crypto-price/compare/v2.4.0...v2.5.0) (2026-03-21)
 
 ### Features
