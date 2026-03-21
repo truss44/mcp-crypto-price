@@ -1,8 +1,31 @@
 {
   "branches": ["main", "master"],
   "plugins": [
-    ["@semantic-release/commit-analyzer", { "preset": "conventionalcommits" }],
-    ["@semantic-release/release-notes-generator", { "preset": "conventionalcommits" }],
+    ["@semantic-release/commit-analyzer", {
+      "preset": "conventionalcommits",
+      "releaseRules": [
+        {"breaking": true, "release": "major"},
+        {"type": "feat", "release": "minor"},
+        {"type": "Feat", "release": "minor"},
+        {"type": "fix", "release": "patch"},
+        {"type": "Fix", "release": "patch"},
+        {"type": "perf", "release": "patch"},
+        {"type": "revert", "release": "patch"}
+      ]
+    }],
+    ["@semantic-release/release-notes-generator", {
+      "preset": "conventionalcommits",
+      "writerOpts": {
+        "types": [
+          {"type": "feat", "section": "Features"},
+          {"type": "Feat", "section": "Features"},
+          {"type": "fix", "section": "Bug Fixes"},
+          {"type": "Fix", "section": "Bug Fixes"},
+          {"type": "perf", "section": "Performance Improvements"},
+          {"type": "revert", "section": "Reverts"}
+        ]
+      }
+    }],
     "@semantic-release/changelog",
     ["@semantic-release/npm", {
       "pkgRoot": ".",
