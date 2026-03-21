@@ -1,3 +1,10 @@
+## [2.3.2](https://github.com/truss44/mcp-crypto-price/compare/v2.3.1...v2.3.2) (2026-03-21)
+
+### Bug Fixes
+
+* route POST / to MCP handler, reserve GET / for health checks ([821b2cd](https://github.com/truss44/mcp-crypto-price/commit/821b2cde160755bb892fd67238015901ebd2eb40))
+* serve 200 on root path for default health check probes ([3b0491b](https://github.com/truss44/mcp-crypto-price/commit/3b0491b462c1c5065a726255ae49acc38fd52681))
+
 ## [2.3.1](https://github.com/truss44/mcp-crypto-price/compare/v2.3.0...v2.3.1) (2026-03-21)
 
 ### Bug Fixes
