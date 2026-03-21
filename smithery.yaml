@@ -2,15 +2,12 @@ name: mcp-crypto-price
 description: >
   Real-time cryptocurrency data and analysis via CoinCap API.
   Includes price tracking, market analysis across exchanges, and historical trends.
-icons:
-  - src: https://raw.githubusercontent.com/truss44/mcp-crypto-price/main/logo.png
-    mimeType: image/png
+icon: "https://raw.githubusercontent.com/truss44/mcp-crypto-price/main/logo.png"
 license: MIT
 homepage: https://github.com/truss44/mcp-crypto-price
 
 startCommand:
-  type: stdio
-  commandType: npx
+  type: http
   configSchema:
     type: object
     properties:
