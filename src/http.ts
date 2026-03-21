@@ -7,7 +7,7 @@ import { createServer } from './index.js';
 const PORT = parseInt(process.env.PORT ?? '3000', 10);
 
 const httpServer = http.createServer(async (req, res) => {
-  if (req.url === '/health') {
+  if (req.url === '/health' || req.url === '/') {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ status: 'ok' }));
     return;
