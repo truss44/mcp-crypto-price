@@ -17,23 +17,19 @@
   ],
   "main": "./dist/index.js",
   "scripts": {
-    "dev": "npx @smithery/cli dev",
-    "build": "npm run build:http",
-    "build:stdio": "tsc && shx chmod +x dist/*.js",
-    "build:http": "npx @smithery/cli build",
-    "start": "npm run start:http",
-    "start:http": "node .smithery/index.cjs",
+    "build": "tsc && shx chmod +x dist/*.js",
+    "start": "node dist/http.js",
+    "start:http": "node dist/http.js",
     "start:stdio": "node dist/index.js",
-    "prepare": "npm run build:stdio",
+    "prepare": "npm run build",
     "watch": "tsc --watch",
     "inspector": "npx @modelcontextprotocol/inspector dist/index.js",
     "test": "NODE_OPTIONS='--experimental-vm-modules --no-warnings' jest",
     "test:coverage": "NODE_OPTIONS='--experimental-vm-modules --no-warnings' jest --coverage",
-    "prepublishOnly": "npm run build:stdio"
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.26.0",
-    "@smithery/sdk": "^1.6.7",
     "zod": "^3.25.46"
   },
   "devDependencies": {
