@@ -41,6 +41,13 @@ const serverCard = {
         },
         required: ['symbol'],
       },
+      annotations: {
+        title: 'Get Crypto Price',
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: true,
+      },
     },
     {
       name: 'get-market-analysis',
@@ -52,6 +59,13 @@ const serverCard = {
         },
         required: ['symbol'],
       },
+      annotations: {
+        title: 'Get Market Analysis',
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: true,
+      },
     },
     {
       name: 'get-historical-analysis',
@@ -60,10 +74,28 @@ const serverCard = {
         type: 'object',
         properties: {
           symbol: { type: 'string', description: 'Cryptocurrency symbol or name (e.g. BTC or Bitcoin)' },
-          interval: { type: 'string', enum: ['m5', 'm15', 'm30', 'h1', 'h2', 'h6', 'h12', 'd1'], default: 'h1' },
-          days: { type: 'number', minimum: 1, maximum: 30, default: 7 },
+          interval: {
+            type: 'string',
+            enum: ['m5', 'm15', 'm30', 'h1', 'h2', 'h6', 'h12', 'd1'],
+            default: 'h1',
+            description: 'Data interval: m1=1min, m5=5min, m15=15min, m30=30min, h1=1hr, h2=2hr, h6=6hr, h12=12hr, d1=daily',
+          },
+          days: {
+            type: 'number',
+            minimum: 1,
+            maximum: 30,
+            default: 7,
+            description: 'Number of days of historical data to retrieve (1-30)',
+          },
         },
         required: ['symbol'],
+      },
+      annotations: {
+        title: 'Get Historical Analysis',
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: true,
       },
     },
     {
@@ -72,8 +104,21 @@ const serverCard = {
       inputSchema: {
         type: 'object',
         properties: {
-          limit: { type: 'number', minimum: 1, maximum: 50, default: 10 },
+          limit: {
+            type: 'number',
+            minimum: 1,
+            maximum: 50,
+            default: 10,
+            description: 'Number of top assets to return, ranked by market cap (1-50)',
+          },
         },
+      },
+      annotations: {
+        title: 'Get Top Assets',
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: true,
       },
     },
   ],
