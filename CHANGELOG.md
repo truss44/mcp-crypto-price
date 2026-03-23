@@ -1,3 +1,9 @@
+## [3.2.0](https://github.com/truss44/mcp-crypto-price/compare/v3.1.0...v3.2.0) (2026-03-23)
+
+### Features
+
+* add MCP tool annotations and parameter descriptions to HTTP discovery ([#145](https://github.com/truss44/mcp-crypto-price/issues/145)) ([95fe758](https://github.com/truss44/mcp-crypto-price/commit/95fe758d46f8030151795e175f65b53b3207ad10)), closes [#144](https://github.com/truss44/mcp-crypto-price/issues/144)
+
 ## [3.1.0](https://github.com/truss44/mcp-crypto-price/compare/v3.0.4...v3.1.0) (2026-03-21)
 
 ### Features
