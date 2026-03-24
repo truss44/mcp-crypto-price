@@ -4,6 +4,7 @@ import http from 'node:http';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import { createServer } from './index.js';
 import { SERVER_CONFIG } from './config/index.js';
+import { renderHomepage } from './homepage.js';
 
 const PORT = parseInt(process.env.PORT ?? '3000', 10);
 
@@ -149,8 +150,15 @@ const httpServer = http.createServer(async (req, res) => {
     return;
   }
 
-  // Health check: GET / or GET /health
-  if ((pathname === '/' || pathname === '/health') && req.method === 'GET') {
+  // Homepage: GET /
+  if (pathname === '/' && req.method === 'GET') {
+    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+    res.end(renderHomepage());
+    return;
+  }
+
+  // Health check: GET /health
+  if (pathname === '/health' && req.method === 'GET') {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ status: 'ok' }));
     return;
