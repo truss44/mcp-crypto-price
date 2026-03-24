@@ -90,7 +90,7 @@ http://localhost:3000/mcp?COINCAP_API_KEY=YOUR_API_KEY_HERE
 For remote deployments:
 
 ```
-https://your-server-host/mcp?COINCAP_API_KEY=YOUR_API_KEY_HERE
+https://mcp-crypto-price.codemonkeyinnovations.com/mcp?COINCAP_API_KEY=YOUR_API_KEY_HERE
 ```
 
 ## Required: CoinCap API Key
