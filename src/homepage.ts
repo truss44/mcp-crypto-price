@@ -297,7 +297,7 @@ export function renderHomepage(): string {
             </div>
             <div class="metric">
               <strong>Remote endpoint</strong>
-              <code>https://&lt;your-host&gt;/mcp</code>
+              <code>https://mcp-crypto-price.codemonkeyinnovations.com/mcp</code>
             </div>
           </div>
         </article>
