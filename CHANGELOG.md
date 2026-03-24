@@ -1,3 +1,9 @@
+## [3.3.0](https://github.com/truss44/mcp-crypto-price/compare/v3.2.0...v3.3.0) (2026-03-24)
+
+### Features
+
+* add homepage landing page for the MCP crypto tool ([#147](https://github.com/truss44/mcp-crypto-price/issues/147)) ([35a8998](https://github.com/truss44/mcp-crypto-price/commit/35a89982e7bb561b03090d43049c625957153c25)), closes [#146](https://github.com/truss44/mcp-crypto-price/issues/146)
+
 ## [3.2.0](https://github.com/truss44/mcp-crypto-price/compare/v3.1.0...v3.2.0) (2026-03-23)
 
 ### Features
