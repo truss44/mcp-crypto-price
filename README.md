@@ -7,6 +7,11 @@
 
 A Model Context Protocol (MCP) server that provides comprehensive cryptocurrency analysis using the CoinCap API. This server offers real-time price data, market analysis, and historical trends through an easy-to-use interface. Supports both STDIO and Streamable HTTP transports.
 
+## Requirements
+
+- **Node.js 22.14+**
+- **CoinCap API key** via `COINCAP_API_KEY`
+
 ## What's New
 
 - **BREAKING**: CoinCap v2 API removed. Now uses v3 API exclusively. A `COINCAP_API_KEY` is required (free tier available at [pro.coincap.io/dashboard](https://pro.coincap.io/dashboard))

@@ -26,6 +26,8 @@ npm run watch          # TypeScript watch
 npm run inspector
 ```
 
+This repository requires **Node.js 22.14+** for development, CI, and release tooling.
+
 To run a single test file:
 ```bash
 NODE_OPTIONS='--experimental-vm-modules --no-warnings' npx jest src/services/__tests__/coincap.test.ts
