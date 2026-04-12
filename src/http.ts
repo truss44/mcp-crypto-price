@@ -164,14 +164,14 @@ const httpServer = http.createServer(async (req, res) => {
   const pathname = parsed.pathname;
 
   // MCP server card for discovery (required by Smithery)
-  if (
-    pathname === '/.well-known/mcp/server-card.json' &&
-    req.method === 'GET'
-  ) {
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify(serverCard));
-    return;
-  }
+  // if (
+  //   pathname === '/.well-known/mcp/server-card.json' &&
+  //   req.method === 'GET'
+  // ) {
+  //   res.writeHead(200, { 'Content-Type': 'application/json' });
+  //   res.end(JSON.stringify(serverCard));
+  //   return;
+  // }
 
   // Homepage: GET /
   if (pathname === '/' && req.method === 'GET') {
