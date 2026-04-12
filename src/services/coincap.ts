@@ -168,7 +168,7 @@ export async function getTechnicalAnalysis(
 ): Promise<TechnicalAnalysis | null> {
   try {
     return await makeCoinCapRequest<TechnicalAnalysis>(
-      `/ta/${assetId}/allLatest`,
+      `/ta/${assetId}/allLatest?fetchInterval=d1`,
       TechnicalAnalysisSchema
     );
   } catch (error) {
