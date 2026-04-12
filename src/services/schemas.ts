@@ -40,3 +40,22 @@ export const MarketSchema = z.object({
 export const MarketsResponseSchema = z.object({
   data: z.array(MarketSchema),
 });
+
+export const ExchangeSchema = z.object({
+  exchangeId: z.string(),
+  name: z.string(),
+  rank: z.string(),
+  percentTotalVolume: z.string().nullable(),
+  volumeUsd: z.string().nullable(),
+  tradingPairs: z.string().nullable(),
+  socket: z.boolean().nullable(),
+  updated: z.number(),
+});
+
+export const ExchangesResponseSchema = z.object({
+  data: z.array(ExchangeSchema),
+});
+
+export const ExchangeResponseSchema = z.object({
+  data: ExchangeSchema,
+});

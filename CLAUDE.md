@@ -56,7 +56,7 @@ MCP client → transport (stdio or HTTP) → src/index.ts (createServer)
 - **`src/services/formatters.ts`** — pure formatting functions for tool output text.
 - **`src/types/index.ts`** — shared TypeScript interfaces for CoinCap API responses.
 
-### Four registered MCP tools
+### Seven registered MCP tools
 
 | Tool | Handler | API endpoint |
 |------|---------|--------------|
@@ -64,6 +64,9 @@ MCP client → transport (stdio or HTTP) → src/index.ts (createServer)
 | `get-market-analysis` | `handleGetMarketAnalysis` | `/assets/{id}/markets` |
 | `get-historical-analysis` | `handleGetHistoricalAnalysis` | `/assets/{id}/history` |
 | `get-top-assets` | `handleGetTopAssets` | `/assets` |
+| `get-technical-analysis` | `handleGetTechnicalAnalysis` | `/ta/{id}/allLatest` |
+| `get-rates` | `handleGetRates` | `/rates` and `/rates/{slug}` |
+| `get-exchanges` | `handleGetExchanges` | `/exchanges` and `/exchanges/{id}` |
 
 ### Releases & commits
 

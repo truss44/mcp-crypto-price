@@ -13,10 +13,12 @@ import {
   handleGetMarketAnalysis,
   handleGetHistoricalAnalysis,
   handleGetTopAssets,
+  handleGetExchanges,
   GetPriceArgumentsSchema,
   GetMarketAnalysisSchema,
   GetHistoricalAnalysisSchema,
   GetTopAssetsSchema,
+  GetExchangesSchema,
 } from './tools/index.js';
 
 export const configSchema = z.object({
@@ -133,6 +135,26 @@ export function createServer({
     },
     async (args, _extra) => {
       const result = await handleGetTopAssets(args);
+      return result as any;
+    }
+  );
+
+  server.registerTool(
+    "get-exchanges",
+    {
+      title: "Get Exchanges",
+      description: "Get top cryptocurrency exchanges ranked by 24h volume. Optionally pass an exchangeId (e.g. 'binance', 'coinbase') to get details for a specific exchange including volume, trading pairs, and market share.",
+      inputSchema: GetExchangesSchema.shape,
+      annotations: {
+        title: "Get Exchanges",
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: true,
+      },
+    },
+    async (args, _extra) => {
+      const result = await handleGetExchanges(args);
       return result as any;
     }
   );

@@ -186,6 +186,30 @@ Lists top cryptocurrencies ranked by market cap, including:
 - Market cap and rank
 - Configurable result count (1–50, default 10)
 
+#### get-technical-analysis
+
+Returns the latest technical indicators for any cryptocurrency:
+- SMA (Simple Moving Average) with period
+- EMA (Exponential Moving Average) with period
+- RSI (Relative Strength Index) with Overbought/Oversold/Neutral signal
+- MACD with signal line, histogram, and Bullish/Bearish label
+- VWAP (Volume Weighted Average Price, 24h)
+
+#### get-rates
+
+Returns USD-based conversion rates for fiat currencies and cryptocurrencies:
+- All fiat currency rates (USD base)
+- Top 10 cryptocurrency rates
+- Optional `slug` parameter (e.g. `euro`, `bitcoin`) for a single rate lookup
+
+#### get-exchanges
+
+Lists top cryptocurrency exchanges ranked by 24h volume:
+- Exchange name, rank, and 24h volume in USD
+- Number of trading pairs and market share percentage
+- Optional `exchangeId` parameter (e.g. `binance`) for single exchange details
+- Optional `limit` parameter (1–50, default 10)
+
 ## Sample Prompts
 
 - "What's the current price of Bitcoin?"
@@ -193,6 +217,9 @@ Lists top cryptocurrencies ranked by market cap, including:
 - "Give me the 7-day price history for DOGE"
 - "What are the top exchanges trading BTC?"
 - "Show me the price trends for SOL with 1-hour intervals"
+- "What are the technical indicators for ETH right now?"
+- "What's the current EUR to USD exchange rate?"
+- "Which crypto exchanges have the highest 24h volume?"
 
 ## Project Inspiration
 

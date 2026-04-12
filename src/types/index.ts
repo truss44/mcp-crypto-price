@@ -40,3 +40,22 @@ export interface Market {
 export interface MarketsResponse {
   data: Market[];
 }
+
+export interface Exchange {
+  exchangeId: string;
+  name: string;
+  rank: string;
+  percentTotalVolume: string | null;
+  volumeUsd: string | null;
+  tradingPairs: string | null;
+  socket: boolean | null;
+  updated: number;
+}
+
+export interface ExchangesResponse {
+  data: Exchange[];
+}
+
+export interface ExchangeResponse {
+  data: Exchange;
+}
