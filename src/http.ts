@@ -40,7 +40,7 @@ const serverCard = {
   },
   tools: [
     {
-      name: 'crypto.price',
+      name: 'get-crypto-price',
       description: 'Get current price and 24h stats for a cryptocurrency',
       inputSchema: {
         type: 'object',
@@ -61,7 +61,7 @@ const serverCard = {
       },
     },
     {
-      name: 'crypto.market',
+      name: 'get-market-analysis',
       description:
         'Get detailed market analysis including top exchanges and volume distribution',
       inputSchema: {
@@ -83,7 +83,7 @@ const serverCard = {
       },
     },
     {
-      name: 'crypto.historical',
+      name: 'get-historical-analysis',
       description: 'Get historical price analysis with customizable timeframe',
       inputSchema: {
         type: 'object',
@@ -118,7 +118,7 @@ const serverCard = {
       },
     },
     {
-      name: 'crypto.top_assets',
+      name: 'get-top-assets',
       description: 'Get top cryptocurrencies ranked by market cap',
       inputSchema: {
         type: 'object',
@@ -142,7 +142,7 @@ const serverCard = {
       },
     },
     {
-      name: 'crypto.technical',
+      name: 'get-technical-analysis',
       description:
         'Get the latest technical indicators for a cryptocurrency including SMA, EMA, RSI, MACD, and VWAP',
       inputSchema: {
@@ -164,7 +164,7 @@ const serverCard = {
       },
     },
     {
-      name: 'crypto.rates',
+      name: 'get-rates',
       description:
         "Get USD-based conversion rates for fiat currencies and cryptocurrencies. Optionally pass a slug (e.g. 'euro', 'us-dollar', 'bitcoin') to look up a single rate.",
       inputSchema: {
@@ -186,7 +186,7 @@ const serverCard = {
       },
     },
     {
-      name: 'crypto.exchanges',
+      name: 'get-exchanges',
       description:
         "Get top cryptocurrency exchanges ranked by 24h volume. Optionally pass an exchangeId (e.g. 'binance', 'coinbase') to get details for a specific exchange.",
       inputSchema: {

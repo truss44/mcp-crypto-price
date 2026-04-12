@@ -66,13 +66,13 @@ MCP client → transport (stdio or HTTP) → src/index.ts (createServer)
 
 | Tool | Handler | API endpoint |
 |------|---------|--------------|
-| `crypto.price` | `handleGetPrice` | `/assets` |
-| `crypto.market` | `handleGetMarketAnalysis` | `/assets/{id}/markets` |
-| `crypto.historical` | `handleGetHistoricalAnalysis` | `/assets/{id}/history` |
-| `crypto.top_assets` | `handleGetTopAssets` | `/assets` |
-| `crypto.technical` | `handleGetTechnicalAnalysis` | `/ta/{id}/allLatest` |
-| `crypto.rates` | `handleGetRates` | `/rates` and `/rates/{slug}` |
-| `crypto.exchanges` | `handleGetExchanges` | `/exchanges` and `/exchanges/{id}` |
+| `get-crypto-price` | `handleGetPrice` | `/assets` |
+| `get-market-analysis` | `handleGetMarketAnalysis` | `/assets/{id}/markets` |
+| `get-historical-analysis` | `handleGetHistoricalAnalysis` | `/assets/{id}/history` |
+| `get-top-assets` | `handleGetTopAssets` | `/assets` |
+| `get-technical-analysis` | `handleGetTechnicalAnalysis` | `/ta/{id}/allLatest` |
+| `get-rates` | `handleGetRates` | `/rates` and `/rates/{slug}` |
+| `get-exchanges` | `handleGetExchanges` | `/exchanges` and `/exchanges/{id}` |
 
 ### Tooling
 
