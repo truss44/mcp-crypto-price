@@ -1,3 +1,9 @@
+## [3.5.8](https://github.com/truss44/mcp-crypto-price/compare/v3.5.7...v3.5.8) (2026-04-12)
+
+### Reverts
+
+* change tool names back to kebab-case (from dot-notation) ([df92472](https://github.com/truss44/mcp-crypto-price/commit/df924724d4a7e649047855f0dd793cae8226e0a2))
+
 ## [3.5.7](https://github.com/truss44/mcp-crypto-price/compare/v3.5.6...v3.5.7) (2026-04-12)
 
 ### Bug Fixes
