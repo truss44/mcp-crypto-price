@@ -16,7 +16,6 @@ A Model Context Protocol (MCP) server that provides comprehensive cryptocurrency
 
 - **BREAKING**: CoinCap v2 API removed. Now uses v3 API exclusively. A `COINCAP_API_KEY` is required (free tier available at [pro.coincap.io/dashboard](https://pro.coincap.io/dashboard))
 - Streamable HTTP transport added (while keeping STDIO compatibility)
-- Release workflow signs commits via SSH for Verified releases
 - Smithery CLI scripts to build and run the HTTP server
 
 ## Usage
@@ -116,39 +115,6 @@ This MCP server works directly via `npx` (configs above) and does not require Sm
 If you do use the Smithery CLI, authenticate with `smithery auth login` or by setting `SMITHERY_API_KEY` in your environment. Recent versions of the Smithery CLI do not support passing API keys via `--key` (or older `--profile` patterns).
 
 Launch Claude Desktop to start using the crypto analysis tools.
-
-## Verified commits & SSH signing
-
-This repository requires Verified (cryptographically signed) commits. CI also includes a job (`Verify commit signatures`) that fails PRs with unsigned commits.
-
-### Create an SSH signing key (once)
-
-```bash
-# Generate a new ed25519 SSH key (no passphrase makes CI easier)
-ssh-keygen -t ed25519 -C "CI signing key for mcp-crypto-price" -f ~/.ssh/id_ed25519 -N ''
-
-# Your keys will be at:
-#   Private: ~/.ssh/id_ed25519
-#   Public : ~/.ssh/id_ed25519.pub
-```
-
-### Enable SSH signing locally (optional but recommended)
-
-```bash
-git config --global gpg.format ssh
-git config --global user.signingkey ~/.ssh/id_ed25519.pub
-git config --global commit.gpgsign true
-
-# Example signed commit
-git commit -S -m 'feat: add something'
-```
-
-### Configure GitHub to verify your signatures
-
-1. Add your public key as an SSH Signing Key in your GitHub account:
-   - GitHub → Settings → SSH and GPG keys → New SSH key
-   - Key type: Signing Key (SSH)
-   - Paste contents of `~/.ssh/id_ed25519.pub`
 
 ## Tools
 
