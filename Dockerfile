@@ -23,15 +23,22 @@ FROM node:24-alpine AS release
 # Set working directory
 WORKDIR /app
 
-# Copy built files from builder stage
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/package-lock.json ./package-lock.json
-
 ENV NODE_ENV=production
 
 # Install production dependencies without running scripts
 RUN npm ci --omit=dev --ignore-scripts
+
+# Create non-root user
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001
+
+# Copy application files with proper ownership
+COPY --from=builder --chown=nodejs:nodejs /app/dist ./dist
+COPY --from=builder --chown=nodejs:nodejs /app/package.json ./package.json
+COPY --from=builder --chown=nodejs:nodejs /app/package-lock.json ./package-lock.json
+
+# Switch to non-root user
+USER nodejs
 
 # Optional: set your CoinCap API key for higher rate limits
 # ENV COINCAP_API_KEY=<YOUR_API_KEY>
@@ -39,7 +46,7 @@ RUN npm ci --omit=dev --ignore-scripts
 EXPOSE 3000
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=15s --retries=3 \
-  CMD wget -qO- http://localhost:3000/health || exit 1
+  CMD curl -f http://localhost:3000/health || exit 1
 
 # Start the HTTP server
 CMD ["node", "dist/http.js"]
