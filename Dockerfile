@@ -42,7 +42,7 @@ COPY --from=builder --chown=nodejs:nodejs /app/dist ./dist
 # Switch to non-root user
 USER nodejs
 
-# Optional: set your CoinCap API key for higher rate limits
+# Required: set your CoinCap API key
 # ENV COINCAP_API_KEY=<YOUR_API_KEY>
 
 EXPOSE 3000

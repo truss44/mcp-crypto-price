@@ -15,6 +15,18 @@ async function handleMcp(
 ) {
   const coincapApiKey =
     searchParams.get('COINCAP_API_KEY') ?? process.env.COINCAP_API_KEY;
+
+  if (!coincapApiKey) {
+    res.writeHead(400, { 'Content-Type': 'application/json' });
+    res.end(
+      JSON.stringify({
+        error:
+          'COINCAP_API_KEY is required. Pass it as a query parameter (?COINCAP_API_KEY=your_key) or set the COINCAP_API_KEY environment variable. Get your free API key at https://pro.coincap.io/dashboard',
+      })
+    );
+    return;
+  }
+
   const transport = new StreamableHTTPServerTransport({
     sessionIdGenerator: undefined,
   });

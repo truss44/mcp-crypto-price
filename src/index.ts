@@ -30,7 +30,6 @@ import {
 export const configSchema = z.object({
   COINCAP_API_KEY: z
     .string()
-    .optional()
     .describe(
       'API key for CoinCap v3 API. Free tier available at https://pro.coincap.io/dashboard'
     ),
@@ -51,7 +50,7 @@ export function createServer({
 }: {
   config: z.infer<typeof configSchema>;
 }) {
-  if (config?.COINCAP_API_KEY && !process.env.COINCAP_API_KEY) {
+  if (config.COINCAP_API_KEY) {
     process.env.COINCAP_API_KEY = config.COINCAP_API_KEY;
   }
   if (config?.CACHE_TTL_SECONDS != null) {
@@ -276,13 +275,12 @@ Summarize the findings including price performance, market liquidity, and any no
 
 export default createServer;
 
-export function createSandboxServer() {
-  return createServer({
-    config: { COINCAP_API_KEY: undefined },
-  });
-}
-
 async function main() {
+  if (!process.env.COINCAP_API_KEY) {
+    throw new Error(
+      'COINCAP_API_KEY environment variable is required. Get your free API key at https://pro.coincap.io/dashboard'
+    );
+  }
   const server = createServer({
     config: { COINCAP_API_KEY: process.env.COINCAP_API_KEY },
   });
