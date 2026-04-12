@@ -20,10 +20,17 @@ describe('handleGetPrice', () => {
 
   it('should return formatted price for a valid symbol', async () => {
     mockSearchAsset.mockResolvedValueOnce({
-      id: 'bitcoin', rank: '1', symbol: 'BTC', name: 'Bitcoin',
-      priceUsd: '50000.00', changePercent24Hr: '2.50',
-      volumeUsd24Hr: '30000000000', marketCapUsd: '950000000000',
-      supply: '19000000', maxSupply: '21000000', vwap24Hr: '49500.00',
+      id: 'bitcoin',
+      rank: '1',
+      symbol: 'BTC',
+      name: 'Bitcoin',
+      priceUsd: '50000.00',
+      changePercent24Hr: '2.50',
+      volumeUsd24Hr: '30000000000',
+      marketCapUsd: '950000000000',
+      supply: '19000000',
+      maxSupply: '21000000',
+      vwap24Hr: '49500.00',
     });
 
     const result = await handleGetPrice({ symbol: 'BTC' });
@@ -35,7 +42,9 @@ describe('handleGetPrice', () => {
     mockSearchAsset.mockResolvedValueOnce(null);
 
     const result = await handleGetPrice({ symbol: 'ZZZZZ' });
-    expect(result.content[0].text).toContain('Could not find cryptocurrency with symbol ZZZZZ');
+    expect(result.content[0].text).toContain(
+      'Could not find cryptocurrency with symbol ZZZZZ'
+    );
   });
 
   it('should return error message on exception', async () => {

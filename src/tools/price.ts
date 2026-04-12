@@ -3,7 +3,10 @@ import { searchAsset } from '../services/coincap.js';
 import { formatPriceInfo } from '../services/formatters.js';
 
 export const GetPriceArgumentsSchema = z.object({
-  symbol: z.string().min(1).describe("Cryptocurrency symbol or name (e.g. BTC or Bitcoin)"),
+  symbol: z
+    .string()
+    .min(1)
+    .describe('Cryptocurrency symbol or name (e.g. BTC or Bitcoin)'),
 });
 
 export async function handleGetPrice(args: unknown) {
@@ -15,19 +18,29 @@ export async function handleGetPrice(args: unknown) {
 
     if (!asset) {
       return {
-        content: [{ type: "text", text: `Could not find cryptocurrency with symbol ${upperSymbol}` }],
+        content: [
+          {
+            type: 'text',
+            text: `Could not find cryptocurrency with symbol ${upperSymbol}`,
+          },
+        ],
       };
     }
 
     return {
-      content: [{ type: "text", text: formatPriceInfo(asset) }],
+      content: [{ type: 'text', text: formatPriceInfo(asset) }],
     };
   } catch (error) {
     return {
-      content: [{
-        type: "text",
-        text: error instanceof Error ? error.message : `Failed to retrieve cryptocurrency data: ${String(error)}`
-      }],
+      content: [
+        {
+          type: 'text',
+          text:
+            error instanceof Error
+              ? error.message
+              : `Failed to retrieve cryptocurrency data: ${String(error)}`,
+        },
+      ],
     };
   }
 }

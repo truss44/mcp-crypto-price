@@ -23,6 +23,8 @@
 !.yamllint.yaml
 !.configurations/
 !.releaserc.json
+!.prettierrc
+!.prettierignore
 
 # === Rules for root dir ===
 /core

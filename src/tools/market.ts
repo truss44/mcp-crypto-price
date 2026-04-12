@@ -3,7 +3,10 @@ import { searchAsset, getMarkets } from '../services/coincap.js';
 import { formatMarketAnalysis } from '../services/formatters.js';
 
 export const GetMarketAnalysisSchema = z.object({
-  symbol: z.string().min(1).describe("Cryptocurrency symbol or name (e.g. BTC or Bitcoin)"),
+  symbol: z
+    .string()
+    .min(1)
+    .describe('Cryptocurrency symbol or name (e.g. BTC or Bitcoin)'),
 });
 
 export async function handleGetMarketAnalysis(args: unknown) {
@@ -15,7 +18,12 @@ export async function handleGetMarketAnalysis(args: unknown) {
 
     if (!asset) {
       return {
-        content: [{ type: "text", text: `Could not find cryptocurrency with symbol ${upperSymbol}` }],
+        content: [
+          {
+            type: 'text',
+            text: `Could not find cryptocurrency with symbol ${upperSymbol}`,
+          },
+        ],
       };
     }
 
@@ -23,19 +31,26 @@ export async function handleGetMarketAnalysis(args: unknown) {
 
     if (!marketsData) {
       return {
-        content: [{ type: "text", text: "Failed to retrieve market data" }],
+        content: [{ type: 'text', text: 'Failed to retrieve market data' }],
       };
     }
 
     return {
-      content: [{ type: "text", text: formatMarketAnalysis(asset, marketsData.data) }],
+      content: [
+        { type: 'text', text: formatMarketAnalysis(asset, marketsData.data) },
+      ],
     };
   } catch (error) {
     return {
-      content: [{
-        type: "text",
-        text: error instanceof Error ? error.message : `Failed to retrieve data: ${String(error)}`
-      }],
+      content: [
+        {
+          type: 'text',
+          text:
+            error instanceof Error
+              ? error.message
+              : `Failed to retrieve data: ${String(error)}`,
+        },
+      ],
     };
   }
 }

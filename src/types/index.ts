@@ -40,3 +40,71 @@ export interface Market {
 export interface MarketsResponse {
   data: Market[];
 }
+
+export interface TechnicalAnalysisIndicatorSMA {
+  period: number;
+  value: string;
+}
+
+export interface TechnicalAnalysisIndicatorEMA {
+  period: number;
+  value: string;
+}
+
+export interface TechnicalAnalysisIndicatorRSI {
+  period: number;
+  value: string;
+}
+
+export interface TechnicalAnalysisIndicatorMACD {
+  value: string;
+  signal: string;
+  histogram: string;
+}
+
+export interface TechnicalAnalysisIndicatorVWAP {
+  value: string;
+}
+
+export interface TechnicalAnalysis {
+  sma: TechnicalAnalysisIndicatorSMA | null;
+  ema: TechnicalAnalysisIndicatorEMA | null;
+  rsi: TechnicalAnalysisIndicatorRSI | null;
+  macd: TechnicalAnalysisIndicatorMACD | null;
+  vwap: TechnicalAnalysisIndicatorVWAP | null;
+}
+
+export interface Rate {
+  id: string;
+  symbol: string;
+  currencySymbol: string | null;
+  type: string;
+  rateUsd: string;
+}
+
+export interface RatesResponse {
+  data: Rate[];
+}
+
+export interface RateResponse {
+  data: Rate;
+}
+
+export interface Exchange {
+  exchangeId: string;
+  name: string;
+  rank: string;
+  percentTotalVolume: string | null;
+  volumeUsd: string | null;
+  tradingPairs: string | null;
+  socket: boolean | null;
+  updated: number;
+}
+
+export interface ExchangesResponse {
+  data: Exchange[];
+}
+
+export interface ExchangeResponse {
+  data: Exchange;
+}
