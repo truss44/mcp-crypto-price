@@ -1,3 +1,9 @@
+## [3.5.12](https://github.com/truss44/mcp-crypto-price/compare/v3.5.11...v3.5.12) (2026-04-12)
+
+### Bug Fixes
+
+* make COINCAP_API_KEY required instead of optional ([a9a0c1f](https://github.com/truss44/mcp-crypto-price/commit/a9a0c1fe87b497522e5780bc7090c7dd1addba66))
+
 ## [3.5.11](https://github.com/truss44/mcp-crypto-price/compare/v3.5.10...v3.5.11) (2026-04-12)
 
 ### Bug Fixes
