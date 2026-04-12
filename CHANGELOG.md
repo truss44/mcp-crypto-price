@@ -1,3 +1,9 @@
+## [3.5.1](https://github.com/truss44/mcp-crypto-price/compare/v3.5.0...v3.5.1) (2026-04-12)
+
+### Bug Fixes
+
+* force push latest tag to remote ([f7eed1e](https://github.com/truss44/mcp-crypto-price/commit/f7eed1ec43db71ed86fbf36801c0629d089d08b7))
+
 ## [3.5.0](https://github.com/truss44/mcp-crypto-price/compare/v3.4.1...v3.5.0) (2026-04-12)
 
 ### Features
