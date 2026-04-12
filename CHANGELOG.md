@@ -1,3 +1,9 @@
+## [3.5.9](https://github.com/truss44/mcp-crypto-price/compare/v3.5.8...v3.5.9) (2026-04-12)
+
+### Bug Fixes
+
+* clarify tool naming convention in documentation ([becd8bd](https://github.com/truss44/mcp-crypto-price/commit/becd8bd025307df6b174f82e38280aeb201b40e2))
+
 ## [3.5.8](https://github.com/truss44/mcp-crypto-price/compare/v3.5.7...v3.5.8) (2026-04-12)
 
 ### Reverts
