@@ -25,6 +25,10 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 
+# Copy package files
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/package-lock.json ./package-lock.json
+
 # Install production dependencies without running scripts
 RUN npm ci --omit=dev --ignore-scripts
 
@@ -34,8 +38,6 @@ RUN addgroup -g 1001 -S nodejs && \
 
 # Copy application files with proper ownership
 COPY --from=builder --chown=nodejs:nodejs /app/dist ./dist
-COPY --from=builder --chown=nodejs:nodejs /app/package.json ./package.json
-COPY --from=builder --chown=nodejs:nodejs /app/package-lock.json ./package-lock.json
 
 # Switch to non-root user
 USER nodejs
