@@ -1,3 +1,9 @@
+## [3.5.11](https://github.com/truss44/mcp-crypto-price/compare/v3.5.10...v3.5.11) (2026-04-12)
+
+### Bug Fixes
+
+* add comprehensive tests for technical analysis response normalization ([b6d68ec](https://github.com/truss44/mcp-crypto-price/commit/b6d68ecf2765268470175733a21cbbb1adc19d64))
+
 ## [3.5.10](https://github.com/truss44/mcp-crypto-price/compare/v3.5.9...v3.5.10) (2026-04-12)
 
 ### Bug Fixes
