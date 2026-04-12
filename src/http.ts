@@ -8,9 +8,16 @@ import { renderHomepage } from './homepage.js';
 
 const PORT = parseInt(process.env.PORT ?? '3000', 10);
 
-async function handleMcp(req: http.IncomingMessage, res: http.ServerResponse, searchParams: URLSearchParams) {
-  const coincapApiKey = searchParams.get('COINCAP_API_KEY') ?? process.env.COINCAP_API_KEY;
-  const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined });
+async function handleMcp(
+  req: http.IncomingMessage,
+  res: http.ServerResponse,
+  searchParams: URLSearchParams
+) {
+  const coincapApiKey =
+    searchParams.get('COINCAP_API_KEY') ?? process.env.COINCAP_API_KEY;
+  const transport = new StreamableHTTPServerTransport({
+    sessionIdGenerator: undefined,
+  });
   const server = createServer({ config: { COINCAP_API_KEY: coincapApiKey } });
   await server.connect(transport);
 
@@ -38,7 +45,10 @@ const serverCard = {
       inputSchema: {
         type: 'object',
         properties: {
-          symbol: { type: 'string', description: 'Cryptocurrency symbol or name (e.g. BTC or Bitcoin)' },
+          symbol: {
+            type: 'string',
+            description: 'Cryptocurrency symbol or name (e.g. BTC or Bitcoin)',
+          },
         },
         required: ['symbol'],
       },
@@ -52,11 +62,15 @@ const serverCard = {
     },
     {
       name: 'get-market-analysis',
-      description: 'Get detailed market analysis including top exchanges and volume distribution',
+      description:
+        'Get detailed market analysis including top exchanges and volume distribution',
       inputSchema: {
         type: 'object',
         properties: {
-          symbol: { type: 'string', description: 'Cryptocurrency symbol or name (e.g. BTC or Bitcoin)' },
+          symbol: {
+            type: 'string',
+            description: 'Cryptocurrency symbol or name (e.g. BTC or Bitcoin)',
+          },
         },
         required: ['symbol'],
       },
@@ -74,12 +88,16 @@ const serverCard = {
       inputSchema: {
         type: 'object',
         properties: {
-          symbol: { type: 'string', description: 'Cryptocurrency symbol or name (e.g. BTC or Bitcoin)' },
+          symbol: {
+            type: 'string',
+            description: 'Cryptocurrency symbol or name (e.g. BTC or Bitcoin)',
+          },
           interval: {
             type: 'string',
             enum: ['m5', 'm15', 'm30', 'h1', 'h2', 'h6', 'h12', 'd1'],
             default: 'h1',
-            description: 'Data interval: m1=1min, m5=5min, m15=15min, m30=30min, h1=1hr, h2=2hr, h6=6hr, h12=12hr, d1=daily',
+            description:
+              'Data interval: m1=1min, m5=5min, m15=15min, m30=30min, h1=1hr, h2=2hr, h6=6hr, h12=12hr, d1=daily',
           },
           days: {
             type: 'number',
@@ -110,7 +128,8 @@ const serverCard = {
             minimum: 1,
             maximum: 50,
             default: 10,
-            description: 'Number of top assets to return, ranked by market cap (1-50)',
+            description:
+              'Number of top assets to return, ranked by market cap (1-50)',
           },
         },
       },
@@ -134,7 +153,8 @@ const serverCard = {
   prompts: [
     {
       name: 'analyze-crypto',
-      description: 'Generate a comprehensive analysis of a cryptocurrency covering price, market, and historical trends',
+      description:
+        'Generate a comprehensive analysis of a cryptocurrency covering price, market, and historical trends',
     },
   ],
 };
@@ -144,7 +164,10 @@ const httpServer = http.createServer(async (req, res) => {
   const pathname = parsed.pathname;
 
   // MCP server card for discovery (required by Smithery)
-  if (pathname === '/.well-known/mcp/server-card.json' && req.method === 'GET') {
+  if (
+    pathname === '/.well-known/mcp/server-card.json' &&
+    req.method === 'GET'
+  ) {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(serverCard));
     return;

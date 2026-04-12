@@ -1,6 +1,28 @@
 import { COINCAP_API_BASE, getCacheTtl } from '../config/index.js';
-import type { AssetsResponse, CacheEntry, CryptoAsset, HistoricalData, MarketsResponse } from '../types/index.js';
-import { AssetsResponseSchema, HistoricalDataSchema, MarketsResponseSchema } from './schemas.js';
+import type {
+  AssetsResponse,
+  CacheEntry,
+  CryptoAsset,
+  Exchange,
+  ExchangeResponse,
+  ExchangesResponse,
+  HistoricalData,
+  MarketsResponse,
+  Rate,
+  RateResponse,
+  RatesResponse,
+  TechnicalAnalysis,
+} from '../types/index.js';
+import {
+  AssetsResponseSchema,
+  ExchangeResponseSchema,
+  ExchangesResponseSchema,
+  HistoricalDataSchema,
+  MarketsResponseSchema,
+  RateResponseSchema,
+  RatesResponseSchema,
+  TechnicalAnalysisSchema,
+} from './schemas.js';
 import type { ZodType } from 'zod';
 
 const API_KEY_ERROR_MESSAGE =
@@ -15,6 +37,7 @@ export class MissingApiKeyError extends Error {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const cache = new Map<string, CacheEntry<any>>();
 
 // Expose cache clear function for testing
@@ -38,11 +61,14 @@ function getCachedData<T>(key: string): T | null {
 function setCacheData<T>(key: string, data: T): void {
   cache.set(key, {
     data,
-    timestamp: Date.now()
+    timestamp: Date.now(),
   });
 }
 
-async function makeCoinCapRequest<T>(endpoint: string, schema?: ZodType<T>): Promise<T> {
+async function makeCoinCapRequest<T>(
+  endpoint: string,
+  schema?: ZodType<T>
+): Promise<T> {
   // Check cache first
   const cacheKey = endpoint;
   const cachedData = getCachedData<T>(cacheKey);
@@ -57,26 +83,31 @@ async function makeCoinCapRequest<T>(endpoint: string, schema?: ZodType<T>): Pro
 
   const response = await fetch(`${COINCAP_API_BASE}${endpoint}`, {
     headers: {
-      'Authorization': `Bearer ${apiKey}`
-    }
+      Authorization: `Bearer ${apiKey}`,
+    },
   });
 
   if (!response.ok) {
-    throw new Error(`CoinCap API error: ${response.status} - ${response.statusText}`);
+    throw new Error(
+      `CoinCap API error: ${response.status} - ${response.statusText}`
+    );
   }
 
   const raw = await response.json();
-  const data = schema ? schema.parse(raw) : raw as T;
+  const data = schema ? schema.parse(raw) : (raw as T);
   setCacheData(cacheKey, data);
   return data;
 }
 
 export async function getAssets(): Promise<AssetsResponse | null> {
   try {
-    return await makeCoinCapRequest<AssetsResponse>('/assets', AssetsResponseSchema);
+    return await makeCoinCapRequest<AssetsResponse>(
+      '/assets',
+      AssetsResponseSchema
+    );
   } catch (error) {
     if (error instanceof MissingApiKeyError) throw error;
-    console.error("Failed to get assets:", error);
+    console.error('Failed to get assets:', error);
     return null;
   }
 }
@@ -84,7 +115,10 @@ export async function getAssets(): Promise<AssetsResponse | null> {
 export async function searchAsset(symbol: string): Promise<CryptoAsset | null> {
   try {
     const upperSymbol = symbol.toUpperCase();
-    const data = await makeCoinCapRequest<AssetsResponse>(`/assets?search=${encodeURIComponent(symbol)}`, AssetsResponseSchema);
+    const data = await makeCoinCapRequest<AssetsResponse>(
+      `/assets?search=${encodeURIComponent(symbol)}`,
+      AssetsResponseSchema
+    );
     const asset =
       data.data.find((a) => a.symbol.toUpperCase() === upperSymbol) ??
       data.data.find((a) => a.name.toUpperCase() === upperSymbol);
@@ -96,9 +130,14 @@ export async function searchAsset(symbol: string): Promise<CryptoAsset | null> {
   }
 }
 
-export async function getMarkets(assetId: string): Promise<MarketsResponse | null> {
+export async function getMarkets(
+  assetId: string
+): Promise<MarketsResponse | null> {
   try {
-    return await makeCoinCapRequest<MarketsResponse>(`/assets/${assetId}/markets`, MarketsResponseSchema);
+    return await makeCoinCapRequest<MarketsResponse>(
+      `/assets/${assetId}/markets`,
+      MarketsResponseSchema
+    );
   } catch (error) {
     if (error instanceof MissingApiKeyError) throw error;
     console.error(`Failed to get markets for asset ${assetId}:`, error);
@@ -120,6 +159,84 @@ export async function getHistoricalData(
   } catch (error) {
     if (error instanceof MissingApiKeyError) throw error;
     console.error(`Failed to get historical data for asset ${assetId}:`, error);
+    return null;
+  }
+}
+
+export async function getTechnicalAnalysis(
+  assetId: string
+): Promise<TechnicalAnalysis | null> {
+  try {
+    return await makeCoinCapRequest<TechnicalAnalysis>(
+      `/ta/${assetId}/allLatest`,
+      TechnicalAnalysisSchema
+    );
+  } catch (error) {
+    if (error instanceof MissingApiKeyError) throw error;
+    console.error(
+      `Failed to get technical analysis for asset ${assetId}:`,
+      error
+    );
+    return null;
+  }
+}
+
+export async function getRates(): Promise<Rate[] | null> {
+  try {
+    const response = await makeCoinCapRequest<RatesResponse>(
+      '/rates',
+      RatesResponseSchema
+    );
+    return response.data;
+  } catch (error) {
+    if (error instanceof MissingApiKeyError) throw error;
+    console.error('Failed to get rates:', error);
+    return null;
+  }
+}
+
+export async function getRate(slug: string): Promise<Rate | null> {
+  try {
+    const response = await makeCoinCapRequest<RateResponse>(
+      `/rates/${encodeURIComponent(slug)}`,
+      RateResponseSchema
+    );
+    return response.data;
+  } catch (error) {
+    if (error instanceof MissingApiKeyError) throw error;
+    console.error(`Failed to get rate for ${slug}:`, error);
+    return null;
+  }
+}
+
+export async function getExchanges(
+  limit: number = 10
+): Promise<Exchange[] | null> {
+  try {
+    const response = await makeCoinCapRequest<ExchangesResponse>(
+      `/exchanges?limit=${limit}`,
+      ExchangesResponseSchema
+    );
+    return response.data;
+  } catch (error) {
+    if (error instanceof MissingApiKeyError) throw error;
+    console.error('Failed to get exchanges:', error);
+    return null;
+  }
+}
+
+export async function getExchange(
+  exchangeId: string
+): Promise<Exchange | null> {
+  try {
+    const response = await makeCoinCapRequest<ExchangeResponse>(
+      `/exchanges/${encodeURIComponent(exchangeId)}`,
+      ExchangeResponseSchema
+    );
+    return response.data;
+  } catch (error) {
+    if (error instanceof MissingApiKeyError) throw error;
+    console.error(`Failed to get exchange ${exchangeId}:`, error);
     return null;
   }
 }

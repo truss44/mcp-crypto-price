@@ -1,4 +1,8 @@
-import { formatPriceInfo, formatMarketAnalysis, formatHistoricalAnalysis } from '../formatters.js';
+import {
+  formatPriceInfo,
+  formatMarketAnalysis,
+  formatHistoricalAnalysis,
+} from '../formatters.js';
 import type { CryptoAsset, Market } from '../../types/index.js';
 
 describe('Formatters', () => {
@@ -15,7 +19,7 @@ describe('Formatters', () => {
         marketCapUsd: '1000000000000',
         supply: '19000000',
         maxSupply: '21000000',
-        vwap24Hr: '49500.00'
+        vwap24Hr: '49500.00',
       };
 
       const formatted = formatPriceInfo(asset);
@@ -39,7 +43,7 @@ describe('Formatters', () => {
         marketCapUsd: '7000000000',
         supply: '589000000000000',
         maxSupply: '',
-        vwap24Hr: '0.00001200'
+        vwap24Hr: '0.00001200',
       };
 
       const formatted = formatPriceInfo(asset);
@@ -61,7 +65,7 @@ describe('Formatters', () => {
         marketCapUsd: '1000000000000',
         supply: '19000000',
         maxSupply: '21000000',
-        vwap24Hr: '49500.00'
+        vwap24Hr: '49500.00',
       };
 
       const markets: Market[] = [
@@ -71,7 +75,7 @@ describe('Formatters', () => {
           quoteSymbol: 'USD',
           priceUsd: '50100.00',
           volumeUsd24Hr: '10000000000',
-          volumePercent: '33.33'
+          volumePercent: '33.33',
         },
         {
           exchangeId: 'coinbase',
@@ -79,8 +83,8 @@ describe('Formatters', () => {
           quoteSymbol: 'USD',
           priceUsd: '50000.00',
           volumeUsd24Hr: '8000000000',
-          volumePercent: '26.67'
-        }
+          volumePercent: '26.67',
+        },
       ];
 
       const formatted = formatMarketAnalysis(asset, markets);
@@ -106,7 +110,7 @@ describe('Formatters', () => {
         marketCapUsd: '1000000000000',
         supply: '19000000',
         maxSupply: '21000000',
-        vwap24Hr: '49500.00'
+        vwap24Hr: '49500.00',
       };
 
       const history = [
@@ -114,20 +118,20 @@ describe('Formatters', () => {
           time: 1609459200000,
           priceUsd: '45000.00',
           circulatingSupply: '18500000',
-          date: '2021-01-01'
+          date: '2021-01-01',
         },
         {
           time: 1609545600000,
           priceUsd: '48000.00',
           circulatingSupply: '18500000',
-          date: '2021-01-02'
+          date: '2021-01-02',
         },
         {
           time: 1609632000000,
           priceUsd: '50000.00',
           circulatingSupply: '18500000',
-          date: '2021-01-03'
-        }
+          date: '2021-01-03',
+        },
       ];
 
       const formatted = formatHistoricalAnalysis(asset, history);

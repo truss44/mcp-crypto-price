@@ -25,6 +25,10 @@
     "watch": "tsc --watch",
     "inspector": "npx @modelcontextprotocol/inspector dist/index.js",
     "test": "NODE_OPTIONS='--experimental-vm-modules --no-warnings' jest",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint \"src/**/*.ts\"",
+    "lint:fix": "eslint \"src/**/*.ts\" --fix",
+    "types:check": "tsc --noEmit",
     "test:coverage": "NODE_OPTIONS='--experimental-vm-modules --no-warnings' jest --coverage",
     "prepublishOnly": "npm run build"
   },
@@ -33,6 +37,7 @@
     "zod": "^4.0.1"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^12.0.6",
@@ -40,11 +45,14 @@
     "@types/jest": "^30.0.0",
     "@types/node": "^24.10.1",
     "conventional-changelog-conventionalcommits": "^9.1.0",
+    "eslint": "^10.2.0",
     "jest": "^30.3.0",
+    "prettier": "^3.8.2",
     "semantic-release": "^25.0.3",
     "shx": "^0.4.0",
     "ts-jest": "^29.4.6",
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.58.1"
   },
   "overrides": {
     "brace-expansion": "^5.0.5",

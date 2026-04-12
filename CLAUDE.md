@@ -19,6 +19,12 @@ npm run start:stdio    # Start STDIO server (dist/index.js)
 npm test               # Run all tests
 npm run test:coverage  # Run tests with coverage
 
+# Lint & Format
+npm run lint           # Check for lint errors (ESLint + typescript-eslint)
+npm run lint:fix       # Auto-fix lint errors
+npm run format         # Format source files with Prettier
+npm run types:check    # TypeScript type-check without emitting files
+
 # Watch mode
 npm run watch          # TypeScript watch
 
@@ -56,7 +62,7 @@ MCP client → transport (stdio or HTTP) → src/index.ts (createServer)
 - **`src/services/formatters.ts`** — pure formatting functions for tool output text.
 - **`src/types/index.ts`** — shared TypeScript interfaces for CoinCap API responses.
 
-### Four registered MCP tools
+### Seven registered MCP tools
 
 | Tool | Handler | API endpoint |
 |------|---------|--------------|
@@ -64,6 +70,14 @@ MCP client → transport (stdio or HTTP) → src/index.ts (createServer)
 | `get-market-analysis` | `handleGetMarketAnalysis` | `/assets/{id}/markets` |
 | `get-historical-analysis` | `handleGetHistoricalAnalysis` | `/assets/{id}/history` |
 | `get-top-assets` | `handleGetTopAssets` | `/assets` |
+| `get-technical-analysis` | `handleGetTechnicalAnalysis` | `/ta/{id}/allLatest` |
+| `get-rates` | `handleGetRates` | `/rates` and `/rates/{slug}` |
+| `get-exchanges` | `handleGetExchanges` | `/exchanges` and `/exchanges/{id}` |
+
+### Tooling
+
+- **Prettier** — code formatting (`npm run format`). Config: `.prettierrc`. Ignores: `.prettierignore`.
+- **ESLint** — linting with `typescript-eslint` (`npm run lint`). Config: `eslint.config.js`.
 
 ### Releases & commits
 

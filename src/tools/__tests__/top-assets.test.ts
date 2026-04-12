@@ -15,16 +15,30 @@ const mockGetAssets = getAssets as jest.MockedFunction<typeof getAssets>;
 
 const mockAssets = [
   {
-    id: 'bitcoin', rank: '1', symbol: 'BTC', name: 'Bitcoin',
-    priceUsd: '50000.00', changePercent24Hr: '2.50',
-    volumeUsd24Hr: '30000000000', marketCapUsd: '950000000000',
-    supply: '19000000', maxSupply: '21000000', vwap24Hr: '49500.00',
+    id: 'bitcoin',
+    rank: '1',
+    symbol: 'BTC',
+    name: 'Bitcoin',
+    priceUsd: '50000.00',
+    changePercent24Hr: '2.50',
+    volumeUsd24Hr: '30000000000',
+    marketCapUsd: '950000000000',
+    supply: '19000000',
+    maxSupply: '21000000',
+    vwap24Hr: '49500.00',
   },
   {
-    id: 'ethereum', rank: '2', symbol: 'ETH', name: 'Ethereum',
-    priceUsd: '3000.00', changePercent24Hr: '1.20',
-    volumeUsd24Hr: '15000000000', marketCapUsd: '350000000000',
-    supply: '120000000', maxSupply: null, vwap24Hr: '2950.00',
+    id: 'ethereum',
+    rank: '2',
+    symbol: 'ETH',
+    name: 'Ethereum',
+    priceUsd: '3000.00',
+    changePercent24Hr: '1.20',
+    volumeUsd24Hr: '15000000000',
+    marketCapUsd: '350000000000',
+    supply: '120000000',
+    maxSupply: null,
+    vwap24Hr: '2950.00',
   },
 ];
 
@@ -37,7 +51,9 @@ describe('handleGetTopAssets', () => {
     mockGetAssets.mockResolvedValueOnce({ data: mockAssets });
 
     const result = await handleGetTopAssets({});
-    expect(result.content[0].text).toContain('Top Cryptocurrencies by Market Cap');
+    expect(result.content[0].text).toContain(
+      'Top Cryptocurrencies by Market Cap'
+    );
     expect(result.content[0].text).toContain('Bitcoin (BTC)');
     expect(result.content[0].text).toContain('Ethereum (ETH)');
   });

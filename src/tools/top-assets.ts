@@ -3,7 +3,12 @@ import { getAssets } from '../services/coincap.js';
 import { formatTopAssets } from '../services/formatters.js';
 
 export const GetTopAssetsSchema = z.object({
-  limit: z.number().min(1).max(50).default(10).describe("Number of top assets to return, ranked by market cap (1-50)"),
+  limit: z
+    .number()
+    .min(1)
+    .max(50)
+    .default(10)
+    .describe('Number of top assets to return, ranked by market cap (1-50)'),
 });
 
 export async function handleGetTopAssets(args: unknown) {
@@ -14,7 +19,7 @@ export async function handleGetTopAssets(args: unknown) {
 
     if (!assetsData) {
       return {
-        content: [{ type: "text", text: "Failed to retrieve assets data" }],
+        content: [{ type: 'text', text: 'Failed to retrieve assets data' }],
       };
     }
 
@@ -22,19 +27,24 @@ export async function handleGetTopAssets(args: unknown) {
 
     if (!topAssets.length) {
       return {
-        content: [{ type: "text", text: "No assets data available" }],
+        content: [{ type: 'text', text: 'No assets data available' }],
       };
     }
 
     return {
-      content: [{ type: "text", text: formatTopAssets(topAssets) }],
+      content: [{ type: 'text', text: formatTopAssets(topAssets) }],
     };
   } catch (error) {
     return {
-      content: [{
-        type: "text",
-        text: error instanceof Error ? error.message : `Failed to retrieve assets data: ${String(error)}`
-      }],
+      content: [
+        {
+          type: 'text',
+          text:
+            error instanceof Error
+              ? error.message
+              : `Failed to retrieve assets data: ${String(error)}`,
+        },
+      ],
     };
   }
 }

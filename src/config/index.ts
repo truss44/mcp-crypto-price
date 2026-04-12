@@ -5,17 +5,19 @@ import { dirname, resolve } from 'path';
 function readVersion(): string {
   try {
     const dir = dirname(fileURLToPath(import.meta.url));
-    const pkg = JSON.parse(readFileSync(resolve(dir, '../../package.json'), 'utf-8'));
+    const pkg = JSON.parse(
+      readFileSync(resolve(dir, '../../package.json'), 'utf-8')
+    );
     return pkg.version;
   } catch {
     return '0.0.0';
   }
 }
 
-export const COINCAP_API_BASE = "https://rest.coincap.io/v3";
+export const COINCAP_API_BASE = 'https://rest.coincap.io/v3';
 
 export const SERVER_CONFIG = {
-  name: "mcp-crypto-price",
+  name: 'mcp-crypto-price',
   version: readVersion(),
 } as const;
 
