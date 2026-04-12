@@ -44,7 +44,7 @@
       "releasedLabels": false
     }],
     ["@semantic-release/exec", {
-      "prepareCmd": "git tag -f latest HEAD && git push origin latest --force"
+      "prepareCmd": "git tag -f latest -m \"Latest release\" HEAD && git push origin latest --force"
     }]
   ]
 }
