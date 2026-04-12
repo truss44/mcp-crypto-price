@@ -1,4 +1,4 @@
-import type { CryptoAsset, Market, HistoricalData } from '../types/index.js';
+import type { CryptoAsset, Market, HistoricalData, Rate } from '../types/index.js';
 
 function formatPrice(value: number): string {
   if (value >= 1) return value.toFixed(2);
@@ -55,6 +55,49 @@ export function formatTopAssets(assets: CryptoAsset[]): string {
   });
 
   return ['Top Cryptocurrencies by Market Cap', '', ...lines].join('\n');
+}
+
+export function formatRates(rates: Rate[]): string {
+  const fiatRates = rates.filter(r => r.type === 'fiat');
+  const cryptoRates = rates.filter(r => r.type === 'crypto');
+
+  const fiatLines = fiatRates.map(r => {
+    const symbol = r.currencySymbol ? ` ${r.currencySymbol}` : '';
+    const rate = parseFloat(r.rateUsd);
+    return `  ${r.symbol}${symbol}: $${rate < 1 ? rate.toFixed(6) : rate.toFixed(4)} USD`;
+  });
+
+  const cryptoLines = cryptoRates.slice(0, 10).map(r => {
+    const rate = parseFloat(r.rateUsd);
+    return `  ${r.symbol}: $${formatPrice(rate)} USD`;
+  });
+
+  return [
+    'Currency Conversion Rates (USD Base)',
+    '',
+    'Fiat Currencies:',
+    ...fiatLines,
+    '',
+    'Crypto Rates (Top 10):',
+    ...cryptoLines,
+  ].join('\n');
+}
+
+export function formatRate(rate: Rate): string {
+  const symbolLabel = rate.currencySymbol ? `${rate.symbol}  ${rate.currencySymbol}` : rate.symbol;
+  const rateValue = parseFloat(rate.rateUsd);
+  const formattedRate = rateValue < 1 ? rateValue.toFixed(6) : formatPrice(rateValue);
+  const name = rate.id
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+
+  return [
+    `Rate: ${name} (${rate.symbol})`,
+    `Symbol: ${symbolLabel}`,
+    `Type: ${rate.type}`,
+    `Rate: $${formattedRate} USD`,
+  ].join('\n');
 }
 
 export function formatHistoricalAnalysis(asset: CryptoAsset, history: HistoricalData['data']): string {

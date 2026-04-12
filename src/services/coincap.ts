@@ -1,6 +1,6 @@
 import { COINCAP_API_BASE, getCacheTtl } from '../config/index.js';
-import type { AssetsResponse, CacheEntry, CryptoAsset, HistoricalData, MarketsResponse } from '../types/index.js';
-import { AssetsResponseSchema, HistoricalDataSchema, MarketsResponseSchema } from './schemas.js';
+import type { AssetsResponse, CacheEntry, CryptoAsset, HistoricalData, MarketsResponse, Rate, RateResponse, RatesResponse } from '../types/index.js';
+import { AssetsResponseSchema, HistoricalDataSchema, MarketsResponseSchema, RateResponseSchema, RatesResponseSchema } from './schemas.js';
 import type { ZodType } from 'zod';
 
 const API_KEY_ERROR_MESSAGE =
@@ -102,6 +102,31 @@ export async function getMarkets(assetId: string): Promise<MarketsResponse | nul
   } catch (error) {
     if (error instanceof MissingApiKeyError) throw error;
     console.error(`Failed to get markets for asset ${assetId}:`, error);
+    return null;
+  }
+}
+
+export async function getRates(): Promise<Rate[] | null> {
+  try {
+    const response = await makeCoinCapRequest<RatesResponse>('/rates', RatesResponseSchema);
+    return response.data;
+  } catch (error) {
+    if (error instanceof MissingApiKeyError) throw error;
+    console.error('Failed to get rates:', error);
+    return null;
+  }
+}
+
+export async function getRate(slug: string): Promise<Rate | null> {
+  try {
+    const response = await makeCoinCapRequest<RateResponse>(
+      `/rates/${encodeURIComponent(slug)}`,
+      RateResponseSchema
+    );
+    return response.data;
+  } catch (error) {
+    if (error instanceof MissingApiKeyError) throw error;
+    console.error(`Failed to get rate for ${slug}:`, error);
     return null;
   }
 }

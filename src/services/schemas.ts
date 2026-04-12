@@ -40,3 +40,19 @@ export const MarketSchema = z.object({
 export const MarketsResponseSchema = z.object({
   data: z.array(MarketSchema),
 });
+
+export const RateSchema = z.object({
+  id: z.string(),
+  symbol: z.string(),
+  currencySymbol: z.string().nullable(),
+  type: z.string(),
+  rateUsd: z.string(),
+});
+
+export const RatesResponseSchema = z.object({
+  data: z.array(RateSchema),
+});
+
+export const RateResponseSchema = z.object({
+  data: RateSchema,
+});

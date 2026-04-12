@@ -13,10 +13,12 @@ import {
   handleGetMarketAnalysis,
   handleGetHistoricalAnalysis,
   handleGetTopAssets,
+  handleGetRates,
   GetPriceArgumentsSchema,
   GetMarketAnalysisSchema,
   GetHistoricalAnalysisSchema,
   GetTopAssetsSchema,
+  GetRatesSchema,
 } from './tools/index.js';
 
 export const configSchema = z.object({
@@ -133,6 +135,26 @@ export function createServer({
     },
     async (args, _extra) => {
       const result = await handleGetTopAssets(args);
+      return result as any;
+    }
+  );
+
+  server.registerTool(
+    "get-rates",
+    {
+      title: "Get Currency Rates",
+      description: "Get USD-based conversion rates for fiat currencies and cryptocurrencies. Optionally pass a slug (e.g. 'euro', 'us-dollar', 'bitcoin') to look up a single rate.",
+      inputSchema: GetRatesSchema.shape,
+      annotations: {
+        title: "Get Currency Rates",
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: true,
+      },
+    },
+    async (args, _extra) => {
+      const result = await handleGetRates(args);
       return result as any;
     }
   );

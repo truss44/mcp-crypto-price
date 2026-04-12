@@ -40,3 +40,19 @@ export interface Market {
 export interface MarketsResponse {
   data: Market[];
 }
+
+export interface Rate {
+  id: string;
+  symbol: string;
+  currencySymbol: string | null;
+  type: string;
+  rateUsd: string;
+}
+
+export interface RatesResponse {
+  data: Rate[];
+}
+
+export interface RateResponse {
+  data: Rate;
+}
