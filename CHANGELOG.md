@@ -1,3 +1,10 @@
+## [3.4.1](https://github.com/truss44/mcp-crypto-price/compare/v3.4.0...v3.4.1) (2026-04-12)
+
+### Bug Fixes
+
+* restore @semantic-release/git after adding github-actions bypass ([7bd2a88](https://github.com/truss44/mcp-crypto-price/commit/7bd2a8856f23c97f598954ad662fd9167c768bbc))
+* use GH_TOKEN PAT for release to bypass branch protection ([31877a7](https://github.com/truss44/mcp-crypto-price/commit/31877a751e486d0452c3350618e40db4ce01c7ed))
+
 ## [3.3.1](https://github.com/truss44/mcp-crypto-price/compare/v3.3.0...v3.3.1) (2026-03-24)
 
 ### Bug Fixes
