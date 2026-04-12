@@ -1,6 +1,6 @@
 import { COINCAP_API_BASE, getCacheTtl } from '../config/index.js';
-import type { AssetsResponse, CacheEntry, CryptoAsset, HistoricalData, MarketsResponse } from '../types/index.js';
-import { AssetsResponseSchema, HistoricalDataSchema, MarketsResponseSchema } from './schemas.js';
+import type { AssetsResponse, CacheEntry, CryptoAsset, HistoricalData, MarketsResponse, TechnicalAnalysis } from '../types/index.js';
+import { AssetsResponseSchema, HistoricalDataSchema, MarketsResponseSchema, TechnicalAnalysisSchema } from './schemas.js';
 import type { ZodType } from 'zod';
 
 const API_KEY_ERROR_MESSAGE =
@@ -120,6 +120,19 @@ export async function getHistoricalData(
   } catch (error) {
     if (error instanceof MissingApiKeyError) throw error;
     console.error(`Failed to get historical data for asset ${assetId}:`, error);
+    return null;
+  }
+}
+
+export async function getTechnicalAnalysis(assetId: string): Promise<TechnicalAnalysis | null> {
+  try {
+    return await makeCoinCapRequest<TechnicalAnalysis>(
+      `/ta/${assetId}/allLatest`,
+      TechnicalAnalysisSchema
+    );
+  } catch (error) {
+    if (error instanceof MissingApiKeyError) throw error;
+    console.error(`Failed to get technical analysis for asset ${assetId}:`, error);
     return null;
   }
 }

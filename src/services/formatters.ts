@@ -1,4 +1,4 @@
-import type { CryptoAsset, Market, HistoricalData } from '../types/index.js';
+import type { CryptoAsset, Market, HistoricalData, TechnicalAnalysis } from '../types/index.js';
 
 function formatPrice(value: number): string {
   if (value >= 1) return value.toFixed(2);
@@ -55,6 +55,56 @@ export function formatTopAssets(assets: CryptoAsset[]): string {
   });
 
   return ['Top Cryptocurrencies by Market Cap', '', ...lines].join('\n');
+}
+
+export function formatTechnicalAnalysis(asset: CryptoAsset, ta: TechnicalAnalysis): string {
+  const price = formatPrice(parseFloat(asset.priceUsd));
+
+  const smaLine = ta.sma
+    ? `  SMA (${ta.sma.period}): $${formatPrice(parseFloat(ta.sma.value))}`
+    : '  SMA: N/A';
+
+  const emaLine = ta.ema
+    ? `  EMA (${ta.ema.period}): $${formatPrice(parseFloat(ta.ema.value))}`
+    : '  EMA: N/A';
+
+  const rsiValue = ta.rsi ? parseFloat(ta.rsi.value) : null;
+  const rsiSignal = rsiValue === null ? 'N/A' : rsiValue > 70 ? 'Overbought' : rsiValue < 30 ? 'Oversold' : 'Neutral';
+  const rsiLine = ta.rsi
+    ? `  RSI (${ta.rsi.period}): ${parseFloat(ta.rsi.value).toFixed(2)} (${rsiSignal})`
+    : '  RSI: N/A';
+
+  const macdHistogram = ta.macd ? parseFloat(ta.macd.histogram) : null;
+  const macdSignalLabel = macdHistogram === null ? '' : macdHistogram > 0 ? ' (Bullish)' : ' (Bearish)';
+  const macdLines = ta.macd
+    ? [
+        `  Value: ${formatPrice(parseFloat(ta.macd.value))}`,
+        `  Signal: ${formatPrice(parseFloat(ta.macd.signal))}`,
+        `  Histogram: ${formatPrice(Math.abs(macdHistogram!))}${macdSignalLabel}`,
+      ].join('\n')
+    : '  MACD: N/A';
+
+  const vwapLine = ta.vwap
+    ? `  VWAP (24h): $${formatPrice(parseFloat(ta.vwap.value))}`
+    : '  VWAP: N/A';
+
+  return [
+    `Technical Analysis: ${asset.name} (${asset.symbol})`,
+    `Current Price: $${price}`,
+    '',
+    'Moving Averages:',
+    smaLine,
+    emaLine,
+    '',
+    'Momentum:',
+    rsiLine,
+    '',
+    'MACD:',
+    macdLines,
+    '',
+    'Volume:',
+    vwapLine,
+  ].join('\n');
 }
 
 export function formatHistoricalAnalysis(asset: CryptoAsset, history: HistoricalData['data']): string {

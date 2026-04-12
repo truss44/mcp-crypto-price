@@ -40,3 +40,36 @@ export const MarketSchema = z.object({
 export const MarketsResponseSchema = z.object({
   data: z.array(MarketSchema),
 });
+
+const SMASchema = z.object({
+  period: z.number(),
+  value: z.string(),
+}).nullable();
+
+const EMASchema = z.object({
+  period: z.number(),
+  value: z.string(),
+}).nullable();
+
+const RSISchema = z.object({
+  period: z.number(),
+  value: z.string(),
+}).nullable();
+
+const MACDSchema = z.object({
+  value: z.string(),
+  signal: z.string(),
+  histogram: z.string(),
+}).nullable();
+
+const VWAPSchema = z.object({
+  value: z.string(),
+}).nullable();
+
+export const TechnicalAnalysisSchema = z.object({
+  sma: SMASchema,
+  ema: EMASchema,
+  rsi: RSISchema,
+  macd: MACDSchema,
+  vwap: VWAPSchema,
+});

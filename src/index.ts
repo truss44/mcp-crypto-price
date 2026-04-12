@@ -13,10 +13,12 @@ import {
   handleGetMarketAnalysis,
   handleGetHistoricalAnalysis,
   handleGetTopAssets,
+  handleGetTechnicalAnalysis,
   GetPriceArgumentsSchema,
   GetMarketAnalysisSchema,
   GetHistoricalAnalysisSchema,
   GetTopAssetsSchema,
+  GetTechnicalAnalysisSchema,
 } from './tools/index.js';
 
 export const configSchema = z.object({
@@ -133,6 +135,26 @@ export function createServer({
     },
     async (args, _extra) => {
       const result = await handleGetTopAssets(args);
+      return result as any;
+    }
+  );
+
+  server.registerTool(
+    "get-technical-analysis",
+    {
+      title: "Get Technical Analysis",
+      description: "Get the latest technical indicators for a cryptocurrency including SMA, EMA, RSI, MACD, and VWAP to assess momentum, trend direction, and overbought/oversold conditions.",
+      inputSchema: GetTechnicalAnalysisSchema.shape,
+      annotations: {
+        title: "Get Technical Analysis",
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: true,
+      },
+    },
+    async (args, _extra) => {
+      const result = await handleGetTechnicalAnalysis(args);
       return result as any;
     }
   );

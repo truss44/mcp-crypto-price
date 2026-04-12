@@ -40,3 +40,36 @@ export interface Market {
 export interface MarketsResponse {
   data: Market[];
 }
+
+export interface TechnicalAnalysisIndicatorSMA {
+  period: number;
+  value: string;
+}
+
+export interface TechnicalAnalysisIndicatorEMA {
+  period: number;
+  value: string;
+}
+
+export interface TechnicalAnalysisIndicatorRSI {
+  period: number;
+  value: string;
+}
+
+export interface TechnicalAnalysisIndicatorMACD {
+  value: string;
+  signal: string;
+  histogram: string;
+}
+
+export interface TechnicalAnalysisIndicatorVWAP {
+  value: string;
+}
+
+export interface TechnicalAnalysis {
+  sma: TechnicalAnalysisIndicatorSMA | null;
+  ema: TechnicalAnalysisIndicatorEMA | null;
+  rsi: TechnicalAnalysisIndicatorRSI | null;
+  macd: TechnicalAnalysisIndicatorMACD | null;
+  vwap: TechnicalAnalysisIndicatorVWAP | null;
+}
