@@ -62,7 +62,7 @@ MCP client → transport (stdio or HTTP) → src/index.ts (createServer)
 - **`src/services/formatters.ts`** — pure formatting functions for tool output text.
 - **`src/types/index.ts`** — shared TypeScript interfaces for CoinCap API responses.
 
-### Seven registered MCP tools
+### Seven registered MCP tools (kebab-case naming)
 
 | Tool | Handler | API endpoint |
 |------|---------|--------------|
