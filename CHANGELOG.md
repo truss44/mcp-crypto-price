@@ -1,3 +1,13 @@
+## [3.5.0](https://github.com/truss44/mcp-crypto-price/compare/v3.4.1...v3.5.0) (2026-04-12)
+
+### Features
+
+* add latest tag that auto-updates to latest release ([47e6153](https://github.com/truss44/mcp-crypto-price/commit/47e61533148a27cd89b67c66ea77a6360c6bf319))
+
+### Bug Fixes
+
+* correct semantic-release exec plugin configuration ([fbe32d0](https://github.com/truss44/mcp-crypto-price/commit/fbe32d0affbaca8703012d29506ee56581c74249))
+
 ## [3.4.1](https://github.com/truss44/mcp-crypto-price/compare/v3.4.0...v3.4.1) (2026-04-12)
 
 ### Bug Fixes
