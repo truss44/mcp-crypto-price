@@ -131,7 +131,7 @@ Launch Claude Desktop to start using the crypto analysis tools.
 
 ## Tools
 
-#### get-crypto-price
+#### crypto.price
 
 Gets current price and 24h stats for any cryptocurrency, including:
 - Current price in USD
@@ -140,7 +140,7 @@ Gets current price and 24h stats for any cryptocurrency, including:
 - Market cap
 - Market rank
 
-#### get-market-analysis
+#### crypto.market
 
 Provides detailed market analysis including:
 - Top 5 exchanges by volume
@@ -148,7 +148,7 @@ Provides detailed market analysis including:
 - Volume distribution analysis
 - VWAP (Volume Weighted Average Price)
 
-#### get-historical-analysis
+#### crypto.historical
 
 Analyzes historical price data with:
 - Customizable time intervals (5min to 1 day)
@@ -157,7 +157,7 @@ Analyzes historical price data with:
 - Volatility metrics
 - High/low price ranges
 
-#### get-top-assets
+#### crypto.top_assets
 
 Lists top cryptocurrencies ranked by market cap, including:
 - Current price in USD
@@ -165,7 +165,7 @@ Lists top cryptocurrencies ranked by market cap, including:
 - Market cap and rank
 - Configurable result count (1–50, default 10)
 
-#### get-technical-analysis
+#### crypto.technical
 
 Returns the latest technical indicators for any cryptocurrency:
 - SMA (Simple Moving Average) with period
@@ -174,14 +174,14 @@ Returns the latest technical indicators for any cryptocurrency:
 - MACD with signal line, histogram, and Bullish/Bearish label
 - VWAP (Volume Weighted Average Price, 24h)
 
-#### get-rates
+#### crypto.rates
 
 Returns USD-based conversion rates for fiat currencies and cryptocurrencies:
 - All fiat currency rates (USD base)
 - Top 10 cryptocurrency rates
 - Optional `slug` parameter (e.g. `euro`, `bitcoin`) for a single rate lookup
 
-#### get-exchanges
+#### crypto.exchanges
 
 Lists top cryptocurrency exchanges ranked by 24h volume:
 - Exchange name, rank, and 24h volume in USD
