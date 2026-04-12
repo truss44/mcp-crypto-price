@@ -1,3 +1,9 @@
+## [3.5.10](https://github.com/truss44/mcp-crypto-price/compare/v3.5.9...v3.5.10) (2026-04-12)
+
+### Bug Fixes
+
+* add fetchInterval parameter to technical analysis endpoint ([90f2899](https://github.com/truss44/mcp-crypto-price/commit/90f28992d2cb9611b8b41f0c9d6bc12ada80e3a2))
+
 ## [3.5.9](https://github.com/truss44/mcp-crypto-price/compare/v3.5.8...v3.5.9) (2026-04-12)
 
 ### Bug Fixes
