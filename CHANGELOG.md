@@ -1,3 +1,9 @@
+## [3.5.3](https://github.com/truss44/mcp-crypto-price/compare/v3.5.2...v3.5.3) (2026-04-12)
+
+### Reverts
+
+* remove explicit CodeQL workflow, use default setup ([783f060](https://github.com/truss44/mcp-crypto-price/commit/783f06021d6d53483151deaa119a3ddd986e2b43))
+
 ## [3.5.2](https://github.com/truss44/mcp-crypto-price/compare/v3.5.1...v3.5.2) (2026-04-12)
 
 ### Bug Fixes
