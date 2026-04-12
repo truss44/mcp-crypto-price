@@ -70,7 +70,7 @@ export function createServer({
   });
 
   server.registerTool(
-    'get-crypto-price',
+    'crypto.price',
     {
       title: 'Get Crypto Price',
       description:
@@ -91,7 +91,7 @@ export function createServer({
   );
 
   server.registerTool(
-    'get-market-analysis',
+    'crypto.market',
     {
       title: 'Get Market Analysis',
       description:
@@ -112,7 +112,7 @@ export function createServer({
   );
 
   server.registerTool(
-    'get-historical-analysis',
+    'crypto.historical',
     {
       title: 'Get Historical Analysis',
       description:
@@ -133,7 +133,7 @@ export function createServer({
   );
 
   server.registerTool(
-    'get-top-assets',
+    'crypto.top_assets',
     {
       title: 'Get Top Assets',
       description:
@@ -154,7 +154,7 @@ export function createServer({
   );
 
   server.registerTool(
-    'get-technical-analysis',
+    'crypto.technical',
     {
       title: 'Get Technical Analysis',
       description:
@@ -175,7 +175,7 @@ export function createServer({
   );
 
   server.registerTool(
-    'get-rates',
+    'crypto.rates',
     {
       title: 'Get Currency Rates',
       description:
@@ -196,7 +196,7 @@ export function createServer({
   );
 
   server.registerTool(
-    'get-exchanges',
+    'crypto.exchanges',
     {
       title: 'Get Exchanges',
       description:
