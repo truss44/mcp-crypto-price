@@ -1,3 +1,9 @@
+## [3.5.6](https://github.com/truss44/mcp-crypto-price/compare/v3.5.5...v3.5.6) (2026-04-12)
+
+### Bug Fixes
+
+* add missing tools to HTTP server card (technical-analysis, rates, exchanges) ([cc2411c](https://github.com/truss44/mcp-crypto-price/commit/cc2411c2e56e9b3e2b67c2f457c862cc867d5333))
+
 ## [3.5.3](https://github.com/truss44/mcp-crypto-price/compare/v3.5.2...v3.5.3) (2026-04-12)
 
 ### Reverts
