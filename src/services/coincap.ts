@@ -30,6 +30,127 @@ const API_KEY_ERROR_MESSAGE =
   'A free tier is available! Get your API key at: https://pro.coincap.io/dashboard\n\n' +
   'Then set the COINCAP_API_KEY environment variable in your MCP client configuration.';
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
+}
+
+function normalizeStringValue(value: unknown): string | null {
+  if (typeof value === 'string') {
+    return value;
+  }
+
+  if (typeof value === 'number' && Number.isFinite(value)) {
+    return String(value);
+  }
+
+  return null;
+}
+
+function normalizePeriodValue(value: unknown, fallback: number): number {
+  if (typeof value === 'number' && Number.isFinite(value)) {
+    return value;
+  }
+
+  if (typeof value === 'string') {
+    const parsed = Number(value);
+    if (Number.isFinite(parsed)) {
+      return parsed;
+    }
+  }
+
+  return fallback;
+}
+
+function normalizeWindowedIndicator(value: unknown, fallbackPeriod: number) {
+  if (value == null) {
+    return null;
+  }
+
+  if (isRecord(value)) {
+    const normalizedValue = normalizeStringValue(value.value);
+    if (!normalizedValue) {
+      return null;
+    }
+
+    return {
+      period: normalizePeriodValue(
+        value.period ?? value.window,
+        fallbackPeriod
+      ),
+      value: normalizedValue,
+    };
+  }
+
+  const normalizedValue = normalizeStringValue(value);
+  if (!normalizedValue) {
+    return null;
+  }
+
+  return {
+    period: fallbackPeriod,
+    value: normalizedValue,
+  };
+}
+
+function normalizeMacdIndicator(value: unknown) {
+  if (!isRecord(value)) {
+    return null;
+  }
+
+  const normalizedValue = normalizeStringValue(value.value ?? value.macd);
+  const normalizedSignal = normalizeStringValue(
+    value.signal ?? value.signalLine
+  );
+  const normalizedHistogram = normalizeStringValue(
+    value.histogram ?? value.hist
+  );
+
+  if (!normalizedValue || !normalizedSignal || !normalizedHistogram) {
+    return null;
+  }
+
+  return {
+    value: normalizedValue,
+    signal: normalizedSignal,
+    histogram: normalizedHistogram,
+  };
+}
+
+function normalizeVwapIndicator(value: unknown) {
+  if (value == null) {
+    return null;
+  }
+
+  if (isRecord(value)) {
+    const normalizedValue = normalizeStringValue(
+      value.value ?? value.vwap ?? value.vwap24Hr
+    );
+
+    return normalizedValue ? { value: normalizedValue } : null;
+  }
+
+  const normalizedValue = normalizeStringValue(value);
+  return normalizedValue ? { value: normalizedValue } : null;
+}
+
+function normalizeTechnicalAnalysisResponse(raw: unknown): TechnicalAnalysis {
+  const payload = isRecord(raw) && isRecord(raw.data) ? raw.data : raw;
+
+  if (!isRecord(payload)) {
+    throw new Error(
+      'Unexpected technical analysis response shape from CoinCap'
+    );
+  }
+
+  return TechnicalAnalysisSchema.parse({
+    sma: normalizeWindowedIndicator(payload.sma, 5),
+    ema: normalizeWindowedIndicator(payload.ema, 5),
+    rsi: normalizeWindowedIndicator(payload.rsi, 5),
+    macd: normalizeMacdIndicator(payload.macd),
+    vwap: normalizeVwapIndicator(payload.vwap ?? payload.vwap24Hr),
+  });
+}
+
 export class MissingApiKeyError extends Error {
   constructor() {
     super(API_KEY_ERROR_MESSAGE);
@@ -167,10 +288,11 @@ export async function getTechnicalAnalysis(
   assetId: string
 ): Promise<TechnicalAnalysis | null> {
   try {
-    return await makeCoinCapRequest<TechnicalAnalysis>(
-      `/ta/${assetId}/allLatest?fetchInterval=d1`,
-      TechnicalAnalysisSchema
+    const response = await makeCoinCapRequest<unknown>(
+      `/ta/${assetId}/allLatest?fetchInterval=d1`
     );
+
+    return normalizeTechnicalAnalysisResponse(response);
   } catch (error) {
     if (error instanceof MissingApiKeyError) throw error;
     console.error(

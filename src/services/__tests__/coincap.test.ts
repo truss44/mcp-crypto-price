@@ -3,6 +3,7 @@ import {
   getAssets,
   getMarkets,
   getHistoricalData,
+  getTechnicalAnalysis,
   clearCache,
   MissingApiKeyError,
 } from '../coincap.js';
@@ -194,6 +195,106 @@ describe('CoinCap Service', () => {
       );
       expect(result).toBeNull();
       expect(console.error).toHaveBeenCalled();
+    });
+  });
+
+  describe('getTechnicalAnalysis', () => {
+    it('should parse a wrapped technical analysis response', async () => {
+      const mockResponse = {
+        timestamp: 1700000000000,
+        data: {
+          sma: { period: 20, value: '102100.00' },
+          ema: { period: 20, value: '103450.00' },
+          rsi: { period: 14, value: '58.30' },
+          macd: {
+            value: '1234.50',
+            signal: '980.20',
+            histogram: '254.30',
+          },
+          vwap: { value: '103890.00' },
+        },
+      };
+
+      mockFetch.mockImplementationOnce(() =>
+        Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve(mockResponse),
+        } as Response)
+      );
+
+      const result = await getTechnicalAnalysis('bitcoin');
+
+      expect(result).toEqual({
+        sma: { period: 20, value: '102100.00' },
+        ema: { period: 20, value: '103450.00' },
+        rsi: { period: 14, value: '58.30' },
+        macd: {
+          value: '1234.50',
+          signal: '980.20',
+          histogram: '254.30',
+        },
+        vwap: { value: '103890.00' },
+      });
+      expect(mockFetch).toHaveBeenCalledWith(
+        'https://rest.coincap.io/v3/ta/bitcoin/allLatest?fetchInterval=d1',
+        expect.objectContaining({
+          headers: { Authorization: 'Bearer test-api-key' },
+        })
+      );
+    });
+
+    it('should parse a direct technical analysis response', async () => {
+      const mockResponse = {
+        sma: { window: '20', value: 102100 },
+        ema: { period: '20', value: '103450.00' },
+        rsi: { period: 14, value: 58.3 },
+        macd: {
+          macd: '1234.50',
+          signalLine: '980.20',
+          hist: '254.30',
+        },
+        vwap24Hr: '103890.00',
+      };
+
+      mockFetch.mockImplementationOnce(() =>
+        Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve(mockResponse),
+        } as Response)
+      );
+
+      const result = await getTechnicalAnalysis('bitcoin');
+
+      expect(result).toEqual({
+        sma: { period: 20, value: '102100' },
+        ema: { period: 20, value: '103450.00' },
+        rsi: { period: 14, value: '58.3' },
+        macd: {
+          value: '1234.50',
+          signal: '980.20',
+          histogram: '254.30',
+        },
+        vwap: { value: '103890.00' },
+      });
+    });
+
+    it('should return empty indicators for an invalid technical analysis response', async () => {
+      mockFetch.mockImplementationOnce(() =>
+        Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve({ data: 'invalid' }),
+        } as Response)
+      );
+
+      const result = await getTechnicalAnalysis('bitcoin');
+
+      expect(result).toEqual({
+        sma: null,
+        ema: null,
+        rsi: null,
+        macd: null,
+        vwap: null,
+      });
     });
   });
 });
