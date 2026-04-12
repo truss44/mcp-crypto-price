@@ -37,7 +37,19 @@
       "gitArgs": ["-S"]
     }],
     ["@semantic-release/github", {
-      "labels": []
-    }]
+      "labels": [],
+      "assets": [],
+      "successComment": false,
+      "failComment": false,
+      "releasedLabels": false
+    }],
+    {
+      "prepare": [
+        {
+          "path": "@semantic-release/exec",
+          "cmd": "git tag -f latest ${nextRelease.gitTag}"
+        }
+      ]
+    }
   ]
 }
