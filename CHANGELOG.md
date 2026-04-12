@@ -1,3 +1,9 @@
+## [3.5.7](https://github.com/truss44/mcp-crypto-price/compare/v3.5.6...v3.5.7) (2026-04-12)
+
+### Bug Fixes
+
+* enable server card endpoint for Smithery discovery ([12adc7c](https://github.com/truss44/mcp-crypto-price/commit/12adc7cdb91d2d34920fd3fd230571c9465b0bba))
+
 ## [3.5.6](https://github.com/truss44/mcp-crypto-price/compare/v3.5.5...v3.5.6) (2026-04-12)
 
 ### Bug Fixes
