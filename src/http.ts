@@ -141,6 +141,80 @@ const serverCard = {
         openWorldHint: true,
       },
     },
+    {
+      name: 'get-technical-analysis',
+      description:
+        'Get the latest technical indicators for a cryptocurrency including SMA, EMA, RSI, MACD, and VWAP',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          symbol: {
+            type: 'string',
+            description: 'Cryptocurrency symbol or name (e.g. BTC or Bitcoin)',
+          },
+        },
+        required: ['symbol'],
+      },
+      annotations: {
+        title: 'Get Technical Analysis',
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: true,
+      },
+    },
+    {
+      name: 'get-rates',
+      description:
+        "Get USD-based conversion rates for fiat currencies and cryptocurrencies. Optionally pass a slug (e.g. 'euro', 'us-dollar', 'bitcoin') to look up a single rate.",
+      inputSchema: {
+        type: 'object',
+        properties: {
+          slug: {
+            type: 'string',
+            description:
+              "Optional: rate slug to fetch a single rate (e.g. 'us-dollar', 'euro', 'bitcoin')",
+          },
+        },
+      },
+      annotations: {
+        title: 'Get Currency Rates',
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: true,
+      },
+    },
+    {
+      name: 'get-exchanges',
+      description:
+        "Get top cryptocurrency exchanges ranked by 24h volume. Optionally pass an exchangeId (e.g. 'binance', 'coinbase') to get details for a specific exchange.",
+      inputSchema: {
+        type: 'object',
+        properties: {
+          exchangeId: {
+            type: 'string',
+            description:
+              "Optional: specific exchange ID to look up (e.g. 'binance', 'coinbase', 'kraken')",
+          },
+          limit: {
+            type: 'number',
+            minimum: 1,
+            maximum: 50,
+            default: 10,
+            description:
+              'Number of top exchanges to return when listing (1-50, default 10)',
+          },
+        },
+      },
+      annotations: {
+        title: 'Get Exchanges',
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: true,
+      },
+    },
   ],
   resources: [
     {
