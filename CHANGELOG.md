@@ -1,3 +1,9 @@
+## [3.5.2](https://github.com/truss44/mcp-crypto-price/compare/v3.5.1...v3.5.2) (2026-04-12)
+
+### Bug Fixes
+
+* add simple annotation to latest tag ([3260b37](https://github.com/truss44/mcp-crypto-price/commit/3260b37c93d1a5d34eea86a7825b320e30638cde))
+
 ## [3.5.1](https://github.com/truss44/mcp-crypto-price/compare/v3.5.0...v3.5.1) (2026-04-12)
 
 ### Bug Fixes
