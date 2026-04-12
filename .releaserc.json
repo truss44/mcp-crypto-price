@@ -43,13 +43,8 @@
       "failComment": false,
       "releasedLabels": false
     }],
-    {
-      "prepare": [
-        {
-          "path": "@semantic-release/exec",
-          "cmd": "git tag -f latest ${nextRelease.gitTag}"
-        }
-      ]
-    }
+    ["@semantic-release/exec", {
+      "prepareCmd": "git tag -f latest ${nextRelease.gitTag}"
+    }]
   ]
 }
