@@ -58,14 +58,15 @@ If your MCP client requires launching via `cmd.exe` on Windows:
 ### Development scripts
 
 ```bash
-npm run build         # Compile TypeScript → dist/
-npm run format        # Format source files with Prettier
-npm run lint          # Check for lint errors (ESLint + typescript-eslint)
-npm run lint:fix      # Auto-fix lint errors
-npm run types:check   # TypeScript type-check without emitting files
-npm test              # Run all tests
-npm run test:coverage # Run tests with coverage report
-npm run inspector     # Open MCP inspector for interactive debugging
+pnpm dev          # Development (HTTP server with hot reload via Smithery CLI)
+pnpm build         # Compile TypeScript → dist/
+pnpm format        # Format source files with Prettier
+pnpm lint          # Check for lint errors (ESLint + typescript-eslint)
+pnpm lint:fix      # Auto-fix lint errors
+pnpm types:check   # TypeScript type-check without emitting files
+pnpm test          # Run all tests
+pnpm test:coverage # Run tests with coverage report
+pnpm inspector     # Open MCP inspector for interactive debugging
 ```
 
 ### Run as Streamable HTTP server
@@ -75,27 +76,27 @@ You can run the server over HTTP for environments that support MCP over HTTP str
 - Dev server (recommended during development):
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
 - Build and run the HTTP server:
 
 ```bash
 # Build (outputs to dist/)
-npm run build
+pnpm build
 
 # Start the HTTP server
-npm run start:http
+pnpm start:http
 ```
 
 - Build and run the STDIO server:
 
 ```bash
 # Build (outputs to dist/)
-npm run build
+pnpm build
 
 # Start the STDIO server
-npm run start:stdio
+pnpm start:stdio
 ```
 
 The server listens on port 3000 by default (override with `PORT`). For clients that connect over HTTP (e.g. Smithery, Claude.ai), pass your API key as a query parameter:
@@ -123,7 +124,7 @@ Without a valid API key, all tools will return an error with instructions on how
 
 ## Note for Smithery CLI users
 
-This MCP server works directly via `npx` (configs above) and does not require Smithery.
+This MCP server works directly via `pnpm dlx` (configs above) and does not require Smithery.
 
 If you do use the Smithery CLI, authenticate with `smithery auth login` or by setting `SMITHERY_API_KEY` in your environment. Recent versions of the Smithery CLI do not support passing API keys via `--key` (or older `--profile` patterns).
 

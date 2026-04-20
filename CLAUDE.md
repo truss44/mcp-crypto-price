@@ -6,37 +6,37 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 # Development (HTTP server with hot reload via Smithery CLI)
-npm run dev
+pnpm dev
 
 # Build
-npm run build          # Compile TypeScript → dist/
+pnpm build          # Compile TypeScript → dist/
 
 # Run
-npm run start:http     # Start HTTP server (dist/http.js)
-npm run start:stdio    # Start STDIO server (dist/index.js)
+pnpm start:http     # Start HTTP server (dist/http.js)
+pnpm start:stdio    # Start STDIO server (dist/index.js)
 
 # Test
-npm test               # Run all tests
-npm run test:coverage  # Run tests with coverage
+pnpm test               # Run all tests
+pnpm test:coverage  # Run tests with coverage
 
 # Lint & Format
-npm run lint           # Check for lint errors (ESLint + typescript-eslint)
-npm run lint:fix       # Auto-fix lint errors
-npm run format         # Format source files with Prettier
-npm run types:check    # TypeScript type-check without emitting files
+pnpm lint           # Check for lint errors (ESLint + typescript-eslint)
+pnpm lint:fix       # Auto-fix lint errors
+pnpm format         # Format source files with Prettier
+pnpm types:check    # TypeScript type-check without emitting files
 
 # Watch mode
-npm run watch          # TypeScript watch
+pnpm watch          # TypeScript watch
 
 # MCP Inspector (debug tools interactively)
-npm run inspector
+pnpm inspector
 ```
 
 This repository requires **Node.js 22.14+** for development, CI, and release tooling.
 
 To run a single test file:
 ```bash
-NODE_OPTIONS='--experimental-vm-modules --no-warnings' npx jest src/services/__tests__/coincap.test.ts
+NODE_OPTIONS='--experimental-vm-modules --no-warnings' pnpm dlx jest src/services/__tests__/coincap.test.ts
 ```
 
 ## Architecture
@@ -76,8 +76,8 @@ MCP client → transport (stdio or HTTP) → src/index.ts (createServer)
 
 ### Tooling
 
-- **Prettier** — code formatting (`npm run format`). Config: `.prettierrc`. Ignores: `.prettierignore`.
-- **ESLint** — linting with `typescript-eslint` (`npm run lint`). Config: `eslint.config.js`.
+- **Prettier** — code formatting (`pnpm format`). Config: `.prettierrc`. Ignores: `.prettierignore`.
+- **ESLint** — linting with `typescript-eslint` (`pnpm lint`). Config: `eslint.config.js`.
 
 ### Releases & commits
 

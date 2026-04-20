@@ -28,12 +28,16 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: '24.x'
-          
+          cache: 'pnpm'
+
+      - name: Install pnpm
+        run: corepack enable && corepack prepare pnpm@latest --activate
+
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install
 
       - name: Test
-        run: npm test 
+        run: pnpm test 
       
       - name: Configure Git identity
         run: |
@@ -51,16 +55,16 @@ jobs:
           git config gpg.format ssh
           git config user.signingkey ~/.ssh/id_ed25519.pub
           git config commit.gpgsign true
-        
+
       - name: Build
-        run: npm run build
+        run: pnpm build
 
       - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
-        run: npm audit signatures
+        run: pnpm audit signatures
 
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           DEBUG: semantic-release:*
-        run: npx semantic-release
+        run: pnpm dlx semantic-release
