@@ -15,7 +15,7 @@ COPY src ./src
 COPY tsconfig.json ./
 
 # Build the application
-RUN pnpm run build
+RUN pnpm build
 
 # Production stage
 FROM node:24-alpine AS release

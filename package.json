@@ -21,7 +21,7 @@
     "start": "node dist/http.js",
     "start:http": "node dist/http.js",
     "start:stdio": "node dist/index.js",
-    "prepare": "pnpm run build",
+    "prepare": "pnpm build",
     "watch": "tsc --watch",
     "inspector": "pnpm dlx @modelcontextprotocol/inspector dist/index.js",
     "test": "NODE_OPTIONS='--experimental-vm-modules --no-warnings' jest",
@@ -30,7 +30,7 @@
     "lint:fix": "eslint \"src/**/*.ts\" --fix",
     "types:check": "tsc --noEmit",
     "test:coverage": "NODE_OPTIONS='--experimental-vm-modules --no-warnings' jest --coverage",
-    "prepublishOnly": "pnpm run build"
+    "prepublishOnly": "pnpm build"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.27.1",
