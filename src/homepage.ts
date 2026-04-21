@@ -293,7 +293,7 @@ export function renderHomepage(): string {
             </div>
             <div class="metric">
               <strong>CLI example</strong>
-              <code>npx @smithery/cli install mcp-crypto-price --client claude</code>
+              <code>pnpm dlx @smithery/cli install mcp-crypto-price --client claude</code>
             </div>
             <div class="metric">
               <strong>Remote endpoint</strong>

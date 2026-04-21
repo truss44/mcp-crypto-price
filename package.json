@@ -23,7 +23,7 @@
     "start:stdio": "node dist/index.js",
     "prepare": "pnpm run build",
     "watch": "tsc --watch",
-    "inspector": "npx @modelcontextprotocol/inspector dist/index.js",
+    "inspector": "pnpm dlx @modelcontextprotocol/inspector dist/index.js",
     "test": "NODE_OPTIONS='--experimental-vm-modules --no-warnings' jest",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint \"src/**/*.ts\"",
