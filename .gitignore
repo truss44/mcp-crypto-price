@@ -25,6 +25,7 @@
 !.releaserc.json
 !.prettierrc
 !.prettierignore
+!.npmrc
 
 # === Rules for root dir ===
 /core
