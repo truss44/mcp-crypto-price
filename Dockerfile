@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 
 # Install pnpm and dependencies
-RUN corepack enable && corepack prepare pnpm@latest --activate && pnpm install
+RUN corepack enable && corepack prepare pnpm@latest --activate && pnpm install --ignore-scripts
 
 # Copy source code
 COPY src ./src
