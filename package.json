@@ -30,7 +30,8 @@
     "lint:fix": "eslint \"src/**/*.ts\" --fix",
     "types:check": "tsc --noEmit",
     "test:coverage": "NODE_OPTIONS='--experimental-vm-modules --no-warnings' jest --coverage",
-    "prepublishOnly": "pnpm build"
+    "prepublishOnly": "pnpm build",
+    "release": "semantic-release"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.27.1",
