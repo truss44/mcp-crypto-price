@@ -70,3 +70,18 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           DEBUG: semantic-release:*
         run: pnpm dlx semantic-release
+
+      - name: Update 'latest' tag to most recent release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          set -e
+          git fetch --tags --force
+          # Determine the most recent tag (highest SemVer tag)
+          LATEST_TAG=$(git tag --sort=-version:refname | head -n 1)
+          echo "Most recent release tag: $LATEST_TAG"
+          # Point/move local 'latest' tag to that tag's commit
+          git tag -f latest "$LATEST_TAG"
+          # Remove remote 'latest' if it exists (ignore error), then push updated tag
+          git push origin :refs/tags/latest || true
+          git push origin refs/tags/latest
