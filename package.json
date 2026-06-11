@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
-    "hono": "^4.12.19",
+    "hono": "^4.12.25",
     "zod": "^4.4.3"
   },
   "devDependencies": {
@@ -46,14 +46,14 @@
     "@semantic-release/github": "^12.0.8",
     "@semantic-release/npm": "^13.1.5",
     "@types/jest": "^30.0.0",
-    "@types/node": "^24.12.4",
+    "@types/node": "^24.13.1",
     "conventional-changelog-conventionalcommits": "^9.3.1",
-    "eslint": "^10.4.0",
+    "eslint": "^10.4.1",
     "jest": "^30.4.2",
     "prettier": "^3.8.3",
     "semantic-release": "^25.0.3",
     "shx": "^0.4.0",
-    "ts-jest": "^29.4.9",
+    "ts-jest": "^29.4.11",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.59.4"
   },
