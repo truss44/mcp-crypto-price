@@ -53,7 +53,7 @@ importers:
         version: 30.4.2(@types/node@24.13.1)
       prettier:
         specifier: ^3.8.3
-        version: 3.8.3
+        version: 3.8.4
       semantic-release:
         specifier: ^25.0.3
         version: 25.0.3(typescript@5.9.3)
@@ -759,49 +759,41 @@ packages:
     resolution: {integrity: sha512-ghMWlxxa3aCW9sk5FpzrTXSo/NSanKs/RovDal5q+T2Q+dAKLFyGXWmQ6AAMsl6k/TgXHw+jj9Q9sELLx9mfJw==}
     cpu: [arm64]
     os: [linux]
-    libc: [glibc]
 
   '@unrs/resolver-binding-linux-arm64-musl@1.12.0':
     resolution: {integrity: sha512-ldOaKTzXNIHjGzRtzgfh+g6mqt30Q8hnR+EFdfeKYgeuMqnwsllk6IaN2kadvuRRQNBr1ycI45pmgGA5EUxzuA==}
     cpu: [arm64]
     os: [linux]
-    libc: [musl]
 
   '@unrs/resolver-binding-linux-ppc64-gnu@1.12.0':
     resolution: {integrity: sha512-PQRjWSz5v+7K9CHh8a11t6JHfmuG2o3ozHgj/9IsEtSMBc/S8p8eZoJO0+i7FUq0JEjnIfLRLUADXOF/2jx4SQ==}
     cpu: [ppc64]
     os: [linux]
-    libc: [glibc]
 
   '@unrs/resolver-binding-linux-riscv64-gnu@1.12.0':
     resolution: {integrity: sha512-slpQUuAp3+I0jsFyHxBaqETZSe8+OaG019nDOCBD0ZqZSNv0z7lMXKDgpH9BsSD+1Z5BSvV1QUbWS/MbGxpI+A==}
     cpu: [riscv64]
     os: [linux]
-    libc: [glibc]
 
   '@unrs/resolver-binding-linux-riscv64-musl@1.12.0':
     resolution: {integrity: sha512-v30e31aTFDfl1R+On53cNpd4sMQ+lzYTE4dxVia1B++Ds+27lEZSOlwjPfPN20mxb9ENis1mwUW+5SO6OzXJcA==}
     cpu: [riscv64]
     os: [linux]
-    libc: [musl]
 
   '@unrs/resolver-binding-linux-s390x-gnu@1.12.0':
     resolution: {integrity: sha512-yn6cnDhoH1IOgYvLnTeu7iAf1iknc7SXjqyLPCr3umbaeuFD8Uy2x3c3F82x2SDVEX/JpEkAGNd18lUBw4w9aQ==}
     cpu: [s390x]
     os: [linux]
-    libc: [glibc]
 
   '@unrs/resolver-binding-linux-x64-gnu@1.12.0':
     resolution: {integrity: sha512-M0zUTXIoRbPdWmLOs8hG3CnLVKTMbcAkC1++GJzjLAlGfH5gvhbePa6+TFniTgqiizGr0/3fdXI7R8aNwy/N4g==}
     cpu: [x64]
     os: [linux]
-    libc: [glibc]
 
   '@unrs/resolver-binding-linux-x64-musl@1.12.0':
     resolution: {integrity: sha512-GJUwROe22qValEd7JRT7FG/u36Iv/IL9AedRw7pEdbc8KcfbODcygvQHAVigBFReylyLe8UkPYxJy7F5Sm+Ldw==}
     cpu: [x64]
     os: [linux]
-    libc: [musl]
 
   '@unrs/resolver-binding-openharmony-arm64@1.12.0':
     resolution: {integrity: sha512-UwIkgOapYxrSPf8KTOtXeZKJD69upM9hQQuty1W0wQAJwsZrJSXFEoxuJ6lcjmEp/iJvx5PUknMqqBXJlzPTyw==}
@@ -2489,8 +2481,8 @@ packages:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
 
-  prettier@3.8.3:
-    resolution: {integrity: sha512-7igPTM53cGHMW8xWuVTydi2KO233VFiTNyF5hLJqpilHfmn8C8gPf+PS7dUT64YcXFbiMGZxS9pCSxL/Dxm/Jw==}
+  prettier@3.8.4:
+    resolution: {integrity: sha512-N2MylSdi48+5N/6S5j+maeHbUSIzzZ5uOcX5Hm4QpV8Dkb1HFjfAKTKX6yNPJQD9AhcT3ifHNB66tWTTJDi11Q==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -5830,7 +5822,7 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier@3.8.3: {}
+  prettier@3.8.4: {}
 
   pretty-format@30.4.1:
     dependencies:
