@@ -1,17 +1,17 @@
-import { jest } from '@jest/globals';
+import { vi, type MockedFunction } from 'vitest';
 
-jest.unstable_mockModule('../../services/coincap.js', () => ({
-  searchAsset: jest.fn(),
-  getAssets: jest.fn(),
-  getMarkets: jest.fn(),
-  getHistoricalData: jest.fn(),
-  clearCache: jest.fn(),
+vi.mock('../../services/coincap.js', () => ({
+  searchAsset: vi.fn(),
+  getAssets: vi.fn(),
+  getMarkets: vi.fn(),
+  getHistoricalData: vi.fn(),
+  clearCache: vi.fn(),
 }));
 
 const { getAssets } = await import('../../services/coincap.js');
 const { handleGetTopAssets } = await import('../top-assets.js');
 
-const mockGetAssets = getAssets as jest.MockedFunction<typeof getAssets>;
+const mockGetAssets = getAssets as MockedFunction<typeof getAssets>;
 
 const mockAssets = [
   {
@@ -44,7 +44,7 @@ const mockAssets = [
 
 describe('handleGetTopAssets', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should return formatted top assets', async () => {

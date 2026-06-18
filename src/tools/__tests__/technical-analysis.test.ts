@@ -1,20 +1,20 @@
-import { jest } from '@jest/globals';
+import { vi, type MockedFunction } from 'vitest';
 
-jest.unstable_mockModule('../../services/coincap.js', () => ({
-  searchAsset: jest.fn(),
-  getAssets: jest.fn(),
-  getMarkets: jest.fn(),
-  getHistoricalData: jest.fn(),
-  getTechnicalAnalysis: jest.fn(),
-  clearCache: jest.fn(),
+vi.mock('../../services/coincap.js', () => ({
+  searchAsset: vi.fn(),
+  getAssets: vi.fn(),
+  getMarkets: vi.fn(),
+  getHistoricalData: vi.fn(),
+  getTechnicalAnalysis: vi.fn(),
+  clearCache: vi.fn(),
 }));
 
 const { searchAsset, getTechnicalAnalysis } =
   await import('../../services/coincap.js');
 const { handleGetTechnicalAnalysis } = await import('../technical-analysis.js');
 
-const mockSearchAsset = searchAsset as jest.MockedFunction<typeof searchAsset>;
-const mockGetTechnicalAnalysis = getTechnicalAnalysis as jest.MockedFunction<
+const mockSearchAsset = searchAsset as MockedFunction<typeof searchAsset>;
+const mockGetTechnicalAnalysis = getTechnicalAnalysis as MockedFunction<
   typeof getTechnicalAnalysis
 >;
 
@@ -42,7 +42,7 @@ const mockTa = {
 
 describe('handleGetTechnicalAnalysis', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should return formatted technical analysis for a valid symbol', async () => {

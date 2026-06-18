@@ -16,8 +16,8 @@ pnpm start:http     # Start HTTP server (dist/http.js)
 pnpm start:stdio    # Start STDIO server (dist/index.js)
 
 # Test
-pnpm test               # Run all tests
-pnpm test:coverage  # Run tests with coverage
+pnpm test               # Run all tests with Vitest
+pnpm test:coverage      # Run tests with coverage
 
 # Lint & Format
 pnpm lint           # Check for lint errors (ESLint + typescript-eslint)
@@ -36,7 +36,7 @@ This repository requires **Node.js 22.14+** for development, CI, and release too
 
 To run a single test file:
 ```bash
-NODE_OPTIONS='--experimental-vm-modules --no-warnings' pnpm dlx jest src/services/__tests__/coincap.test.ts
+pnpm vitest run src/services/__tests__/coincap.test.ts
 ```
 
 ## Architecture

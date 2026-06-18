@@ -1,4 +1,6 @@
 allowBuilds:
   unrs-resolver: true
+overrides:
+  js-yaml: ^4.1.2
 minimumReleaseAgeExclude:
   - hono@4.12.21

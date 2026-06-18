@@ -1,19 +1,19 @@
-import { jest } from '@jest/globals';
+import { vi, type MockedFunction } from 'vitest';
 
-jest.unstable_mockModule('../../services/coincap.js', () => ({
-  searchAsset: jest.fn(),
-  getAssets: jest.fn(),
-  getMarkets: jest.fn(),
-  getHistoricalData: jest.fn(),
-  clearCache: jest.fn(),
+vi.mock('../../services/coincap.js', () => ({
+  searchAsset: vi.fn(),
+  getAssets: vi.fn(),
+  getMarkets: vi.fn(),
+  getHistoricalData: vi.fn(),
+  clearCache: vi.fn(),
 }));
 
 const { searchAsset, getHistoricalData } =
   await import('../../services/coincap.js');
 const { handleGetHistoricalAnalysis } = await import('../historical.js');
 
-const mockSearchAsset = searchAsset as jest.MockedFunction<typeof searchAsset>;
-const mockGetHistoricalData = getHistoricalData as jest.MockedFunction<
+const mockSearchAsset = searchAsset as MockedFunction<typeof searchAsset>;
+const mockGetHistoricalData = getHistoricalData as MockedFunction<
   typeof getHistoricalData
 >;
 
@@ -33,7 +33,7 @@ const mockAsset = {
 
 describe('handleGetHistoricalAnalysis', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should return formatted historical analysis', async () => {

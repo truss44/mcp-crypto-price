@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { vi, type MockedFunction } from 'vitest';
 import {
   getAssets,
   getMarkets,
@@ -9,17 +9,17 @@ import {
 } from '../coincap.js';
 
 // Mock global fetch
-const mockFetch = jest.fn() as jest.MockedFunction<typeof fetch>;
-global.fetch = mockFetch;
+const mockFetch = vi.fn() as MockedFunction<typeof fetch>;
+globalThis.fetch = mockFetch;
 
 // Suppress console.error during tests
-console.error = jest.fn();
+console.error = vi.fn();
 
 describe('CoinCap Service', () => {
   const originalEnv = process.env;
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     mockFetch.mockReset();
     clearCache();
     process.env = { ...originalEnv, COINCAP_API_KEY: 'test-api-key' };

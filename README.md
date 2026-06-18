@@ -64,8 +64,8 @@ pnpm format        # Format source files with Prettier
 pnpm lint          # Check for lint errors (ESLint + typescript-eslint)
 pnpm lint:fix      # Auto-fix lint errors
 pnpm types:check   # TypeScript type-check without emitting files
-pnpm test          # Run all tests
-pnpm test:coverage # Run tests with coverage report
+pnpm test          # Run all tests with Vitest
+pnpm test:coverage # Run tests with coverage report (Vitest)
 pnpm inspector     # Open MCP inspector for interactive debugging
 ```
 

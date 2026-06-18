@@ -1,22 +1,20 @@
-import { jest } from '@jest/globals';
+import { vi, type MockedFunction } from 'vitest';
 
-jest.unstable_mockModule('../../services/coincap.js', () => ({
-  searchAsset: jest.fn(),
-  getAssets: jest.fn(),
-  getMarkets: jest.fn(),
-  getHistoricalData: jest.fn(),
-  getExchanges: jest.fn(),
-  getExchange: jest.fn(),
-  clearCache: jest.fn(),
+vi.mock('../../services/coincap.js', () => ({
+  searchAsset: vi.fn(),
+  getAssets: vi.fn(),
+  getMarkets: vi.fn(),
+  getHistoricalData: vi.fn(),
+  getExchanges: vi.fn(),
+  getExchange: vi.fn(),
+  clearCache: vi.fn(),
 }));
 
 const { getExchanges, getExchange } = await import('../../services/coincap.js');
 const { handleGetExchanges } = await import('../exchanges.js');
 
-const mockGetExchanges = getExchanges as jest.MockedFunction<
-  typeof getExchanges
->;
-const mockGetExchange = getExchange as jest.MockedFunction<typeof getExchange>;
+const mockGetExchanges = getExchanges as MockedFunction<typeof getExchanges>;
+const mockGetExchange = getExchange as MockedFunction<typeof getExchange>;
 
 const mockExchanges = [
   {
@@ -54,7 +52,7 @@ const mockExchange = {
 
 describe('handleGetExchanges', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should return formatted exchange list when no exchangeId is provided', async () => {

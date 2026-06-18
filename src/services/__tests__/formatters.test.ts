@@ -4,6 +4,7 @@ import {
   formatHistoricalAnalysis,
 } from '../formatters.js';
 import type { CryptoAsset, Market } from '../../types/index.js';
+import { describe, expect, it } from 'vitest';
 
 describe('Formatters', () => {
   describe('formatPriceInfo', () => {

@@ -1,20 +1,20 @@
-import { jest } from '@jest/globals';
+import { vi, type MockedFunction } from 'vitest';
 
-jest.unstable_mockModule('../../services/coincap.js', () => ({
-  searchAsset: jest.fn(),
-  getAssets: jest.fn(),
-  getMarkets: jest.fn(),
-  getHistoricalData: jest.fn(),
-  getRates: jest.fn(),
-  getRate: jest.fn(),
-  clearCache: jest.fn(),
+vi.mock('../../services/coincap.js', () => ({
+  searchAsset: vi.fn(),
+  getAssets: vi.fn(),
+  getMarkets: vi.fn(),
+  getHistoricalData: vi.fn(),
+  getRates: vi.fn(),
+  getRate: vi.fn(),
+  clearCache: vi.fn(),
 }));
 
 const { getRates, getRate } = await import('../../services/coincap.js');
 const { handleGetRates } = await import('../rates.js');
 
-const mockGetRates = getRates as jest.MockedFunction<typeof getRates>;
-const mockGetRate = getRate as jest.MockedFunction<typeof getRate>;
+const mockGetRates = getRates as MockedFunction<typeof getRates>;
+const mockGetRate = getRate as MockedFunction<typeof getRate>;
 
 const mockRates = [
   {
@@ -64,7 +64,7 @@ const mockRate = {
 
 describe('handleGetRates', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should return all rates when no slug is provided', async () => {
