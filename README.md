@@ -17,8 +17,8 @@ A Model Context Protocol (MCP) server that provides comprehensive cryptocurrency
 - **BREAKING**: CoinCap v2 API removed. Now uses v3 API exclusively. A `COINCAP_API_KEY` is required (free tier available at [pro.coincap.io/dashboard](https://pro.coincap.io/dashboard))
 - Streamable HTTP transport added (while keeping STDIO compatibility)
 - Smithery CLI scripts to build and run the HTTP server
-- **6 new tools**: `assets.search`, `market.global`, `assets.compare`, `analysis.candlestick`, `price.convert`, `assets.info`
-- **Dot-notation tool naming**: All tools organized into a navigable tree (`price.*`, `market.*`, `assets.*`, `analysis.*`)
+- **6 new tools**: `assets-search`, `market-global`, `assets-compare`, `analysis-candlestick`, `price-convert`, `assets-info`
+- **Hierarchical tool naming**: All tools organized into category-prefixed names (`price-*`, `market-*`, `assets-*`, `analysis-*`)
 - **Output schemas**: All tools now declare `outputSchema` with `structuredContent` for type-safe responses
 - **MCP best practices**: `isError` flag on validation errors, server description, and `asset://{symbol}` resource template
 
@@ -136,7 +136,7 @@ Launch Claude Desktop to start using the crypto analysis tools.
 
 ## Tools
 
-#### price.get
+#### price-get
 
 Gets current price and 24h stats for any cryptocurrency, including:
 - Current price in USD
@@ -145,14 +145,14 @@ Gets current price and 24h stats for any cryptocurrency, including:
 - Market cap
 - Market rank
 
-#### price.convert
+#### price-convert
 
 Converts a cryptocurrency amount into any fiat currency:
 - Uses real-time price data and USD-based exchange rates
 - Parameters: `symbol` (e.g. `BTC`), `amount` (default 1), `currency` (default `usd`)
 - Example: 2.5 BTC in EUR
 
-#### market.analysis
+#### market-analysis
 
 Provides detailed market analysis including:
 - Top 5 exchanges by volume
@@ -160,7 +160,7 @@ Provides detailed market analysis including:
 - Volume distribution analysis
 - VWAP (Volume Weighted Average Price)
 
-#### market.global
+#### market-global
 
 Provides an overview of the entire cryptocurrency market:
 - Total market capitalization across all assets
@@ -169,14 +169,14 @@ Provides an overview of the entire cryptocurrency market:
 - Bitcoin dominance percentage
 - Top gainers and losers
 
-#### market.rates
+#### market-rates
 
 Returns USD-based conversion rates for fiat currencies and cryptocurrencies:
 - All fiat currency rates (USD base)
 - Top 10 cryptocurrency rates
 - Optional `slug` parameter (e.g. `euro`, `bitcoin`) for a single rate lookup
 
-#### market.exchanges
+#### market-exchanges
 
 Lists top cryptocurrency exchanges ranked by 24h volume:
 - Exchange name, rank, and 24h volume in USD
@@ -184,7 +184,7 @@ Lists top cryptocurrency exchanges ranked by 24h volume:
 - Optional `exchangeId` parameter (e.g. `binance`) for single exchange details
 - Optional `limit` parameter (1–50, default 10)
 
-#### assets.top
+#### assets-top
 
 Lists top cryptocurrencies ranked by market cap, including:
 - Current price in USD
@@ -192,14 +192,14 @@ Lists top cryptocurrencies ranked by market cap, including:
 - Market cap and rank
 - Configurable result count (1–50, default 10)
 
-#### assets.search
+#### assets-search
 
 Searches for cryptocurrencies by name or symbol with fuzzy matching:
 - Returns matching assets with symbol, name, price, and rank
 - Configurable result count (1–50, default 10)
 - Example: search "bit" returns Bitcoin, Bitcoin Cash, BitTorrent, etc.
 
-#### assets.info
+#### assets-info
 
 Returns detailed metadata for a single cryptocurrency:
 - ID, rank, symbol, and name
@@ -207,14 +207,14 @@ Returns detailed metadata for a single cryptocurrency:
 - Circulating supply and max supply
 - VWAP (24h)
 
-#### assets.compare
+#### assets-compare
 
 Compares 2–5 cryptocurrencies side by side:
 - Price, 24h change, market cap, volume, and rank for each asset
 - Comma-separated symbols (e.g. `BTC,ETH,SOL`)
 - Highlights best performer by 24h change
 
-#### analysis.historical
+#### analysis-historical
 
 Analyzes historical price data with:
 - Customizable time intervals (5min to 1 day)
@@ -223,7 +223,7 @@ Analyzes historical price data with:
 - Volatility metrics
 - High/low price ranges
 
-#### analysis.technical
+#### analysis-technical
 
 Returns the latest technical indicators for any cryptocurrency:
 - SMA (Simple Moving Average) with period
@@ -232,7 +232,7 @@ Returns the latest technical indicators for any cryptocurrency:
 - MACD with signal line, histogram, and Bullish/Bearish label
 - VWAP (Volume Weighted Average Price, 24h)
 
-#### analysis.candlestick
+#### analysis-candlestick
 
 Retrieves OHLCV candlestick data from a specific exchange:
 - Open, high, low, close, and volume for each candle
