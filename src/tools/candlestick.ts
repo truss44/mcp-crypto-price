@@ -26,12 +26,11 @@ export const CandlestickOutputSchema = z.object({
   symbol: z.string(),
   candles: z.array(
     z.object({
-      open: z.string(),
-      high: z.string(),
-      low: z.string(),
-      close: z.string(),
-      volume: z.string(),
-      period: z.number(),
+      open: z.number(),
+      high: z.number(),
+      low: z.number(),
+      close: z.number(),
+      time: z.number(),
     })
   ),
 });
@@ -85,7 +84,7 @@ export async function handleGetCandlestickData(args: unknown) {
       };
     }
 
-    if (!candlesData.data.length) {
+    if (!candlesData.candles.length) {
       return {
         content: [
           {
@@ -105,19 +104,18 @@ export async function handleGetCandlestickData(args: unknown) {
       content: [
         {
           type: 'text',
-          text: formatCandlestickData(asset, candlesData.data),
+          text: formatCandlestickData(asset, candlesData.candles),
         },
       ],
       structuredContent: {
         name: asset.name,
         symbol: asset.symbol,
-        candles: candlesData.data.map((c) => ({
+        candles: candlesData.candles.map((c) => ({
           open: c.open,
           high: c.high,
           low: c.low,
           close: c.close,
-          volume: c.volume,
-          period: c.period,
+          time: c.time,
         })),
       },
     };
