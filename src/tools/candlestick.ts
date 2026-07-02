@@ -14,7 +14,9 @@ export const GetCandlestickDataSchema = z.object({
   quote: z
     .string()
     .default('usd')
-    .describe('Quote currency ID (e.g. "usd", "usdt", "btc")'),
+    .describe(
+      'Quote currency code (e.g. "usd", "usdt", "btc", "eur"). Common mappings: usd→us-dollar, usdt→tether, usdc→usd-coin. Not all exchanges support all quote currencies — e.g. Binance uses "usdt" not "usd".'
+    ),
   interval: z
     .enum(['m5', 'm15', 'm30', 'h1', 'h2', 'h6', 'h12', 'd1'])
     .default('h1')
@@ -84,7 +86,10 @@ export async function handleGetCandlestickData(args: unknown) {
     if (!candlesData) {
       return {
         content: [
-          { type: 'text', text: 'Failed to retrieve candlestick data' },
+          {
+            type: 'text',
+            text: `Failed to retrieve candlestick data for ${asset.name} (${asset.symbol}) on ${exchange} with quote "${quote}". This usually means the exchange does not support this trading pair. Try a different quote currency (e.g. "usdt" for Binance) or a different exchange (e.g. "kraken" supports USD pairs).`,
+          },
         ],
         structuredContent: {
           name: asset.name,

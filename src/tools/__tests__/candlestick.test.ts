@@ -79,7 +79,8 @@ describe('handleGetCandlestickData', () => {
     mockGetCandles.mockResolvedValueOnce(null);
 
     const result = await handleGetCandlestickData({ symbol: 'BTC' });
-    expect(result.content[0].text).toBe('Failed to retrieve candlestick data');
+    expect(result.content[0].text).toContain('Failed to retrieve candlestick data');
+    expect(result.content[0].text).toContain('Try a different quote currency');
   });
 
   it('should return no-data message when candles array is empty', async () => {

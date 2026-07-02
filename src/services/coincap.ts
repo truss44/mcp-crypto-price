@@ -388,6 +388,22 @@ export async function getExchange(
   }
 }
 
+const QUOTE_ID_MAP: Record<string, string> = {
+  usd: 'us-dollar',
+  eur: 'euro',
+  gbp: 'british-pound',
+  jpy: 'japanese-yen',
+  usdt: 'tether',
+  usdc: 'usd-coin',
+  btc: 'bitcoin',
+  eth: 'ethereum',
+};
+
+function normalizeQuoteId(quote: string): string {
+  const lower = quote.toLowerCase();
+  return QUOTE_ID_MAP[lower] ?? lower;
+}
+
 export async function getCandles(
   exchange: string,
   baseId: string,
@@ -396,14 +412,20 @@ export async function getCandles(
   start: number,
   end: number
 ): Promise<CandlesResponse | null> {
+  const normalizedQuoteId = normalizeQuoteId(quoteId);
   try {
     return await makeCoinCapRequest<CandlesResponse>(
-      `/candles?exchange=${encodeURIComponent(exchange)}&baseId=${encodeURIComponent(baseId)}&quoteId=${encodeURIComponent(quoteId)}&interval=${interval}&start=${start}&end=${end}`,
+      `/candles?exchange=${encodeURIComponent(exchange)}&baseId=${encodeURIComponent(baseId)}&quoteId=${encodeURIComponent(normalizedQuoteId)}&interval=${interval}&start=${start}&end=${end}`,
       CandlesResponseSchema
     );
   } catch (error) {
     if (error instanceof MissingApiKeyError) throw error;
-    console.error('Failed to get candles:', error);
+    const detail =
+      error instanceof Error ? error.message : String(error);
+    console.error(
+      `Failed to get candles for ${exchange} ${baseId}/${normalizedQuoteId}:`,
+      detail
+    );
     return null;
   }
 }
