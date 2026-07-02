@@ -1,3 +1,9 @@
+## [3.7.0](https://github.com/truss44/mcp-crypto-price/compare/v3.6.0...v3.7.0) (2026-07-02)
+
+### Features
+
+* add 6 new prompts to README and CLAUDE.md ([99e7e13](https://github.com/truss44/mcp-crypto-price/commit/99e7e13d80a9b50e4f87ef00597a7c1d19650e66))
+
 ## [3.6.0](https://github.com/truss44/mcp-crypto-price/compare/v3.5.12...v3.6.0) (2026-07-02)
 
 ### Features
