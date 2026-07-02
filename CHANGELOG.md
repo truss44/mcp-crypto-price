@@ -1,3 +1,9 @@
+## [5.0.2](https://github.com/truss44/mcp-crypto-price/compare/v5.0.1...v5.0.2) (2026-07-02)
+
+### Bug Fixes
+
+* normalize quote currency IDs for candlestick API and improve error messages ([04b9bfc](https://github.com/truss44/mcp-crypto-price/commit/04b9bfcfb2ffa629332e30e21fa1cc07466f9c7d))
+
 ## [5.0.1](https://github.com/truss44/mcp-crypto-price/compare/v5.0.0...v5.0.1) (2026-07-02)
 
 ### Bug Fixes
