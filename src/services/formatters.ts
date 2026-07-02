@@ -337,13 +337,12 @@ export function formatCandlestickData(
   }
 
   const lines = candles.map((c) => {
-    const date = new Date(c.period).toISOString().split('T')[0];
-    const open = formatPrice(parseFloat(c.open));
-    const high = formatPrice(parseFloat(c.high));
-    const low = formatPrice(parseFloat(c.low));
-    const close = formatPrice(parseFloat(c.close));
-    const volume = (parseFloat(c.volume) / 1_000_000).toFixed(2);
-    return `${date} | O: $${open} | H: $${high} | L: $${low} | C: $${close} | Vol: ${volume}M`;
+    const date = new Date(c.time).toISOString().split('T')[0];
+    const open = formatPrice(c.open);
+    const high = formatPrice(c.high);
+    const low = formatPrice(c.low);
+    const close = formatPrice(c.close);
+    return `${date} | O: $${open} | H: $${high} | L: $${low} | C: $${close}`;
   });
 
   return [

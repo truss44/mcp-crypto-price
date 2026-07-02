@@ -110,14 +110,14 @@ export interface ExchangeResponse {
 }
 
 export interface Candle {
-  open: string;
-  high: string;
-  low: string;
-  close: string;
-  volume: string;
-  period: number;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  time: number;
 }
 
 export interface CandlesResponse {
-  data: Candle[];
+  candles: Candle[];
+  timestamp: number;
 }

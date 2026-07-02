@@ -32,20 +32,18 @@ const mockAsset = {
 
 const mockCandles = [
   {
-    open: '49000.00',
-    high: '50500.00',
-    low: '48500.00',
-    close: '50000.00',
-    volume: '1000000',
-    period: 1700000000000,
+    open: 49000.00,
+    high: 50500.00,
+    low: 48500.00,
+    close: 50000.00,
+    time: 1700000000000,
   },
   {
-    open: '50000.00',
-    high: '51000.00',
-    low: '49500.00',
-    close: '50800.00',
-    volume: '1200000',
-    period: 1700003600000,
+    open: 50000.00,
+    high: 51000.00,
+    low: 49500.00,
+    close: 50800.00,
+    time: 1700003600000,
   },
 ];
 
@@ -56,7 +54,7 @@ describe('handleGetCandlestickData', () => {
 
   it('should return formatted candlestick data for valid symbol', async () => {
     mockSearchAsset.mockResolvedValueOnce(mockAsset);
-    mockGetCandles.mockResolvedValueOnce({ data: mockCandles });
+    mockGetCandles.mockResolvedValueOnce({ candles: mockCandles, timestamp: 1700003600000 });
 
     const result = await handleGetCandlestickData({ symbol: 'BTC' });
     expect(result.content[0].text).toContain(
@@ -83,7 +81,7 @@ describe('handleGetCandlestickData', () => {
 
   it('should return no-data message when candles array is empty', async () => {
     mockSearchAsset.mockResolvedValueOnce(mockAsset);
-    mockGetCandles.mockResolvedValueOnce({ data: [] });
+    mockGetCandles.mockResolvedValueOnce({ candles: [], timestamp: 0 });
 
     const result = await handleGetCandlestickData({ symbol: 'BTC' });
     expect(result.content[0].text).toContain('No candlestick data available');
