@@ -1,3 +1,26 @@
+## [4.0.0](https://github.com/truss44/mcp-crypto-price/compare/v3.7.0...v4.0.0) (2026-07-02)
+
+### ⚠ BREAKING CHANGES
+
+* Tool names changed from kebab-case to dot-notation
+  get-crypto-price      -> price.get
+  get-market-analysis   -> market.analysis
+  get-historical-analysis -> analysis.historical
+  get-top-assets        -> assets.top
+  get-technical-analysis -> analysis.technical
+  get-rates             -> market.rates
+  get-exchanges         -> market.exchanges
+  search-assets         -> assets.search
+  get-global-metrics    -> market.global
+  compare-crypto        -> assets.compare
+  get-candlestick-data  -> analysis.candlestick
+  get-price-conversion  -> price.convert
+  get-asset-info        -> assets.info
+
+### Features
+
+* add outputSchema and dot-notation tool names for Smithery AI scoring ([d253884](https://github.com/truss44/mcp-crypto-price/commit/d2538849ffc4f9b89ccd8197057814e8f0adfc20))
+
 ## [3.7.0](https://github.com/truss44/mcp-crypto-price/compare/v3.6.0...v3.7.0) (2026-07-02)
 
 ### Features
