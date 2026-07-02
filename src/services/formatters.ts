@@ -330,11 +330,10 @@ export function formatComparison(assets: CryptoAsset[]): string {
 
 export function formatCandlestickData(
   asset: CryptoAsset,
-  candles: Candle[],
-  exchange: string
+  candles: Candle[]
 ): string {
   if (candles.length === 0) {
-    return `No candlestick data available for ${asset.name} (${asset.symbol}) on ${exchange}.`;
+    return `No candlestick data available for ${asset.name} (${asset.symbol}).`;
   }
 
   const lines = candles.map((c) => {
@@ -348,7 +347,7 @@ export function formatCandlestickData(
   });
 
   return [
-    `Candlestick Data for ${asset.name} (${asset.symbol}) — Exchange: ${exchange}`,
+    `Candlestick Data for ${asset.name} (${asset.symbol})`,
     '',
     ...lines,
   ].join('\n');

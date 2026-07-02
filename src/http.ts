@@ -587,24 +587,13 @@ const serverCard = {
     {
       name: 'analysis-candlestick',
       description:
-        'Get OHLCV candlestick data for a cryptocurrency from a specific exchange. Useful for charting and technical analysis.',
+        'Get OHLCV candlestick data for a cryptocurrency. Useful for charting and technical analysis.',
       inputSchema: {
         type: 'object',
         properties: {
           symbol: {
             type: 'string',
             description: 'Cryptocurrency symbol or name (e.g. BTC or Bitcoin)',
-          },
-          exchange: {
-            type: 'string',
-            default: 'poloniex',
-            description:
-              'Exchange ID (e.g. "poloniex", "bittrex", "kraken", "binance")',
-          },
-          quote: {
-            type: 'string',
-            default: 'usd',
-            description: 'Quote currency ID (e.g. "usd", "usdt", "btc")',
           },
           interval: {
             type: 'string',
@@ -629,7 +618,6 @@ const serverCard = {
         properties: {
           name: { type: 'string' },
           symbol: { type: 'string' },
-          exchange: { type: 'string' },
           candles: {
             type: 'array',
             items: {
@@ -646,7 +634,7 @@ const serverCard = {
             },
           },
         },
-        required: ['name', 'symbol', 'exchange', 'candles'],
+        required: ['name', 'symbol', 'candles'],
       },
       annotations: {
         title: 'Get Candlestick Data',

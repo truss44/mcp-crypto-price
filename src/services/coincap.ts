@@ -388,34 +388,15 @@ export async function getExchange(
   }
 }
 
-const QUOTE_ID_MAP: Record<string, string> = {
-  usd: 'us-dollar',
-  eur: 'euro',
-  gbp: 'british-pound',
-  jpy: 'japanese-yen',
-  usdt: 'tether',
-  usdc: 'usd-coin',
-  btc: 'bitcoin',
-  eth: 'ethereum',
-};
-
-function normalizeQuoteId(quote: string): string {
-  const lower = quote.toLowerCase();
-  return QUOTE_ID_MAP[lower] ?? lower;
-}
-
 export async function getCandles(
-  exchange: string,
-  baseId: string,
-  quoteId: string,
+  assetId: string,
   interval: string,
   start: number,
   end: number
 ): Promise<CandlesResponse | null> {
-  const normalizedQuoteId = normalizeQuoteId(quoteId);
   try {
     return await makeCoinCapRequest<CandlesResponse>(
-      `/candles?exchange=${encodeURIComponent(exchange)}&baseId=${encodeURIComponent(baseId)}&quoteId=${encodeURIComponent(normalizedQuoteId)}&interval=${interval}&start=${start}&end=${end}`,
+      `/ta/${encodeURIComponent(assetId)}/candlesticks?interval=${interval}&start=${start}&end=${end}`,
       CandlesResponseSchema
     );
   } catch (error) {
@@ -423,7 +404,7 @@ export async function getCandles(
     const detail =
       error instanceof Error ? error.message : String(error);
     console.error(
-      `Failed to get candles for ${exchange} ${baseId}/${normalizedQuoteId}:`,
+      `Failed to get candlesticks for ${assetId}:`,
       detail
     );
     return null;

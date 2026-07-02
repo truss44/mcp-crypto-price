@@ -64,7 +64,6 @@ describe('handleGetCandlestickData', () => {
     );
     expect(result.content[0].text).toContain('O: $49000.00');
     expect(result.content[0].text).toContain('C: $50800.00');
-    expect(result.content[0].text).toContain('Exchange: poloniex');
   });
 
   it('should return not-found message for unknown symbol', async () => {
@@ -80,7 +79,6 @@ describe('handleGetCandlestickData', () => {
 
     const result = await handleGetCandlestickData({ symbol: 'BTC' });
     expect(result.content[0].text).toContain('Failed to retrieve candlestick data');
-    expect(result.content[0].text).toContain('Try a different quote currency');
   });
 
   it('should return no-data message when candles array is empty', async () => {

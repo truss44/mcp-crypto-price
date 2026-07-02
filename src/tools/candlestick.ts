@@ -7,16 +7,6 @@ export const GetCandlestickDataSchema = z.object({
     .string()
     .min(1)
     .describe('Cryptocurrency symbol or name (e.g. BTC or Bitcoin)'),
-  exchange: z
-    .string()
-    .default('poloniex')
-    .describe('Exchange ID (e.g. "poloniex", "bittrex", "kraken", "binance")'),
-  quote: z
-    .string()
-    .default('usd')
-    .describe(
-      'Quote currency code (e.g. "usd", "usdt", "btc", "eur"). Common mappings: usd→us-dollar, usdt→tether, usdc→usd-coin. Not all exchanges support all quote currencies — e.g. Binance uses "usdt" not "usd".'
-    ),
   interval: z
     .enum(['m5', 'm15', 'm30', 'h1', 'h2', 'h6', 'h12', 'd1'])
     .default('h1')
@@ -34,7 +24,6 @@ export const GetCandlestickDataSchema = z.object({
 export const CandlestickOutputSchema = z.object({
   name: z.string(),
   symbol: z.string(),
-  exchange: z.string(),
   candles: z.array(
     z.object({
       open: z.string(),
@@ -49,7 +38,7 @@ export const CandlestickOutputSchema = z.object({
 
 export async function handleGetCandlestickData(args: unknown) {
   try {
-    const { symbol, exchange, quote, interval, days } =
+    const { symbol, interval, days } =
       GetCandlestickDataSchema.parse(args);
     const upperSymbol = symbol.toUpperCase();
     const asset = await searchAsset(upperSymbol);
@@ -65,7 +54,6 @@ export async function handleGetCandlestickData(args: unknown) {
         structuredContent: {
           name: '',
           symbol: upperSymbol,
-          exchange,
           candles: [],
         },
       };
@@ -75,9 +63,7 @@ export async function handleGetCandlestickData(args: unknown) {
     const end = now - (now % 60000);
     const start = end - days * 24 * 60 * 60 * 1000;
     const candlesData = await getCandles(
-      exchange,
       asset.id,
-      quote,
       interval,
       start,
       end
@@ -88,13 +74,12 @@ export async function handleGetCandlestickData(args: unknown) {
         content: [
           {
             type: 'text',
-            text: `Failed to retrieve candlestick data for ${asset.name} (${asset.symbol}) on ${exchange} with quote "${quote}". This usually means the exchange does not support this trading pair. Try a different quote currency (e.g. "usdt" for Binance) or a different exchange (e.g. "kraken" supports USD pairs).`,
+            text: `Failed to retrieve candlestick data for ${asset.name} (${asset.symbol}).`,
           },
         ],
         structuredContent: {
           name: asset.name,
           symbol: asset.symbol,
-          exchange,
           candles: [],
         },
       };
@@ -105,13 +90,12 @@ export async function handleGetCandlestickData(args: unknown) {
         content: [
           {
             type: 'text',
-            text: `No candlestick data available for ${asset.name} (${asset.symbol}) on ${exchange} with quote ${quote.toUpperCase()}`,
+            text: `No candlestick data available for ${asset.name} (${asset.symbol})`,
           },
         ],
         structuredContent: {
           name: asset.name,
           symbol: asset.symbol,
-          exchange,
           candles: [],
         },
       };
@@ -121,13 +105,12 @@ export async function handleGetCandlestickData(args: unknown) {
       content: [
         {
           type: 'text',
-          text: formatCandlestickData(asset, candlesData.data, exchange),
+          text: formatCandlestickData(asset, candlesData.data),
         },
       ],
       structuredContent: {
         name: asset.name,
         symbol: asset.symbol,
-        exchange,
         candles: candlesData.data.map((c) => ({
           open: c.open,
           high: c.high,
@@ -151,7 +134,6 @@ export async function handleGetCandlestickData(args: unknown) {
         structuredContent: {
           name: '',
           symbol: '',
-          exchange: '',
           candles: [],
         },
       };
@@ -169,7 +151,6 @@ export async function handleGetCandlestickData(args: unknown) {
       structuredContent: {
         name: '',
         symbol: '',
-        exchange: '',
         candles: [],
       },
     };

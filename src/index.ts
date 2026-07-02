@@ -320,7 +320,7 @@ export function createServer({
     {
       title: 'Get Candlestick Data',
       description:
-        'Get OHLCV candlestick data for a cryptocurrency from a specific exchange. Useful for charting and technical analysis.',
+        'Get OHLCV candlestick data for a cryptocurrency. Useful for charting and technical analysis.',
       inputSchema: GetCandlestickDataSchema.shape,
       outputSchema: CandlestickOutputSchema.shape,
       annotations: {
