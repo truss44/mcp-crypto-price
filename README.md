@@ -244,6 +244,20 @@ The server exposes the following MCP resources:
 - **`info://server`** — Server name and version metadata
 - **`asset://{symbol}`** — Cryptocurrency asset information by symbol (e.g. `asset://BTC`), returned as JSON
 
+## Prompts
+
+The server exposes the following MCP prompts that clients can invoke:
+
+| Prompt | Args | Description |
+|--------|------|-------------|
+| `analyze-crypto` | `symbol` | Comprehensive analysis: price, market, historical trends |
+| `compare-cryptocurrencies` | `symbols` | Compare 2-5 cryptos side-by-side |
+| `market-overview` | — | Global market snapshot: metrics, top assets, top exchanges |
+| `crypto-conversion` | `symbol`, `amount?`, `currency?` | Convert crypto amount to fiat |
+| `exchange-analysis` | `symbol` | Exchange landscape analysis for a crypto |
+| `technical-analysis` | `symbol` | Full technical analysis: indicators, candles, trends |
+| `crypto-screener` | `query` | Search and screen cryptos for opportunities |
+
 ## Sample Prompts
 
 - "What's the current price of Bitcoin?"
@@ -260,6 +274,18 @@ The server exposes the following MCP resources:
 - "Show me 1-hour candlestick data for BTC on Binance over the last 3 days"
 - "Convert 2.5 BTC to EUR"
 - "Get detailed info about the Ethereum asset"
+- "Generate a comprehensive analysis of a cryptocurrency covering price, market, and historical trends"
+- "Find all cryptocurrencies with 'bit' in their name and show me their current prices"
+- "What's the market cap ranking and circulating supply of Cardano?"
+- "Compare the top 3 stablecoins and show which has the highest volume"
+- "Show me how Bitcoin has performed over the past 30 days with daily candles"
+- "Convert 100 SOL to GBP and show the exchange rate"
+- "Give me a full market snapshot: global metrics, top gainers, and BTC dominance"
+- "What are the best and worst performing cryptos in the last 24 hours?"
+- "Show me 15-minute candlestick data for ETH on Coinbase over the last 2 days"
+- "Compare DeFi tokens: UNI, AAVE, COMP, and MKR"
+- "What's the VWAP and max supply of Bitcoin?"
+- "Search for layer-2 tokens and compare the top results"
 
 ## License
 

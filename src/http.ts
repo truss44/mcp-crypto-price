@@ -426,6 +426,36 @@ const serverCard = {
       description:
         'Generate a comprehensive analysis of a cryptocurrency covering price, market, and historical trends',
     },
+    {
+      name: 'compare-cryptocurrencies',
+      description:
+        'Compare 2-5 cryptocurrencies side-by-side covering price, market cap, volume, and 24h performance',
+    },
+    {
+      name: 'market-overview',
+      description:
+        'Get a comprehensive overview of the cryptocurrency market including global metrics, top assets, and top exchanges',
+    },
+    {
+      name: 'crypto-conversion',
+      description:
+        'Convert a cryptocurrency amount to a fiat currency with real-time rates',
+    },
+    {
+      name: 'exchange-analysis',
+      description:
+        'Analyze trading activity for a cryptocurrency across exchanges, including volume distribution and top markets',
+    },
+    {
+      name: 'technical-analysis',
+      description:
+        'Get a full technical analysis of a cryptocurrency including indicators, candlestick patterns, and historical trends',
+    },
+    {
+      name: 'crypto-screener',
+      description:
+        'Search for cryptocurrencies matching a query and screen the results for the best opportunities',
+    },
   ],
 };
 

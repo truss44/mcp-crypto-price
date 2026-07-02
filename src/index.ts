@@ -385,6 +385,197 @@ Summarize the findings including price performance, market liquidity, and any no
     })
   );
 
+  server.registerPrompt(
+    'compare-cryptocurrencies',
+    {
+      title: 'Compare Cryptocurrencies',
+      description:
+        'Compare 2-5 cryptocurrencies side-by-side covering price, market cap, volume, and 24h performance',
+      argsSchema: {
+        symbols: z
+          .string()
+          .describe(
+            'Comma-separated list of 2-5 cryptocurrency symbols (e.g. BTC,ETH,SOL)'
+          ),
+      },
+    },
+    ({ symbols }) => ({
+      messages: [
+        {
+          role: 'user',
+          content: {
+            type: 'text',
+            text: `Please compare the following cryptocurrencies: ${symbols}. Use the available tools to:
+1. Get the current price and 24h stats for each
+2. Compare them side-by-side including price, market cap, volume, and rank
+3. Highlight the best and worst performers over the last 24 hours
+
+Provide a clear comparison table and identify which crypto has the strongest momentum.`,
+          },
+        },
+      ],
+    })
+  );
+
+  server.registerPrompt(
+    'market-overview',
+    {
+      title: 'Market Overview',
+      description:
+        'Get a comprehensive overview of the cryptocurrency market including global metrics, top assets, and top exchanges',
+    },
+    () => ({
+      messages: [
+        {
+          role: 'user',
+          content: {
+            type: 'text',
+            text: `Please provide a comprehensive overview of the cryptocurrency market. Use the available tools to:
+1. Get global market metrics including total market cap, volume, and BTC dominance
+2. Get the top 10 assets by market cap
+3. Get the top exchanges by 24h volume
+
+Summarize the current state of the market, highlighting any notable trends.`,
+          },
+        },
+      ],
+    })
+  );
+
+  server.registerPrompt(
+    'crypto-conversion',
+    {
+      title: 'Crypto Conversion',
+      description:
+        'Convert a cryptocurrency amount to a fiat currency with real-time rates',
+      argsSchema: {
+        symbol: z
+          .string()
+          .describe('Cryptocurrency symbol (e.g. BTC, ETH, SOL)'),
+        amount: z
+          .number()
+          .optional()
+          .describe('Amount to convert (default: 1)'),
+        currency: z
+          .string()
+          .optional()
+          .describe('Target fiat currency code (e.g. USD, EUR, JPY, GBP)'),
+      },
+    },
+    ({ symbol, amount, currency }) => {
+      const amt = amount ?? 1;
+      const cur = currency ?? 'USD';
+      return {
+        messages: [
+          {
+            role: 'user',
+            content: {
+              type: 'text',
+              text: `Please convert ${amt} ${symbol.toUpperCase()} to ${cur.toUpperCase()}. Use the available tools to:
+1. Get the current price of ${symbol.toUpperCase()}
+2. Get the USD-to-${cur.toUpperCase()} exchange rate
+3. Calculate the converted amount
+
+Show the exchange rate and final converted value clearly.`,
+            },
+          },
+        ],
+      };
+    }
+  );
+
+  server.registerPrompt(
+    'exchange-analysis',
+    {
+      title: 'Exchange Analysis',
+      description:
+        'Analyze trading activity for a cryptocurrency across exchanges, including volume distribution and top markets',
+      argsSchema: {
+        symbol: z
+          .string()
+          .describe('Cryptocurrency symbol or name (e.g. BTC, ETH, Bitcoin)'),
+      },
+    },
+    ({ symbol }) => ({
+      messages: [
+        {
+          role: 'user',
+          content: {
+            type: 'text',
+            text: `Please analyze the exchange landscape for ${symbol}. Use the available tools to:
+1. Get market analysis showing the top exchanges trading ${symbol.toUpperCase()}
+2. Get the top exchanges by overall 24h volume
+3. Identify which exchanges have the best liquidity for ${symbol.toUpperCase()}
+
+Summarize the findings including volume distribution and recommended exchanges for trading ${symbol.toUpperCase()}.`,
+          },
+        },
+      ],
+    })
+  );
+
+  server.registerPrompt(
+    'technical-analysis',
+    {
+      title: 'Technical Analysis',
+      description:
+        'Get a full technical analysis of a cryptocurrency including indicators, candlestick patterns, and historical trends',
+      argsSchema: {
+        symbol: z
+          .string()
+          .describe('Cryptocurrency symbol or name (e.g. BTC, ETH, Bitcoin)'),
+      },
+    },
+    ({ symbol }) => ({
+      messages: [
+        {
+          role: 'user',
+          content: {
+            type: 'text',
+            text: `Please perform a comprehensive technical analysis of ${symbol}. Use the available tools to:
+1. Get the latest technical indicators (SMA, EMA, RSI, MACD, VWAP)
+2. Get candlestick data over the last 7 days with daily intervals
+3. Get historical price trends over the past 14 days
+
+Summarize the technical outlook: is ${symbol.toUpperCase()} bullish or bearish? What do the indicators suggest?`,
+          },
+        },
+      ],
+    })
+  );
+
+  server.registerPrompt(
+    'crypto-screener',
+    {
+      title: 'Crypto Screener',
+      description:
+        'Search for cryptocurrencies matching a query and screen the results for the best opportunities',
+      argsSchema: {
+        query: z
+          .string()
+          .describe(
+            'Search query — name, symbol, or partial match (e.g. "bit", "defi", "layer")'
+          ),
+      },
+    },
+    ({ query }) => ({
+      messages: [
+        {
+          role: 'user',
+          content: {
+            type: 'text',
+            text: `Please screen cryptocurrencies matching "${query}". Use the available tools to:
+1. Search for assets matching "${query}"
+2. Get detailed info for the top 3 results including price, market cap, rank, and supply
+3. Compare them side-by-side
+
+Identify which of the results have the strongest fundamentals and price performance.`,
+          },
+        },
+      ],
+    })
+  );
+
   // Register a no-op resource so the server advertises resources capability
   // during the MCP initialize handshake. Without this, clients may receive
   // -32601 "Method not found" errors for resources/list.
