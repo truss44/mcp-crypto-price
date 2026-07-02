@@ -9,6 +9,20 @@ export const GetAssetInfoSchema = z.object({
     .describe('Cryptocurrency symbol or name (e.g. BTC or Bitcoin)'),
 });
 
+export const AssetInfoOutputSchema = z.object({
+  id: z.string(),
+  rank: z.string().nullable(),
+  symbol: z.string(),
+  name: z.string(),
+  priceUsd: z.string(),
+  changePercent24Hr: z.string().nullable(),
+  marketCapUsd: z.string().nullable(),
+  volumeUsd24Hr: z.string().nullable(),
+  supply: z.string().nullable(),
+  maxSupply: z.string().nullable(),
+  vwap24Hr: z.string().nullable(),
+});
+
 export async function handleGetAssetInfo(args: unknown) {
   try {
     const { symbol } = GetAssetInfoSchema.parse(args);
@@ -29,6 +43,19 @@ export async function handleGetAssetInfo(args: unknown) {
 
     return {
       content: [{ type: 'text', text: formatAssetInfo(asset) }],
+      structuredContent: {
+        id: asset.id,
+        rank: asset.rank,
+        symbol: asset.symbol,
+        name: asset.name,
+        priceUsd: asset.priceUsd,
+        changePercent24Hr: asset.changePercent24Hr,
+        marketCapUsd: asset.marketCapUsd,
+        volumeUsd24Hr: asset.volumeUsd24Hr,
+        supply: asset.supply,
+        maxSupply: asset.maxSupply,
+        vwap24Hr: asset.vwap24Hr,
+      },
     };
   } catch (error) {
     if (error instanceof ZodError) {

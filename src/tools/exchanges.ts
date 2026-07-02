@@ -21,6 +21,20 @@ export const GetExchangesSchema = z.object({
     ),
 });
 
+export const ExchangesOutputSchema = z.object({
+  exchanges: z.array(
+    z.object({
+      exchangeId: z.string(),
+      name: z.string(),
+      rank: z.string(),
+      percentTotalVolume: z.string().nullable(),
+      volumeUsd: z.string().nullable(),
+      tradingPairs: z.string().nullable(),
+      socket: z.boolean().nullable(),
+    })
+  ),
+});
+
 export async function handleGetExchanges(args: unknown) {
   const { exchangeId, limit = 10 } = GetExchangesSchema.parse(args);
 
@@ -41,6 +55,19 @@ export async function handleGetExchanges(args: unknown) {
 
       return {
         content: [{ type: 'text', text: formatExchange(exchange) }],
+        structuredContent: {
+          exchanges: [
+            {
+              exchangeId: exchange.exchangeId,
+              name: exchange.name,
+              rank: exchange.rank,
+              percentTotalVolume: exchange.percentTotalVolume,
+              volumeUsd: exchange.volumeUsd,
+              tradingPairs: exchange.tradingPairs,
+              socket: exchange.socket,
+            },
+          ],
+        },
       };
     }
 
@@ -56,6 +83,17 @@ export async function handleGetExchanges(args: unknown) {
       content: [
         { type: 'text', text: formatExchanges(exchanges.slice(0, limit)) },
       ],
+      structuredContent: {
+        exchanges: exchanges.slice(0, limit).map((ex) => ({
+          exchangeId: ex.exchangeId,
+          name: ex.name,
+          rank: ex.rank,
+          percentTotalVolume: ex.percentTotalVolume,
+          volumeUsd: ex.volumeUsd,
+          tradingPairs: ex.tradingPairs,
+          socket: ex.socket,
+        })),
+      },
     };
   } catch (error) {
     return {

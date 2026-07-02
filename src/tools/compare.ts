@@ -12,6 +12,21 @@ export const CompareCryptoSchema = z.object({
     ),
 });
 
+export const CompareOutputSchema = z.object({
+  assets: z.array(
+    z.object({
+      name: z.string(),
+      symbol: z.string(),
+      priceUsd: z.string(),
+      changePercent24Hr: z.string().nullable(),
+      volumeUsd24Hr: z.string().nullable(),
+      marketCapUsd: z.string().nullable(),
+      rank: z.string().nullable(),
+    })
+  ),
+  notFound: z.array(z.string()),
+});
+
 export async function handleCompareCrypto(args: unknown) {
   try {
     const { symbols } = CompareCryptoSchema.parse(args);
@@ -61,6 +76,18 @@ export async function handleCompareCrypto(args: unknown) {
 
     return {
       content: [{ type: 'text', text: output }],
+      structuredContent: {
+        assets: results.map((a) => ({
+          name: a.name,
+          symbol: a.symbol,
+          priceUsd: a.priceUsd,
+          changePercent24Hr: a.changePercent24Hr,
+          volumeUsd24Hr: a.volumeUsd24Hr,
+          marketCapUsd: a.marketCapUsd,
+          rank: a.rank,
+        })),
+        notFound,
+      },
     };
   } catch (error) {
     if (error instanceof ZodError) {

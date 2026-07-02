@@ -9,6 +9,22 @@ export const GetMarketAnalysisSchema = z.object({
     .describe('Cryptocurrency symbol or name (e.g. BTC or Bitcoin)'),
 });
 
+export const MarketAnalysisOutputSchema = z.object({
+  name: z.string(),
+  symbol: z.string(),
+  priceUsd: z.string(),
+  volumeUsd24Hr: z.string().nullable(),
+  vwap24Hr: z.string().nullable(),
+  topMarkets: z.array(
+    z.object({
+      exchangeId: z.string(),
+      priceUsd: z.string(),
+      volumeUsd24Hr: z.string(),
+      volumePercent: z.string(),
+    })
+  ),
+});
+
 export async function handleGetMarketAnalysis(args: unknown) {
   const { symbol } = GetMarketAnalysisSchema.parse(args);
   const upperSymbol = symbol.toUpperCase();
@@ -35,10 +51,35 @@ export async function handleGetMarketAnalysis(args: unknown) {
       };
     }
 
+    const totalVolume = marketsData.data.reduce(
+      (sum, market) => sum + parseFloat(market.volumeUsd24Hr),
+      0
+    );
+    const topMarkets = marketsData.data
+      .sort((a, b) => parseFloat(b.volumeUsd24Hr) - parseFloat(a.volumeUsd24Hr))
+      .slice(0, 5)
+      .map((market) => ({
+        exchangeId: market.exchangeId,
+        priceUsd: market.priceUsd,
+        volumeUsd24Hr: market.volumeUsd24Hr,
+        volumePercent: (
+          (parseFloat(market.volumeUsd24Hr) / totalVolume) *
+          100
+        ).toFixed(2),
+      }));
+
     return {
       content: [
         { type: 'text', text: formatMarketAnalysis(asset, marketsData.data) },
       ],
+      structuredContent: {
+        name: asset.name,
+        symbol: asset.symbol,
+        priceUsd: asset.priceUsd,
+        volumeUsd24Hr: asset.volumeUsd24Hr,
+        vwap24Hr: asset.vwap24Hr,
+        topMarkets,
+      },
     };
   } catch (error) {
     return {
