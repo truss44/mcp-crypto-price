@@ -1,4 +1,5 @@
 import type {
+  Candle,
   CryptoAsset,
   Exchange,
   HistoricalData,
@@ -250,5 +251,150 @@ export function formatHistoricalAnalysis(
     '\nVolatility Analysis:',
     `Price Range: $${formatPrice(highestPrice - lowestPrice)}`,
     `Range Percentage: ${(((highestPrice - lowestPrice) / lowestPrice) * 100).toFixed(2)}%`,
+  ].join('\n');
+}
+
+export function formatSearchResults(assets: CryptoAsset[]): string {
+  if (assets.length === 0) {
+    return 'No matching cryptocurrencies found.';
+  }
+
+  const lines = assets.map((asset) => {
+    const price = formatPrice(parseFloat(asset.priceUsd));
+    const rankStr = asset.rank != null ? `#${asset.rank} ` : '';
+    return `${rankStr}${asset.name} (${asset.symbol}) — ID: ${asset.id} — $${price}`;
+  });
+
+  return ['Search Results', '', ...lines].join('\n');
+}
+
+export function formatGlobalMetrics(assets: CryptoAsset[]): string {
+  const totalMarketCap = assets.reduce(
+    (sum, a) => sum + parseFloat(a.marketCapUsd || '0'),
+    0
+  );
+  const totalVolume = assets.reduce(
+    (sum, a) => sum + parseFloat(a.volumeUsd24Hr || '0'),
+    0
+  );
+  const btc = assets.find((a) => a.symbol.toUpperCase() === 'BTC');
+  const btcDominance =
+    btc && totalMarketCap > 0
+      ? ((parseFloat(btc.marketCapUsd || '0') / totalMarketCap) * 100).toFixed(
+          2
+        )
+      : 'N/A';
+
+  return [
+    'Global Crypto Market Overview',
+    '',
+    `Total Market Cap: $${(totalMarketCap / 1_000_000_000_000).toFixed(2)}T`,
+    `Total 24h Volume: $${(totalVolume / 1_000_000_000_000).toFixed(2)}T`,
+    `BTC Dominance: ${btcDominance}%`,
+    `Active Cryptocurrencies: ${assets.length}`,
+  ].join('\n');
+}
+
+export function formatComparison(assets: CryptoAsset[]): string {
+  const header = [
+    'Asset'.padEnd(20),
+    'Price'.padEnd(14),
+    '24h Change'.padEnd(12),
+    'Volume'.padEnd(14),
+    'Market Cap'.padEnd(14),
+    'Rank',
+  ].join('');
+
+  const separator = '-'.repeat(header.length);
+
+  const rows = assets.map((a) => {
+    const price = `$${formatPrice(parseFloat(a.priceUsd))}`;
+    const change = `${parseFloat(a.changePercent24Hr || '0').toFixed(2)}%`;
+    const volume = `$${(parseFloat(a.volumeUsd24Hr || '0') / 1_000_000).toFixed(0)}M`;
+    const marketCap = `$${(parseFloat(a.marketCapUsd || '0') / 1_000_000_000).toFixed(2)}B`;
+    const rank = a.rank != null ? `#${a.rank}` : 'N/A';
+    return [
+      `${a.name} (${a.symbol})`.padEnd(20),
+      price.padEnd(14),
+      change.padEnd(12),
+      volume.padEnd(14),
+      marketCap.padEnd(14),
+      rank,
+    ].join('');
+  });
+
+  return ['Cryptocurrency Comparison', '', header, separator, ...rows].join(
+    '\n'
+  );
+}
+
+export function formatCandlestickData(
+  asset: CryptoAsset,
+  candles: Candle[],
+  exchange: string
+): string {
+  if (candles.length === 0) {
+    return `No candlestick data available for ${asset.name} (${asset.symbol}) on ${exchange}.`;
+  }
+
+  const lines = candles.map((c) => {
+    const date = new Date(c.period).toISOString().split('T')[0];
+    const open = formatPrice(parseFloat(c.open));
+    const high = formatPrice(parseFloat(c.high));
+    const low = formatPrice(parseFloat(c.low));
+    const close = formatPrice(parseFloat(c.close));
+    const volume = (parseFloat(c.volume) / 1_000_000).toFixed(2);
+    return `${date} | O: $${open} | H: $${high} | L: $${low} | C: $${close} | Vol: ${volume}M`;
+  });
+
+  return [
+    `Candlestick Data for ${asset.name} (${asset.symbol}) — Exchange: ${exchange}`,
+    '',
+    ...lines,
+  ].join('\n');
+}
+
+export function formatPriceConversion(
+  fromSymbol: string,
+  fromAmount: number,
+  toCurrency: string,
+  rate: number
+): string {
+  const converted = fromAmount * rate;
+  return [
+    'Price Conversion',
+    '',
+    `${fromAmount} ${fromSymbol.toUpperCase()} = ${formatPrice(converted)} ${toCurrency.toUpperCase()}`,
+    `Exchange Rate: 1 ${fromSymbol.toUpperCase()} = ${formatPrice(rate)} ${toCurrency.toUpperCase()}`,
+  ].join('\n');
+}
+
+export function formatAssetInfo(asset: CryptoAsset): string {
+  const price = formatPrice(parseFloat(asset.priceUsd));
+  const change = parseFloat(asset.changePercent24Hr || '0').toFixed(2);
+  const volume = (
+    parseFloat(asset.volumeUsd24Hr || '0') / 1_000_000_000
+  ).toFixed(2);
+  const marketCap = (
+    parseFloat(asset.marketCapUsd || '0') / 1_000_000_000
+  ).toFixed(2);
+  const supply = parseFloat(asset.supply || '0').toLocaleString();
+  const maxSupply = asset.maxSupply
+    ? parseFloat(asset.maxSupply).toLocaleString()
+    : 'Unlimited';
+  const vwap = asset.vwap24Hr ? formatPrice(parseFloat(asset.vwap24Hr)) : 'N/A';
+
+  return [
+    `Asset Information: ${asset.name} (${asset.symbol})`,
+    '',
+    `ID: ${asset.id}`,
+    `Rank: #${asset.rank ?? 'N/A'}`,
+    `Price: $${price}`,
+    `24h Change: ${change}%`,
+    `Market Cap: $${marketCap}B`,
+    `24h Volume: $${volume}B`,
+    `Supply: ${supply}`,
+    `Max Supply: ${maxSupply}`,
+    `VWAP (24h): ${vwap === 'N/A' ? 'N/A' : `$${vwap}`}`,
   ].join('\n');
 }

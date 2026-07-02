@@ -49,6 +49,8 @@ const serverCard = {
   serverInfo: {
     name: SERVER_CONFIG.name,
     version: SERVER_CONFIG.version,
+    description:
+      'A Model Context Protocol server providing cryptocurrency price, market, and on-chain data from CoinCap.',
   },
   tools: [
     {
@@ -227,12 +229,194 @@ const serverCard = {
         openWorldHint: true,
       },
     },
+    {
+      name: 'search-assets',
+      description:
+        'Search for cryptocurrencies by name, symbol, or partial match. Returns multiple matching assets with their ID, name, symbol, rank, and current price.',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          query: {
+            type: 'string',
+            description:
+              'Search query — cryptocurrency name, symbol, or partial match (e.g. "bit", "eth", "doge")',
+          },
+          limit: {
+            type: 'number',
+            minimum: 1,
+            maximum: 50,
+            default: 10,
+            description:
+              'Maximum number of results to return (1-50, default 10)',
+          },
+        },
+        required: ['query'],
+      },
+      annotations: {
+        title: 'Search Crypto Assets',
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: true,
+      },
+    },
+    {
+      name: 'get-global-metrics',
+      description:
+        'Get a global overview of the cryptocurrency market including total market capitalization, 24-hour trading volume, Bitcoin dominance percentage, and the number of active cryptocurrencies.',
+      inputSchema: {
+        type: 'object',
+      },
+      annotations: {
+        title: 'Get Global Metrics',
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: true,
+      },
+    },
+    {
+      name: 'compare-crypto',
+      description:
+        'Compare 2-5 cryptocurrencies side-by-side including price, 24h change, volume, market cap, and rank. Pass symbols as a comma-separated list (e.g. "BTC,ETH,SOL").',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          symbols: {
+            type: 'string',
+            description:
+              'Comma-separated list of 2-5 cryptocurrency symbols or names to compare (e.g. "BTC,ETH,SOL")',
+          },
+        },
+        required: ['symbols'],
+      },
+      annotations: {
+        title: 'Compare Cryptocurrencies',
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: true,
+      },
+    },
+    {
+      name: 'get-candlestick-data',
+      description:
+        'Get OHLCV candlestick data for a cryptocurrency from a specific exchange. Useful for charting and technical analysis.',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          symbol: {
+            type: 'string',
+            description: 'Cryptocurrency symbol or name (e.g. BTC or Bitcoin)',
+          },
+          exchange: {
+            type: 'string',
+            default: 'poloniex',
+            description:
+              'Exchange ID (e.g. "poloniex", "bittrex", "kraken", "binance")',
+          },
+          quote: {
+            type: 'string',
+            default: 'usd',
+            description: 'Quote currency ID (e.g. "usd", "usdt", "btc")',
+          },
+          interval: {
+            type: 'string',
+            enum: ['m5', 'm15', 'm30', 'h1', 'h2', 'h6', 'h12', 'd1'],
+            default: 'h1',
+            description:
+              'Candle interval: m5=5min, m15=15min, m30=30min, h1=1hr, h2=2hr, h6=6hr, h12=12hr, d1=daily',
+          },
+          days: {
+            type: 'number',
+            minimum: 1,
+            maximum: 30,
+            default: 1,
+            description:
+              'Number of days of candlestick data to retrieve (1-30)',
+          },
+        },
+        required: ['symbol'],
+      },
+      annotations: {
+        title: 'Get Candlestick Data',
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: true,
+      },
+    },
+    {
+      name: 'get-price-conversion',
+      description:
+        'Convert a cryptocurrency amount to any fiat currency (e.g. USD, EUR, JPY). Uses real-time exchange rates for accurate conversions.',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          symbol: {
+            type: 'string',
+            description:
+              'Cryptocurrency symbol to convert from (e.g. BTC, ETH)',
+          },
+          amount: {
+            type: 'number',
+            minimum: 0,
+            exclusiveMinimum: 0,
+            default: 1,
+            description: 'Amount of the cryptocurrency to convert (default 1)',
+          },
+          currency: {
+            type: 'string',
+            default: 'usd',
+            description:
+              'Target currency code (e.g. "usd", "eur", "gbp", "jpy")',
+          },
+        },
+        required: ['symbol'],
+      },
+      annotations: {
+        title: 'Get Price Conversion',
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: true,
+      },
+    },
+    {
+      name: 'get-asset-info',
+      description:
+        'Get detailed metadata for a cryptocurrency including ID, rank, supply, max supply, VWAP, market cap, and 24h volume.',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          symbol: {
+            type: 'string',
+            description: 'Cryptocurrency symbol or name (e.g. BTC or Bitcoin)',
+          },
+        },
+        required: ['symbol'],
+      },
+      annotations: {
+        title: 'Get Asset Info',
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: true,
+      },
+    },
   ],
   resources: [
     {
       name: 'server-info',
       uri: 'info://server',
       description: 'Basic server information',
+      mimeType: 'application/json',
+    },
+    {
+      name: 'asset-info',
+      uri: 'asset://{symbol}',
+      description:
+        'Cryptocurrency asset information by symbol (e.g. asset://BTC)',
       mimeType: 'application/json',
     },
   ],
