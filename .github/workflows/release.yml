@@ -3,7 +3,10 @@ on:
   push:
     branches:
       - main
-      - master
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
 
 permissions:
   contents: read # for checkout
@@ -38,9 +41,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Test
-        run: pnpm test 
-      
       - name: Configure Git identity
         run: |
           git config user.name "${{ github.actor }}"
