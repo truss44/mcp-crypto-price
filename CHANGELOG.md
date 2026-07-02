@@ -1,3 +1,9 @@
+## [5.1.0](https://github.com/truss44/mcp-crypto-price/compare/v5.0.4...v5.1.0) (2026-07-02)
+
+### Features
+
+* update homepage to showcase all tools and prompts ([#212](https://github.com/truss44/mcp-crypto-price/issues/212)) ([b01df72](https://github.com/truss44/mcp-crypto-price/commit/b01df72f9140132d734b5dd253c9b1f6e8e48bc0))
+
 ## [5.0.4](https://github.com/truss44/mcp-crypto-price/compare/v5.0.3...v5.0.4) (2026-07-02)
 
 ### Bug Fixes
