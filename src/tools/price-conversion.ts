@@ -19,6 +19,14 @@ export const GetPriceConversionSchema = z.object({
     .describe('Target currency code (e.g. "usd", "eur", "gbp", "jpy")'),
 });
 
+export const PriceConversionOutputSchema = z.object({
+  fromSymbol: z.string(),
+  amount: z.number(),
+  toCurrency: z.string(),
+  conversionRate: z.number(),
+  convertedAmount: z.number(),
+});
+
 export async function handleGetPriceConversion(args: unknown) {
   try {
     const { symbol, amount, currency } = GetPriceConversionSchema.parse(args);
@@ -75,6 +83,13 @@ export async function handleGetPriceConversion(args: unknown) {
           ),
         },
       ],
+      structuredContent: {
+        fromSymbol: upperSymbol,
+        amount,
+        toCurrency: upperCurrency,
+        conversionRate,
+        convertedAmount: amount * conversionRate,
+      },
     };
   } catch (error) {
     if (error instanceof ZodError) {

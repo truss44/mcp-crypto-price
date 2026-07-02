@@ -11,6 +11,18 @@ export const GetRatesSchema = z.object({
     ),
 });
 
+export const RatesOutputSchema = z.object({
+  rates: z.array(
+    z.object({
+      id: z.string(),
+      symbol: z.string(),
+      currencySymbol: z.string().nullable(),
+      type: z.string(),
+      rateUsd: z.string(),
+    })
+  ),
+});
+
 export async function handleGetRates(args: unknown) {
   const { slug } = GetRatesSchema.parse(args);
 
@@ -31,6 +43,17 @@ export async function handleGetRates(args: unknown) {
 
       return {
         content: [{ type: 'text', text: formatRate(rate) }],
+        structuredContent: {
+          rates: [
+            {
+              id: rate.id,
+              symbol: rate.symbol,
+              currencySymbol: rate.currencySymbol,
+              type: rate.type,
+              rateUsd: rate.rateUsd,
+            },
+          ],
+        },
       };
     }
 
@@ -44,6 +67,15 @@ export async function handleGetRates(args: unknown) {
 
     return {
       content: [{ type: 'text', text: formatRates(rates) }],
+      structuredContent: {
+        rates: rates.map((r) => ({
+          id: r.id,
+          symbol: r.symbol,
+          currencySymbol: r.currencySymbol,
+          type: r.type,
+          rateUsd: r.rateUsd,
+        })),
+      },
     };
   } catch (error) {
     return {

@@ -54,7 +54,7 @@ const serverCard = {
   },
   tools: [
     {
-      name: 'get-crypto-price',
+      name: 'price.get',
       description: 'Get current price and 24h stats for a cryptocurrency',
       inputSchema: {
         type: 'object',
@@ -66,6 +66,27 @@ const serverCard = {
         },
         required: ['symbol'],
       },
+      outputSchema: {
+        type: 'object',
+        properties: {
+          name: { type: 'string' },
+          symbol: { type: 'string' },
+          priceUsd: { type: 'string' },
+          changePercent24Hr: { type: ['string', 'null'] },
+          volumeUsd24Hr: { type: ['string', 'null'] },
+          marketCapUsd: { type: ['string', 'null'] },
+          rank: { type: ['string', 'null'] },
+        },
+        required: [
+          'name',
+          'symbol',
+          'priceUsd',
+          'changePercent24Hr',
+          'volumeUsd24Hr',
+          'marketCapUsd',
+          'rank',
+        ],
+      },
       annotations: {
         title: 'Get Crypto Price',
         readOnlyHint: true,
@@ -75,7 +96,7 @@ const serverCard = {
       },
     },
     {
-      name: 'get-market-analysis',
+      name: 'market.analysis',
       description:
         'Get detailed market analysis including top exchanges and volume distribution',
       inputSchema: {
@@ -88,6 +109,42 @@ const serverCard = {
         },
         required: ['symbol'],
       },
+      outputSchema: {
+        type: 'object',
+        properties: {
+          name: { type: 'string' },
+          symbol: { type: 'string' },
+          priceUsd: { type: 'string' },
+          volumeUsd24Hr: { type: ['string', 'null'] },
+          vwap24Hr: { type: ['string', 'null'] },
+          topMarkets: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                exchangeId: { type: 'string' },
+                priceUsd: { type: 'string' },
+                volumeUsd24Hr: { type: 'string' },
+                volumePercent: { type: 'string' },
+              },
+              required: [
+                'exchangeId',
+                'priceUsd',
+                'volumeUsd24Hr',
+                'volumePercent',
+              ],
+            },
+          },
+        },
+        required: [
+          'name',
+          'symbol',
+          'priceUsd',
+          'volumeUsd24Hr',
+          'vwap24Hr',
+          'topMarkets',
+        ],
+      },
       annotations: {
         title: 'Get Market Analysis',
         readOnlyHint: true,
@@ -97,7 +154,7 @@ const serverCard = {
       },
     },
     {
-      name: 'get-historical-analysis',
+      name: 'analysis.historical',
       description: 'Get historical price analysis with customizable timeframe',
       inputSchema: {
         type: 'object',
@@ -123,6 +180,31 @@ const serverCard = {
         },
         required: ['symbol'],
       },
+      outputSchema: {
+        type: 'object',
+        properties: {
+          name: { type: 'string' },
+          symbol: { type: 'string' },
+          periodHigh: { type: 'number' },
+          periodLow: { type: 'number' },
+          priceChangePercent: { type: 'string' },
+          currentPrice: { type: 'number' },
+          startingPrice: { type: 'number' },
+          priceRange: { type: 'number' },
+          rangePercentage: { type: 'string' },
+        },
+        required: [
+          'name',
+          'symbol',
+          'periodHigh',
+          'periodLow',
+          'priceChangePercent',
+          'currentPrice',
+          'startingPrice',
+          'priceRange',
+          'rangePercentage',
+        ],
+      },
       annotations: {
         title: 'Get Historical Analysis',
         readOnlyHint: true,
@@ -132,7 +214,7 @@ const serverCard = {
       },
     },
     {
-      name: 'get-top-assets',
+      name: 'assets.top',
       description: 'Get top cryptocurrencies ranked by market cap',
       inputSchema: {
         type: 'object',
@@ -147,6 +229,36 @@ const serverCard = {
           },
         },
       },
+      outputSchema: {
+        type: 'object',
+        properties: {
+          assets: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                id: { type: 'string' },
+                rank: { type: ['string', 'null'] },
+                symbol: { type: 'string' },
+                name: { type: 'string' },
+                priceUsd: { type: 'string' },
+                changePercent24Hr: { type: ['string', 'null'] },
+                marketCapUsd: { type: ['string', 'null'] },
+              },
+              required: [
+                'id',
+                'rank',
+                'symbol',
+                'name',
+                'priceUsd',
+                'changePercent24Hr',
+                'marketCapUsd',
+              ],
+            },
+          },
+        },
+        required: ['assets'],
+      },
       annotations: {
         title: 'Get Top Assets',
         readOnlyHint: true,
@@ -156,7 +268,7 @@ const serverCard = {
       },
     },
     {
-      name: 'get-technical-analysis',
+      name: 'analysis.technical',
       description:
         'Get the latest technical indicators for a cryptocurrency including SMA, EMA, RSI, MACD, and VWAP',
       inputSchema: {
@@ -169,6 +281,61 @@ const serverCard = {
         },
         required: ['symbol'],
       },
+      outputSchema: {
+        type: 'object',
+        properties: {
+          name: { type: 'string' },
+          symbol: { type: 'string' },
+          currentPrice: { type: 'string' },
+          sma: {
+            type: ['object', 'null'],
+            properties: {
+              period: { type: 'number' },
+              value: { type: 'string' },
+            },
+          },
+          ema: {
+            type: ['object', 'null'],
+            properties: {
+              period: { type: 'number' },
+              value: { type: 'string' },
+            },
+          },
+          rsi: {
+            type: ['object', 'null'],
+            properties: {
+              period: { type: 'number' },
+              value: { type: 'string' },
+              signal: { type: 'string' },
+            },
+          },
+          macd: {
+            type: ['object', 'null'],
+            properties: {
+              value: { type: 'string' },
+              signal: { type: 'string' },
+              histogram: { type: 'string' },
+              signalLabel: { type: 'string' },
+            },
+          },
+          vwap: {
+            type: ['object', 'null'],
+            properties: {
+              value: { type: 'string' },
+            },
+          },
+        },
+        required: [
+          'name',
+          'symbol',
+          'currentPrice',
+          'sma',
+          'ema',
+          'rsi',
+          'macd',
+          'vwap',
+        ],
+      },
       annotations: {
         title: 'Get Technical Analysis',
         readOnlyHint: true,
@@ -178,7 +345,7 @@ const serverCard = {
       },
     },
     {
-      name: 'get-rates',
+      name: 'market.rates',
       description:
         "Get USD-based conversion rates for fiat currencies and cryptocurrencies. Optionally pass a slug (e.g. 'euro', 'us-dollar', 'bitcoin') to look up a single rate.",
       inputSchema: {
@@ -191,6 +358,26 @@ const serverCard = {
           },
         },
       },
+      outputSchema: {
+        type: 'object',
+        properties: {
+          rates: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                id: { type: 'string' },
+                symbol: { type: 'string' },
+                currencySymbol: { type: ['string', 'null'] },
+                type: { type: 'string' },
+                rateUsd: { type: 'string' },
+              },
+              required: ['id', 'symbol', 'currencySymbol', 'type', 'rateUsd'],
+            },
+          },
+        },
+        required: ['rates'],
+      },
       annotations: {
         title: 'Get Currency Rates',
         readOnlyHint: true,
@@ -200,7 +387,7 @@ const serverCard = {
       },
     },
     {
-      name: 'get-exchanges',
+      name: 'market.exchanges',
       description:
         "Get top cryptocurrency exchanges ranked by 24h volume. Optionally pass an exchangeId (e.g. 'binance', 'coinbase') to get details for a specific exchange.",
       inputSchema: {
@@ -221,6 +408,36 @@ const serverCard = {
           },
         },
       },
+      outputSchema: {
+        type: 'object',
+        properties: {
+          exchanges: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                exchangeId: { type: 'string' },
+                name: { type: 'string' },
+                rank: { type: 'string' },
+                percentTotalVolume: { type: ['string', 'null'] },
+                volumeUsd: { type: ['string', 'null'] },
+                tradingPairs: { type: ['string', 'null'] },
+                socket: { type: ['boolean', 'null'] },
+              },
+              required: [
+                'exchangeId',
+                'name',
+                'rank',
+                'percentTotalVolume',
+                'volumeUsd',
+                'tradingPairs',
+                'socket',
+              ],
+            },
+          },
+        },
+        required: ['exchanges'],
+      },
       annotations: {
         title: 'Get Exchanges',
         readOnlyHint: true,
@@ -230,7 +447,7 @@ const serverCard = {
       },
     },
     {
-      name: 'search-assets',
+      name: 'assets.search',
       description:
         'Search for cryptocurrencies by name, symbol, or partial match. Returns multiple matching assets with their ID, name, symbol, rank, and current price.',
       inputSchema: {
@@ -252,6 +469,26 @@ const serverCard = {
         },
         required: ['query'],
       },
+      outputSchema: {
+        type: 'object',
+        properties: {
+          results: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                id: { type: 'string' },
+                rank: { type: ['string', 'null'] },
+                symbol: { type: 'string' },
+                name: { type: 'string' },
+                priceUsd: { type: 'string' },
+              },
+              required: ['id', 'rank', 'symbol', 'name', 'priceUsd'],
+            },
+          },
+        },
+        required: ['results'],
+      },
       annotations: {
         title: 'Search Crypto Assets',
         readOnlyHint: true,
@@ -261,11 +498,26 @@ const serverCard = {
       },
     },
     {
-      name: 'get-global-metrics',
+      name: 'market.global',
       description:
         'Get a global overview of the cryptocurrency market including total market capitalization, 24-hour trading volume, Bitcoin dominance percentage, and the number of active cryptocurrencies.',
       inputSchema: {
         type: 'object',
+      },
+      outputSchema: {
+        type: 'object',
+        properties: {
+          totalMarketCap: { type: 'number' },
+          totalVolume: { type: 'number' },
+          btcDominance: { type: 'string' },
+          activeCryptocurrencies: { type: 'number' },
+        },
+        required: [
+          'totalMarketCap',
+          'totalVolume',
+          'btcDominance',
+          'activeCryptocurrencies',
+        ],
       },
       annotations: {
         title: 'Get Global Metrics',
@@ -276,7 +528,7 @@ const serverCard = {
       },
     },
     {
-      name: 'compare-crypto',
+      name: 'assets.compare',
       description:
         'Compare 2-5 cryptocurrencies side-by-side including price, 24h change, volume, market cap, and rank. Pass symbols as a comma-separated list (e.g. "BTC,ETH,SOL").',
       inputSchema: {
@@ -290,6 +542,40 @@ const serverCard = {
         },
         required: ['symbols'],
       },
+      outputSchema: {
+        type: 'object',
+        properties: {
+          assets: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                name: { type: 'string' },
+                symbol: { type: 'string' },
+                priceUsd: { type: 'string' },
+                changePercent24Hr: { type: ['string', 'null'] },
+                volumeUsd24Hr: { type: ['string', 'null'] },
+                marketCapUsd: { type: ['string', 'null'] },
+                rank: { type: ['string', 'null'] },
+              },
+              required: [
+                'name',
+                'symbol',
+                'priceUsd',
+                'changePercent24Hr',
+                'volumeUsd24Hr',
+                'marketCapUsd',
+                'rank',
+              ],
+            },
+          },
+          notFound: {
+            type: 'array',
+            items: { type: 'string' },
+          },
+        },
+        required: ['assets', 'notFound'],
+      },
       annotations: {
         title: 'Compare Cryptocurrencies',
         readOnlyHint: true,
@@ -299,7 +585,7 @@ const serverCard = {
       },
     },
     {
-      name: 'get-candlestick-data',
+      name: 'analysis.candlestick',
       description:
         'Get OHLCV candlestick data for a cryptocurrency from a specific exchange. Useful for charting and technical analysis.',
       inputSchema: {
@@ -338,6 +624,30 @@ const serverCard = {
         },
         required: ['symbol'],
       },
+      outputSchema: {
+        type: 'object',
+        properties: {
+          name: { type: 'string' },
+          symbol: { type: 'string' },
+          exchange: { type: 'string' },
+          candles: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                open: { type: 'string' },
+                high: { type: 'string' },
+                low: { type: 'string' },
+                close: { type: 'string' },
+                volume: { type: 'string' },
+                period: { type: 'number' },
+              },
+              required: ['open', 'high', 'low', 'close', 'volume', 'period'],
+            },
+          },
+        },
+        required: ['name', 'symbol', 'exchange', 'candles'],
+      },
       annotations: {
         title: 'Get Candlestick Data',
         readOnlyHint: true,
@@ -347,7 +657,7 @@ const serverCard = {
       },
     },
     {
-      name: 'get-price-conversion',
+      name: 'price.convert',
       description:
         'Convert a cryptocurrency amount to any fiat currency (e.g. USD, EUR, JPY). Uses real-time exchange rates for accurate conversions.',
       inputSchema: {
@@ -374,6 +684,23 @@ const serverCard = {
         },
         required: ['symbol'],
       },
+      outputSchema: {
+        type: 'object',
+        properties: {
+          fromSymbol: { type: 'string' },
+          amount: { type: 'number' },
+          toCurrency: { type: 'string' },
+          conversionRate: { type: 'number' },
+          convertedAmount: { type: 'number' },
+        },
+        required: [
+          'fromSymbol',
+          'amount',
+          'toCurrency',
+          'conversionRate',
+          'convertedAmount',
+        ],
+      },
       annotations: {
         title: 'Get Price Conversion',
         readOnlyHint: true,
@@ -383,7 +710,7 @@ const serverCard = {
       },
     },
     {
-      name: 'get-asset-info',
+      name: 'assets.info',
       description:
         'Get detailed metadata for a cryptocurrency including ID, rank, supply, max supply, VWAP, market cap, and 24h volume.',
       inputSchema: {
@@ -395,6 +722,35 @@ const serverCard = {
           },
         },
         required: ['symbol'],
+      },
+      outputSchema: {
+        type: 'object',
+        properties: {
+          id: { type: 'string' },
+          rank: { type: ['string', 'null'] },
+          symbol: { type: 'string' },
+          name: { type: 'string' },
+          priceUsd: { type: 'string' },
+          changePercent24Hr: { type: ['string', 'null'] },
+          marketCapUsd: { type: ['string', 'null'] },
+          volumeUsd24Hr: { type: ['string', 'null'] },
+          supply: { type: ['string', 'null'] },
+          maxSupply: { type: ['string', 'null'] },
+          vwap24Hr: { type: ['string', 'null'] },
+        },
+        required: [
+          'id',
+          'rank',
+          'symbol',
+          'name',
+          'priceUsd',
+          'changePercent24Hr',
+          'marketCapUsd',
+          'volumeUsd24Hr',
+          'supply',
+          'maxSupply',
+          'vwap24Hr',
+        ],
       },
       annotations: {
         title: 'Get Asset Info',

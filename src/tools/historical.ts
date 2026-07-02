@@ -21,6 +21,18 @@ export const GetHistoricalAnalysisSchema = z.object({
     .describe('Number of days of historical data to retrieve (1-30)'),
 });
 
+export const HistoricalAnalysisOutputSchema = z.object({
+  name: z.string(),
+  symbol: z.string(),
+  periodHigh: z.number(),
+  periodLow: z.number(),
+  priceChangePercent: z.string(),
+  currentPrice: z.number(),
+  startingPrice: z.number(),
+  priceRange: z.number(),
+  rangePercentage: z.string(),
+});
+
 export async function handleGetHistoricalAnalysis(args: unknown) {
   const { symbol, interval, days } = GetHistoricalAnalysisSchema.parse(args);
   const upperSymbol = symbol.toUpperCase();
@@ -63,6 +75,19 @@ export async function handleGetHistoricalAnalysis(args: unknown) {
       };
     }
 
+    const currentPrice = parseFloat(asset.priceUsd);
+    const oldestPrice = parseFloat(historyData.data[0].priceUsd);
+    const highestPrice = Math.max(
+      ...historyData.data.map((h) => parseFloat(h.priceUsd))
+    );
+    const lowestPrice = Math.min(
+      ...historyData.data.map((h) => parseFloat(h.priceUsd))
+    );
+    const priceChange = (
+      ((currentPrice - oldestPrice) / oldestPrice) *
+      100
+    ).toFixed(2);
+
     return {
       content: [
         {
@@ -70,6 +95,20 @@ export async function handleGetHistoricalAnalysis(args: unknown) {
           text: formatHistoricalAnalysis(asset, historyData.data),
         },
       ],
+      structuredContent: {
+        name: asset.name,
+        symbol: asset.symbol,
+        periodHigh: highestPrice,
+        periodLow: lowestPrice,
+        priceChangePercent: priceChange,
+        currentPrice,
+        startingPrice: oldestPrice,
+        priceRange: highestPrice - lowestPrice,
+        rangePercentage: (
+          ((highestPrice - lowestPrice) / lowestPrice) *
+          100
+        ).toFixed(2),
+      },
     };
   } catch (error) {
     return {

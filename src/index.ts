@@ -37,6 +37,19 @@ import {
   GetCandlestickDataSchema,
   GetPriceConversionSchema,
   GetAssetInfoSchema,
+  PriceOutputSchema,
+  MarketAnalysisOutputSchema,
+  HistoricalAnalysisOutputSchema,
+  TopAssetsOutputSchema,
+  TechnicalAnalysisOutputSchema,
+  RatesOutputSchema,
+  ExchangesOutputSchema,
+  SearchAssetsOutputSchema,
+  GlobalMetricsOutputSchema,
+  CompareOutputSchema,
+  CandlestickOutputSchema,
+  PriceConversionOutputSchema,
+  AssetInfoOutputSchema,
 } from './tools/index.js';
 
 export const configSchema = z.object({
@@ -83,12 +96,13 @@ export function createServer({
   });
 
   server.registerTool(
-    'get-crypto-price',
+    'price.get',
     {
       title: 'Get Crypto Price',
       description:
         'Get real-time price, 24-hour change percentage, trading volume, and market cap for any cryptocurrency by symbol or name.',
       inputSchema: GetPriceArgumentsSchema.shape,
+      outputSchema: PriceOutputSchema.shape,
       annotations: {
         title: 'Get Crypto Price',
         readOnlyHint: true,
@@ -104,12 +118,13 @@ export function createServer({
   );
 
   server.registerTool(
-    'get-market-analysis',
+    'market.analysis',
     {
       title: 'Get Market Analysis',
       description:
         'Get detailed market analysis for a cryptocurrency including the top 5 exchanges by volume, price per exchange, and volume distribution percentages.',
       inputSchema: GetMarketAnalysisSchema.shape,
+      outputSchema: MarketAnalysisOutputSchema.shape,
       annotations: {
         title: 'Get Market Analysis',
         readOnlyHint: true,
@@ -125,12 +140,13 @@ export function createServer({
   );
 
   server.registerTool(
-    'get-historical-analysis',
+    'analysis.historical',
     {
       title: 'Get Historical Analysis',
       description:
         'Get historical price data for a cryptocurrency with trend analysis including period high/low, price change percentage, and volatility metrics over a customizable timeframe.',
       inputSchema: GetHistoricalAnalysisSchema.shape,
+      outputSchema: HistoricalAnalysisOutputSchema.shape,
       annotations: {
         title: 'Get Historical Analysis',
         readOnlyHint: true,
@@ -146,12 +162,13 @@ export function createServer({
   );
 
   server.registerTool(
-    'get-top-assets',
+    'assets.top',
     {
       title: 'Get Top Assets',
       description:
         'Get the top cryptocurrencies ranked by market cap, with real-time price, 24-hour change percentage, and market cap for each asset.',
       inputSchema: GetTopAssetsSchema.shape,
+      outputSchema: TopAssetsOutputSchema.shape,
       annotations: {
         title: 'Get Top Assets',
         readOnlyHint: true,
@@ -167,12 +184,13 @@ export function createServer({
   );
 
   server.registerTool(
-    'get-technical-analysis',
+    'analysis.technical',
     {
       title: 'Get Technical Analysis',
       description:
         'Get the latest technical indicators for a cryptocurrency including SMA, EMA, RSI, MACD, and VWAP to assess momentum, trend direction, and overbought/oversold conditions.',
       inputSchema: GetTechnicalAnalysisSchema.shape,
+      outputSchema: TechnicalAnalysisOutputSchema.shape,
       annotations: {
         title: 'Get Technical Analysis',
         readOnlyHint: true,
@@ -188,12 +206,13 @@ export function createServer({
   );
 
   server.registerTool(
-    'get-rates',
+    'market.rates',
     {
       title: 'Get Currency Rates',
       description:
         "Get USD-based conversion rates for fiat currencies and cryptocurrencies. Optionally pass a slug (e.g. 'euro', 'us-dollar', 'bitcoin') to look up a single rate.",
       inputSchema: GetRatesSchema.shape,
+      outputSchema: RatesOutputSchema.shape,
       annotations: {
         title: 'Get Currency Rates',
         readOnlyHint: true,
@@ -209,12 +228,13 @@ export function createServer({
   );
 
   server.registerTool(
-    'get-exchanges',
+    'market.exchanges',
     {
       title: 'Get Exchanges',
       description:
         "Get top cryptocurrency exchanges ranked by 24h volume. Optionally pass an exchangeId (e.g. 'binance', 'coinbase') to get details for a specific exchange including volume, trading pairs, and market share.",
       inputSchema: GetExchangesSchema.shape,
+      outputSchema: ExchangesOutputSchema.shape,
       annotations: {
         title: 'Get Exchanges',
         readOnlyHint: true,
@@ -230,12 +250,13 @@ export function createServer({
   );
 
   server.registerTool(
-    'search-assets',
+    'assets.search',
     {
       title: 'Search Crypto Assets',
       description:
         'Search for cryptocurrencies by name, symbol, or partial match. Returns multiple matching assets with their ID, name, symbol, rank, and current price.',
       inputSchema: SearchAssetsSchema.shape,
+      outputSchema: SearchAssetsOutputSchema.shape,
       annotations: {
         title: 'Search Crypto Assets',
         readOnlyHint: true,
@@ -251,12 +272,13 @@ export function createServer({
   );
 
   server.registerTool(
-    'get-global-metrics',
+    'market.global',
     {
       title: 'Get Global Metrics',
       description:
         'Get a global overview of the cryptocurrency market including total market capitalization, 24-hour trading volume, Bitcoin dominance percentage, and the number of active cryptocurrencies.',
       inputSchema: GetGlobalMetricsSchema.shape,
+      outputSchema: GlobalMetricsOutputSchema.shape,
       annotations: {
         title: 'Get Global Metrics',
         readOnlyHint: true,
@@ -272,12 +294,13 @@ export function createServer({
   );
 
   server.registerTool(
-    'compare-crypto',
+    'assets.compare',
     {
       title: 'Compare Cryptocurrencies',
       description:
         'Compare 2-5 cryptocurrencies side-by-side including price, 24h change, volume, market cap, and rank. Pass symbols as a comma-separated list (e.g. "BTC,ETH,SOL").',
       inputSchema: CompareCryptoSchema.shape,
+      outputSchema: CompareOutputSchema.shape,
       annotations: {
         title: 'Compare Cryptocurrencies',
         readOnlyHint: true,
@@ -293,12 +316,13 @@ export function createServer({
   );
 
   server.registerTool(
-    'get-candlestick-data',
+    'analysis.candlestick',
     {
       title: 'Get Candlestick Data',
       description:
         'Get OHLCV candlestick data for a cryptocurrency from a specific exchange. Useful for charting and technical analysis.',
       inputSchema: GetCandlestickDataSchema.shape,
+      outputSchema: CandlestickOutputSchema.shape,
       annotations: {
         title: 'Get Candlestick Data',
         readOnlyHint: true,
@@ -314,12 +338,13 @@ export function createServer({
   );
 
   server.registerTool(
-    'get-price-conversion',
+    'price.convert',
     {
       title: 'Get Price Conversion',
       description:
         'Convert a cryptocurrency amount to any fiat currency (e.g. USD, EUR, JPY). Uses real-time exchange rates for accurate conversions.',
       inputSchema: GetPriceConversionSchema.shape,
+      outputSchema: PriceConversionOutputSchema.shape,
       annotations: {
         title: 'Get Price Conversion',
         readOnlyHint: true,
@@ -335,12 +360,13 @@ export function createServer({
   );
 
   server.registerTool(
-    'get-asset-info',
+    'assets.info',
     {
       title: 'Get Asset Info',
       description:
         'Get detailed metadata for a cryptocurrency including ID, rank, supply, max supply, VWAP, market cap, and 24h volume.',
       inputSchema: GetAssetInfoSchema.shape,
+      outputSchema: AssetInfoOutputSchema.shape,
       annotations: {
         title: 'Get Asset Info',
         readOnlyHint: true,

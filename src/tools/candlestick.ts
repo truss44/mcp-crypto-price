@@ -29,6 +29,22 @@ export const GetCandlestickDataSchema = z.object({
     .describe('Number of days of candlestick data to retrieve (1-30)'),
 });
 
+export const CandlestickOutputSchema = z.object({
+  name: z.string(),
+  symbol: z.string(),
+  exchange: z.string(),
+  candles: z.array(
+    z.object({
+      open: z.string(),
+      high: z.string(),
+      low: z.string(),
+      close: z.string(),
+      volume: z.string(),
+      period: z.number(),
+    })
+  ),
+});
+
 export async function handleGetCandlestickData(args: unknown) {
   try {
     const { symbol, exchange, quote, interval, days } =
@@ -85,6 +101,19 @@ export async function handleGetCandlestickData(args: unknown) {
           text: formatCandlestickData(asset, candlesData.data, exchange),
         },
       ],
+      structuredContent: {
+        name: asset.name,
+        symbol: asset.symbol,
+        exchange,
+        candles: candlesData.data.map((c) => ({
+          open: c.open,
+          high: c.high,
+          low: c.low,
+          close: c.close,
+          volume: c.volume,
+          period: c.period,
+        })),
+      },
     };
   } catch (error) {
     if (error instanceof ZodError) {

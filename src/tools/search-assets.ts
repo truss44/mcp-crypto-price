@@ -18,6 +18,18 @@ export const SearchAssetsSchema = z.object({
     .describe('Maximum number of results to return (1-50, default 10)'),
 });
 
+export const SearchAssetsOutputSchema = z.object({
+  results: z.array(
+    z.object({
+      id: z.string(),
+      rank: z.string().nullable(),
+      symbol: z.string(),
+      name: z.string(),
+      priceUsd: z.string(),
+    })
+  ),
+});
+
 export async function handleSearchAssets(args: unknown) {
   try {
     const { query, limit } = SearchAssetsSchema.parse(args);
@@ -43,6 +55,15 @@ export async function handleSearchAssets(args: unknown) {
 
     return {
       content: [{ type: 'text', text: formatSearchResults(results) }],
+      structuredContent: {
+        results: results.map((a) => ({
+          id: a.id,
+          rank: a.rank,
+          symbol: a.symbol,
+          name: a.name,
+          priceUsd: a.priceUsd,
+        })),
+      },
     };
   } catch (error) {
     if (error instanceof ZodError) {
