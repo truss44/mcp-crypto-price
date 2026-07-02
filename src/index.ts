@@ -96,7 +96,7 @@ export function createServer({
   });
 
   server.registerTool(
-    'price.get',
+    'price-get',
     {
       title: 'Get Crypto Price',
       description:
@@ -118,7 +118,7 @@ export function createServer({
   );
 
   server.registerTool(
-    'market.analysis',
+    'market-analysis',
     {
       title: 'Get Market Analysis',
       description:
@@ -140,7 +140,7 @@ export function createServer({
   );
 
   server.registerTool(
-    'analysis.historical',
+    'analysis-historical',
     {
       title: 'Get Historical Analysis',
       description:
@@ -162,7 +162,7 @@ export function createServer({
   );
 
   server.registerTool(
-    'assets.top',
+    'assets-top',
     {
       title: 'Get Top Assets',
       description:
@@ -184,7 +184,7 @@ export function createServer({
   );
 
   server.registerTool(
-    'analysis.technical',
+    'analysis-technical',
     {
       title: 'Get Technical Analysis',
       description:
@@ -206,7 +206,7 @@ export function createServer({
   );
 
   server.registerTool(
-    'market.rates',
+    'market-rates',
     {
       title: 'Get Currency Rates',
       description:
@@ -228,7 +228,7 @@ export function createServer({
   );
 
   server.registerTool(
-    'market.exchanges',
+    'market-exchanges',
     {
       title: 'Get Exchanges',
       description:
@@ -250,7 +250,7 @@ export function createServer({
   );
 
   server.registerTool(
-    'assets.search',
+    'assets-search',
     {
       title: 'Search Crypto Assets',
       description:
@@ -272,7 +272,7 @@ export function createServer({
   );
 
   server.registerTool(
-    'market.global',
+    'market-global',
     {
       title: 'Get Global Metrics',
       description:
@@ -294,7 +294,7 @@ export function createServer({
   );
 
   server.registerTool(
-    'assets.compare',
+    'assets-compare',
     {
       title: 'Compare Cryptocurrencies',
       description:
@@ -316,7 +316,7 @@ export function createServer({
   );
 
   server.registerTool(
-    'analysis.candlestick',
+    'analysis-candlestick',
     {
       title: 'Get Candlestick Data',
       description:
@@ -338,7 +338,7 @@ export function createServer({
   );
 
   server.registerTool(
-    'price.convert',
+    'price-convert',
     {
       title: 'Get Price Conversion',
       description:
@@ -360,7 +360,7 @@ export function createServer({
   );
 
   server.registerTool(
-    'assets.info',
+    'assets-info',
     {
       title: 'Get Asset Info',
       description:

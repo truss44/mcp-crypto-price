@@ -54,7 +54,7 @@ const serverCard = {
   },
   tools: [
     {
-      name: 'price.get',
+      name: 'price-get',
       description: 'Get current price and 24h stats for a cryptocurrency',
       inputSchema: {
         type: 'object',
@@ -96,7 +96,7 @@ const serverCard = {
       },
     },
     {
-      name: 'market.analysis',
+      name: 'market-analysis',
       description:
         'Get detailed market analysis including top exchanges and volume distribution',
       inputSchema: {
@@ -154,7 +154,7 @@ const serverCard = {
       },
     },
     {
-      name: 'analysis.historical',
+      name: 'analysis-historical',
       description: 'Get historical price analysis with customizable timeframe',
       inputSchema: {
         type: 'object',
@@ -214,7 +214,7 @@ const serverCard = {
       },
     },
     {
-      name: 'assets.top',
+      name: 'assets-top',
       description: 'Get top cryptocurrencies ranked by market cap',
       inputSchema: {
         type: 'object',
@@ -268,7 +268,7 @@ const serverCard = {
       },
     },
     {
-      name: 'analysis.technical',
+      name: 'analysis-technical',
       description:
         'Get the latest technical indicators for a cryptocurrency including SMA, EMA, RSI, MACD, and VWAP',
       inputSchema: {
@@ -345,7 +345,7 @@ const serverCard = {
       },
     },
     {
-      name: 'market.rates',
+      name: 'market-rates',
       description:
         "Get USD-based conversion rates for fiat currencies and cryptocurrencies. Optionally pass a slug (e.g. 'euro', 'us-dollar', 'bitcoin') to look up a single rate.",
       inputSchema: {
@@ -387,7 +387,7 @@ const serverCard = {
       },
     },
     {
-      name: 'market.exchanges',
+      name: 'market-exchanges',
       description:
         "Get top cryptocurrency exchanges ranked by 24h volume. Optionally pass an exchangeId (e.g. 'binance', 'coinbase') to get details for a specific exchange.",
       inputSchema: {
@@ -447,7 +447,7 @@ const serverCard = {
       },
     },
     {
-      name: 'assets.search',
+      name: 'assets-search',
       description:
         'Search for cryptocurrencies by name, symbol, or partial match. Returns multiple matching assets with their ID, name, symbol, rank, and current price.',
       inputSchema: {
@@ -498,7 +498,7 @@ const serverCard = {
       },
     },
     {
-      name: 'market.global',
+      name: 'market-global',
       description:
         'Get a global overview of the cryptocurrency market including total market capitalization, 24-hour trading volume, Bitcoin dominance percentage, and the number of active cryptocurrencies.',
       inputSchema: {
@@ -528,7 +528,7 @@ const serverCard = {
       },
     },
     {
-      name: 'assets.compare',
+      name: 'assets-compare',
       description:
         'Compare 2-5 cryptocurrencies side-by-side including price, 24h change, volume, market cap, and rank. Pass symbols as a comma-separated list (e.g. "BTC,ETH,SOL").',
       inputSchema: {
@@ -585,7 +585,7 @@ const serverCard = {
       },
     },
     {
-      name: 'analysis.candlestick',
+      name: 'analysis-candlestick',
       description:
         'Get OHLCV candlestick data for a cryptocurrency from a specific exchange. Useful for charting and technical analysis.',
       inputSchema: {
@@ -657,7 +657,7 @@ const serverCard = {
       },
     },
     {
-      name: 'price.convert',
+      name: 'price-convert',
       description:
         'Convert a cryptocurrency amount to any fiat currency (e.g. USD, EUR, JPY). Uses real-time exchange rates for accurate conversions.',
       inputSchema: {
@@ -710,7 +710,7 @@ const serverCard = {
       },
     },
     {
-      name: 'assets.info',
+      name: 'assets-info',
       description:
         'Get detailed metadata for a cryptocurrency including ID, rank, supply, max supply, VWAP, market cap, and 24h volume.',
       inputSchema: {

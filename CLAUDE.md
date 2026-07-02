@@ -62,25 +62,25 @@ MCP client → transport (stdio or HTTP) → src/index.ts (createServer)
 - **`src/services/formatters.ts`** — pure formatting functions for tool output text.
 - **`src/types/index.ts`** — shared TypeScript interfaces for CoinCap API responses.
 
-### Thirteen registered MCP tools (dot-notation naming)
+### Thirteen registered MCP tools (category-prefixed naming)
 
-Tools are organized into four categories: `price.*`, `market.*`, `assets.*`, `analysis.*`. All tools declare `outputSchema` and return `structuredContent` alongside formatted text.
+Tools are organized into four categories: `price-*`, `market-*`, `assets-*`, `analysis-*`. All tools declare `outputSchema` and return `structuredContent` alongside formatted text.
 
 | Tool | Handler | API endpoint |
 |------|---------|--------------|
-| `price.get` | `handleGetPrice` | `/assets` |
-| `price.convert` | `handleGetPriceConversion` | `/assets` + `/rates` |
-| `market.analysis` | `handleGetMarketAnalysis` | `/assets/{id}/markets` |
-| `market.global` | `handleGetGlobalMetrics` | `/assets` (aggregated) |
-| `market.rates` | `handleGetRates` | `/rates` and `/rates/{slug}` |
-| `market.exchanges` | `handleGetExchanges` | `/exchanges` and `/exchanges/{id}` |
-| `assets.top` | `handleGetTopAssets` | `/assets` |
-| `assets.search` | `handleSearchAssets` | `/assets?search={query}` |
-| `assets.info` | `handleGetAssetInfo` | `/assets` (single lookup) |
-| `assets.compare` | `handleCompareCrypto` | `/assets` (multiple lookups) |
-| `analysis.historical` | `handleGetHistoricalAnalysis` | `/assets/{id}/history` |
-| `analysis.technical` | `handleGetTechnicalAnalysis` | `/ta/{id}/allLatest` |
-| `analysis.candlestick` | `handleGetCandlestickData` | `/assets/{id}/candles` |
+| `price-get` | `handleGetPrice` | `/assets` |
+| `price-convert` | `handleGetPriceConversion` | `/assets` + `/rates` |
+| `market-analysis` | `handleGetMarketAnalysis` | `/assets/{id}/markets` |
+| `market-global` | `handleGetGlobalMetrics` | `/assets` (aggregated) |
+| `market-rates` | `handleGetRates` | `/rates` and `/rates/{slug}` |
+| `market-exchanges` | `handleGetExchanges` | `/exchanges` and `/exchanges/{id}` |
+| `assets-top` | `handleGetTopAssets` | `/assets` |
+| `assets-search` | `handleSearchAssets` | `/assets?search={query}` |
+| `assets-info` | `handleGetAssetInfo` | `/assets` (single lookup) |
+| `assets-compare` | `handleCompareCrypto` | `/assets` (multiple lookups) |
+| `analysis-historical` | `handleGetHistoricalAnalysis` | `/assets/{id}/history` |
+| `analysis-technical` | `handleGetTechnicalAnalysis` | `/ta/{id}/allLatest` |
+| `analysis-candlestick` | `handleGetCandlestickData` | `/assets/{id}/candles` |
 
 ### Resources
 
