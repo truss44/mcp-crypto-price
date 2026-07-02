@@ -1,3 +1,9 @@
+## [5.0.3](https://github.com/truss44/mcp-crypto-price/compare/v5.0.2...v5.0.3) (2026-07-02)
+
+### Bug Fixes
+
+* migrate candlestick tool to v3 /ta/{slug}/candlesticks endpoint ([72fc4ec](https://github.com/truss44/mcp-crypto-price/commit/72fc4ecf0c053f2168c3bbba342fa0a2544ad627))
+
 ## [5.0.2](https://github.com/truss44/mcp-crypto-price/compare/v5.0.1...v5.0.2) (2026-07-02)
 
 ### Bug Fixes
