@@ -1,3 +1,26 @@
+## [5.0.0](https://github.com/truss44/mcp-crypto-price/compare/v4.0.1...v5.0.0) (2026-07-02)
+
+### ⚠ BREAKING CHANGES
+
+* Tool names changed from dot-notation to hyphen-based
+  price.get       -> price-get
+  price.convert   -> price-convert
+  market.analysis -> market-analysis
+  market.global   -> market-global
+  market.rates    -> market-rates
+  market.exchanges -> market-exchanges
+  assets.top      -> assets-top
+  assets.search   -> assets-search
+  assets.info     -> assets-info
+  assets.compare  -> assets-compare
+  analysis.historical -> analysis-historical
+  analysis.technical  -> analysis-technical
+  analysis.candlestick -> analysis-candlestick
+
+### Bug Fixes
+
+* revert dot-notation to hyphen-based tool names for MCP spec compliance ([120942a](https://github.com/truss44/mcp-crypto-price/commit/120942a901c59d5b20d11ae37cb598ba9c1e3e93))
+
 ## [4.0.1](https://github.com/truss44/mcp-crypto-price/compare/v4.0.0...v4.0.1) (2026-07-02)
 
 ### Bug Fixes
