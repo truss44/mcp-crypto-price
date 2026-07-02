@@ -1,3 +1,9 @@
+## [3.6.0](https://github.com/truss44/mcp-crypto-price/compare/v3.5.12...v3.6.0) (2026-07-02)
+
+### Features
+
+* new tools and MCP best practices ([#203](https://github.com/truss44/mcp-crypto-price/issues/203)) ([e51c2c6](https://github.com/truss44/mcp-crypto-price/commit/e51c2c6fb075e25e7d66cd3f4fe470e394908795)), closes [#196](https://github.com/truss44/mcp-crypto-price/issues/196) [#197](https://github.com/truss44/mcp-crypto-price/issues/197) [#198](https://github.com/truss44/mcp-crypto-price/issues/198) [#199](https://github.com/truss44/mcp-crypto-price/issues/199) [#200](https://github.com/truss44/mcp-crypto-price/issues/200) [#201](https://github.com/truss44/mcp-crypto-price/issues/201)
+
 ## [3.5.12](https://github.com/truss44/mcp-crypto-price/compare/v3.5.11...v3.5.12) (2026-04-12)
 
 ### Bug Fixes
