@@ -401,12 +401,8 @@ export async function getCandles(
     );
   } catch (error) {
     if (error instanceof MissingApiKeyError) throw error;
-    const detail =
-      error instanceof Error ? error.message : String(error);
-    console.error(
-      `Failed to get candlesticks for ${assetId}:`,
-      detail
-    );
+    const detail = error instanceof Error ? error.message : String(error);
+    console.error(`Failed to get candlesticks for ${assetId}:`, detail);
     return null;
   }
 }
