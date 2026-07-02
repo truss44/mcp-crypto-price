@@ -60,6 +60,12 @@ export async function handleGetCandlestickData(args: unknown) {
             text: `Could not find cryptocurrency with symbol ${upperSymbol}`,
           },
         ],
+        structuredContent: {
+          name: '',
+          symbol: upperSymbol,
+          exchange,
+          candles: [],
+        },
       };
     }
 
@@ -80,6 +86,12 @@ export async function handleGetCandlestickData(args: unknown) {
         content: [
           { type: 'text', text: 'Failed to retrieve candlestick data' },
         ],
+        structuredContent: {
+          name: asset.name,
+          symbol: asset.symbol,
+          exchange,
+          candles: [],
+        },
       };
     }
 
@@ -91,6 +103,12 @@ export async function handleGetCandlestickData(args: unknown) {
             text: `No candlestick data available for ${asset.name} (${asset.symbol}) on ${exchange} with quote ${quote.toUpperCase()}`,
           },
         ],
+        structuredContent: {
+          name: asset.name,
+          symbol: asset.symbol,
+          exchange,
+          candles: [],
+        },
       };
     }
 
@@ -125,6 +143,12 @@ export async function handleGetCandlestickData(args: unknown) {
             text: `Invalid input: ${error.issues.map((e) => e.message).join(', ')}`,
           },
         ],
+        structuredContent: {
+          name: '',
+          symbol: '',
+          exchange: '',
+          candles: [],
+        },
       };
     }
     return {
@@ -137,6 +161,12 @@ export async function handleGetCandlestickData(args: unknown) {
               : `Failed to retrieve candlestick data: ${String(error)}`,
         },
       ],
+      structuredContent: {
+        name: '',
+        symbol: '',
+        exchange: '',
+        candles: [],
+      },
     };
   }
 }

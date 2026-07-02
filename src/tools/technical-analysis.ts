@@ -44,6 +44,16 @@ export async function handleGetTechnicalAnalysis(args: unknown) {
             text: `Could not find cryptocurrency with symbol ${upperSymbol}`,
           },
         ],
+        structuredContent: {
+          name: '',
+          symbol: upperSymbol,
+          currentPrice: '',
+          sma: null,
+          ema: null,
+          rsi: null,
+          macd: null,
+          vwap: null,
+        },
       };
     }
 
@@ -57,6 +67,16 @@ export async function handleGetTechnicalAnalysis(args: unknown) {
             text: `Failed to retrieve technical analysis for ${asset.name} (${asset.symbol})`,
           },
         ],
+        structuredContent: {
+          name: asset.name,
+          symbol: asset.symbol,
+          currentPrice: asset.priceUsd,
+          sma: null,
+          ema: null,
+          rsi: null,
+          macd: null,
+          vwap: null,
+        },
       };
     }
 
@@ -115,6 +135,16 @@ export async function handleGetTechnicalAnalysis(args: unknown) {
               : `Failed to retrieve technical analysis: ${String(error)}`,
         },
       ],
+      structuredContent: {
+        name: '',
+        symbol: '',
+        currentPrice: '',
+        sma: null,
+        ema: null,
+        rsi: null,
+        macd: null,
+        vwap: null,
+      },
     };
   }
 }

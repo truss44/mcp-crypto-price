@@ -50,6 +50,7 @@ export async function handleGetExchanges(args: unknown) {
               text: `Could not find exchange "${exchangeId}". Try an ID like 'binance', 'coinbase', or 'kraken'.`,
             },
           ],
+          structuredContent: { exchanges: [] },
         };
       }
 
@@ -76,6 +77,7 @@ export async function handleGetExchanges(args: unknown) {
     if (!exchanges) {
       return {
         content: [{ type: 'text', text: 'Failed to retrieve exchanges' }],
+        structuredContent: { exchanges: [] },
       };
     }
 
@@ -106,6 +108,7 @@ export async function handleGetExchanges(args: unknown) {
               : `Failed to retrieve exchanges: ${String(error)}`,
         },
       ],
+      structuredContent: { exchanges: [] },
     };
   }
 }

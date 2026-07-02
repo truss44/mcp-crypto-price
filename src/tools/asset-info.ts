@@ -38,6 +38,19 @@ export async function handleGetAssetInfo(args: unknown) {
             text: `Could not find cryptocurrency with symbol ${upperSymbol}`,
           },
         ],
+        structuredContent: {
+          id: '',
+          rank: null,
+          symbol: upperSymbol,
+          name: '',
+          priceUsd: '',
+          changePercent24Hr: null,
+          marketCapUsd: null,
+          volumeUsd24Hr: null,
+          supply: null,
+          maxSupply: null,
+          vwap24Hr: null,
+        },
       };
     }
 
@@ -67,6 +80,19 @@ export async function handleGetAssetInfo(args: unknown) {
             text: `Invalid input: ${error.issues.map((e) => e.message).join(', ')}`,
           },
         ],
+        structuredContent: {
+          id: '',
+          rank: null,
+          symbol: '',
+          name: '',
+          priceUsd: '',
+          changePercent24Hr: null,
+          marketCapUsd: null,
+          volumeUsd24Hr: null,
+          supply: null,
+          maxSupply: null,
+          vwap24Hr: null,
+        },
       };
     }
     return {
@@ -79,6 +105,19 @@ export async function handleGetAssetInfo(args: unknown) {
               : `Failed to retrieve asset info: ${String(error)}`,
         },
       ],
+      structuredContent: {
+        id: '',
+        rank: null,
+        symbol: '',
+        name: '',
+        priceUsd: '',
+        changePercent24Hr: null,
+        marketCapUsd: null,
+        volumeUsd24Hr: null,
+        supply: null,
+        maxSupply: null,
+        vwap24Hr: null,
+      },
     };
   }
 }
