@@ -1,3 +1,9 @@
+## [5.0.1](https://github.com/truss44/mcp-crypto-price/compare/v5.0.0...v5.0.1) (2026-07-02)
+
+### Bug Fixes
+
+* add structuredContent to all early return and error paths ([455db5c](https://github.com/truss44/mcp-crypto-price/commit/455db5ca340484efbc2fc586fd7a78391a7817c5))
+
 ## [5.0.0](https://github.com/truss44/mcp-crypto-price/compare/v4.0.1...v5.0.0) (2026-07-02)
 
 ### ⚠ BREAKING CHANGES
