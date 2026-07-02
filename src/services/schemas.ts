@@ -118,3 +118,16 @@ export const ExchangesResponseSchema = z.object({
 export const ExchangeResponseSchema = z.object({
   data: ExchangeSchema,
 });
+
+export const CandleSchema = z.object({
+  open: z.string(),
+  high: z.string(),
+  low: z.string(),
+  close: z.string(),
+  volume: z.string(),
+  period: z.number(),
+});
+
+export const CandlesResponseSchema = z.object({
+  data: z.array(CandleSchema),
+});

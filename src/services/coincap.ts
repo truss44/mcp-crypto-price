@@ -2,6 +2,7 @@ import { COINCAP_API_BASE, getCacheTtl } from '../config/index.js';
 import type {
   AssetsResponse,
   CacheEntry,
+  CandlesResponse,
   CryptoAsset,
   Exchange,
   ExchangeResponse,
@@ -15,6 +16,7 @@ import type {
 } from '../types/index.js';
 import {
   AssetsResponseSchema,
+  CandlesResponseSchema,
   ExchangeResponseSchema,
   ExchangesResponseSchema,
   HistoricalDataSchema,
@@ -251,6 +253,29 @@ export async function searchAsset(symbol: string): Promise<CryptoAsset | null> {
   }
 }
 
+export async function searchAssets(
+  query: string,
+  limit: number = 10
+): Promise<CryptoAsset[] | null> {
+  try {
+    const data = await makeCoinCapRequest<AssetsResponse>(
+      `/assets?search=${encodeURIComponent(query)}`,
+      AssetsResponseSchema
+    );
+    const upperQuery = query.toUpperCase();
+    const matches = data.data.filter(
+      (a) =>
+        a.symbol.toUpperCase().includes(upperQuery) ||
+        a.name.toUpperCase().includes(upperQuery)
+    );
+    return matches.slice(0, limit);
+  } catch (error) {
+    if (error instanceof MissingApiKeyError) throw error;
+    console.error(`Failed to search for assets with query ${query}:`, error);
+    return null;
+  }
+}
+
 export async function getMarkets(
   assetId: string
 ): Promise<MarketsResponse | null> {
@@ -359,6 +384,26 @@ export async function getExchange(
   } catch (error) {
     if (error instanceof MissingApiKeyError) throw error;
     console.error(`Failed to get exchange ${exchangeId}:`, error);
+    return null;
+  }
+}
+
+export async function getCandles(
+  exchange: string,
+  baseId: string,
+  quoteId: string,
+  interval: string,
+  start: number,
+  end: number
+): Promise<CandlesResponse | null> {
+  try {
+    return await makeCoinCapRequest<CandlesResponse>(
+      `/candles?exchange=${encodeURIComponent(exchange)}&baseId=${encodeURIComponent(baseId)}&quoteId=${encodeURIComponent(quoteId)}&interval=${interval}&start=${start}&end=${end}`,
+      CandlesResponseSchema
+    );
+  } catch (error) {
+    if (error instanceof MissingApiKeyError) throw error;
+    console.error('Failed to get candles:', error);
     return null;
   }
 }

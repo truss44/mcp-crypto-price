@@ -49,7 +49,7 @@ This is an MCP (Model Context Protocol) server for cryptocurrency data. It suppo
 
 ```
 MCP client → transport (stdio or HTTP) → src/index.ts (createServer)
-  → tool handlers in src/tools/ (price.ts, market.ts, historical.ts)
+  → tool handlers in src/tools/ (price.ts, market.ts, historical.ts, top-assets.ts, technical-analysis.ts, rates.ts, exchanges.ts, search-assets.ts, global-metrics.ts, compare.ts, candlestick.ts, price-conversion.ts, asset-info.ts)
     → src/services/coincap.ts (API + in-memory cache)
       → CoinCap v3 API (COINCAP_API_KEY required)
 ```
@@ -58,11 +58,11 @@ MCP client → transport (stdio or HTTP) → src/index.ts (createServer)
 
 - **`src/index.ts`** exports `createServer(config)` (used by Smithery HTTP transport) and also runs STDIO transport when invoked directly as a CLI or when `MCP_TRANSPORT=stdio`.
 - **`src/services/coincap.ts`** handles all CoinCap API calls via the v3 API. Requires `COINCAP_API_KEY`. Results are cached in-memory for 60 seconds (`CACHE_TTL`).
-- **`src/tools/`** — one file per MCP tool. Each exports a Zod schema (`*Schema`) and a handler (`handle*(args)`). Tools are registered in `src/index.ts`.
+- **`src/tools/`** — one file per MCP tool. Each exports a Zod schema (`*Schema`) and a handler (`handle*(args)`). All handlers wrap Zod `.parse()` inside a `try/catch` that returns `isError: true` on validation failures. Tools are registered in `src/index.ts`.
 - **`src/services/formatters.ts`** — pure formatting functions for tool output text.
 - **`src/types/index.ts`** — shared TypeScript interfaces for CoinCap API responses.
 
-### Seven registered MCP tools (kebab-case naming)
+### Thirteen registered MCP tools (kebab-case naming)
 
 | Tool | Handler | API endpoint |
 |------|---------|--------------|
@@ -73,6 +73,17 @@ MCP client → transport (stdio or HTTP) → src/index.ts (createServer)
 | `get-technical-analysis` | `handleGetTechnicalAnalysis` | `/ta/{id}/allLatest` |
 | `get-rates` | `handleGetRates` | `/rates` and `/rates/{slug}` |
 | `get-exchanges` | `handleGetExchanges` | `/exchanges` and `/exchanges/{id}` |
+| `search-assets` | `handleSearchAssets` | `/assets?search={query}` |
+| `get-global-metrics` | `handleGetGlobalMetrics` | `/assets` (aggregated) |
+| `compare-crypto` | `handleCompareCrypto` | `/assets` (multiple lookups) |
+| `get-candlestick-data` | `handleGetCandlestickData` | `/assets/{id}/candles` |
+| `get-price-conversion` | `handleGetPriceConversion` | `/assets` + `/rates` |
+| `get-asset-info` | `handleGetAssetInfo` | `/assets` (single lookup) |
+
+### Resources
+
+- **`info://server`** — Server name and version metadata
+- **`asset://{symbol}`** — Asset information by symbol (e.g. `asset://BTC`), returned as JSON
 
 ### Tooling
 

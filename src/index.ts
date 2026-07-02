@@ -18,6 +18,12 @@ import {
   handleGetTechnicalAnalysis,
   handleGetRates,
   handleGetExchanges,
+  handleSearchAssets,
+  handleGetGlobalMetrics,
+  handleCompareCrypto,
+  handleGetCandlestickData,
+  handleGetPriceConversion,
+  handleGetAssetInfo,
   GetPriceArgumentsSchema,
   GetMarketAnalysisSchema,
   GetHistoricalAnalysisSchema,
@@ -25,6 +31,12 @@ import {
   GetTechnicalAnalysisSchema,
   GetRatesSchema,
   GetExchangesSchema,
+  SearchAssetsSchema,
+  GetGlobalMetricsSchema,
+  CompareCryptoSchema,
+  GetCandlestickDataSchema,
+  GetPriceConversionSchema,
+  GetAssetInfoSchema,
 } from './tools/index.js';
 
 export const configSchema = z.object({
@@ -60,6 +72,8 @@ export function createServer({
   const server = new McpServer({
     name: SERVER_CONFIG.name,
     version: SERVER_CONFIG.version,
+    description:
+      'A Model Context Protocol server providing cryptocurrency price, market, and on-chain data from CoinCap.',
     icons: [
       {
         src: 'https://raw.githubusercontent.com/truss44/mcp-crypto-price/main/logo.png',
@@ -215,6 +229,132 @@ export function createServer({
     }
   );
 
+  server.registerTool(
+    'search-assets',
+    {
+      title: 'Search Crypto Assets',
+      description:
+        'Search for cryptocurrencies by name, symbol, or partial match. Returns multiple matching assets with their ID, name, symbol, rank, and current price.',
+      inputSchema: SearchAssetsSchema.shape,
+      annotations: {
+        title: 'Search Crypto Assets',
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: true,
+      },
+    },
+    async (args, _extra) => {
+      const result = await handleSearchAssets(args);
+      return result as unknown as CallToolResult;
+    }
+  );
+
+  server.registerTool(
+    'get-global-metrics',
+    {
+      title: 'Get Global Metrics',
+      description:
+        'Get a global overview of the cryptocurrency market including total market capitalization, 24-hour trading volume, Bitcoin dominance percentage, and the number of active cryptocurrencies.',
+      inputSchema: GetGlobalMetricsSchema.shape,
+      annotations: {
+        title: 'Get Global Metrics',
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: true,
+      },
+    },
+    async (args, _extra) => {
+      const result = await handleGetGlobalMetrics(args);
+      return result as unknown as CallToolResult;
+    }
+  );
+
+  server.registerTool(
+    'compare-crypto',
+    {
+      title: 'Compare Cryptocurrencies',
+      description:
+        'Compare 2-5 cryptocurrencies side-by-side including price, 24h change, volume, market cap, and rank. Pass symbols as a comma-separated list (e.g. "BTC,ETH,SOL").',
+      inputSchema: CompareCryptoSchema.shape,
+      annotations: {
+        title: 'Compare Cryptocurrencies',
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: true,
+      },
+    },
+    async (args, _extra) => {
+      const result = await handleCompareCrypto(args);
+      return result as unknown as CallToolResult;
+    }
+  );
+
+  server.registerTool(
+    'get-candlestick-data',
+    {
+      title: 'Get Candlestick Data',
+      description:
+        'Get OHLCV candlestick data for a cryptocurrency from a specific exchange. Useful for charting and technical analysis.',
+      inputSchema: GetCandlestickDataSchema.shape,
+      annotations: {
+        title: 'Get Candlestick Data',
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: true,
+      },
+    },
+    async (args, _extra) => {
+      const result = await handleGetCandlestickData(args);
+      return result as unknown as CallToolResult;
+    }
+  );
+
+  server.registerTool(
+    'get-price-conversion',
+    {
+      title: 'Get Price Conversion',
+      description:
+        'Convert a cryptocurrency amount to any fiat currency (e.g. USD, EUR, JPY). Uses real-time exchange rates for accurate conversions.',
+      inputSchema: GetPriceConversionSchema.shape,
+      annotations: {
+        title: 'Get Price Conversion',
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: true,
+      },
+    },
+    async (args, _extra) => {
+      const result = await handleGetPriceConversion(args);
+      return result as unknown as CallToolResult;
+    }
+  );
+
+  server.registerTool(
+    'get-asset-info',
+    {
+      title: 'Get Asset Info',
+      description:
+        'Get detailed metadata for a cryptocurrency including ID, rank, supply, max supply, VWAP, market cap, and 24h volume.',
+      inputSchema: GetAssetInfoSchema.shape,
+      annotations: {
+        title: 'Get Asset Info',
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: true,
+      },
+    },
+    async (args, _extra) => {
+      const result = await handleGetAssetInfo(args);
+      return result as unknown as CallToolResult;
+    }
+  );
+
   server.registerPrompt(
     'analyze-crypto',
     {
@@ -268,6 +408,34 @@ Summarize the findings including price performance, market liquidity, and any no
         },
       ],
     })
+  );
+
+  // Register a resource template for asset lookups by symbol
+  server.registerResource(
+    'asset-info',
+    'asset://{symbol}',
+    {
+      title: 'Asset Info',
+      description:
+        'Cryptocurrency asset information by symbol (e.g. asset://BTC)',
+      mimeType: 'application/json',
+    },
+    async (uri) => {
+      const symbol = uri.pathname.replace(/^\//, '');
+      const { searchAsset } = await import('./services/coincap.js');
+      const asset = await searchAsset(symbol.toUpperCase());
+      return {
+        contents: [
+          {
+            uri: uri.href,
+            mimeType: 'application/json',
+            text: asset
+              ? JSON.stringify(asset)
+              : JSON.stringify({ error: `Asset ${symbol} not found` }),
+          },
+        ],
+      };
+    }
   );
 
   return server.server;

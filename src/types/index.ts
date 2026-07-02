@@ -108,3 +108,16 @@ export interface ExchangesResponse {
 export interface ExchangeResponse {
   data: Exchange;
 }
+
+export interface Candle {
+  open: string;
+  high: string;
+  low: string;
+  close: string;
+  volume: string;
+  period: number;
+}
+
+export interface CandlesResponse {
+  data: Candle[];
+}
