@@ -354,6 +354,37 @@ export function formatCandlestickData(
   ].join('\n');
 }
 
+const CURRENCY_SYMBOLS: Record<string, string> = {
+  usd: '$',
+  eur: '€',
+  gbp: '£',
+  jpy: '¥',
+  cny: '¥',
+  cad: 'C$',
+  aud: 'A$',
+  chf: 'Fr',
+  inr: '₹',
+  krw: '₩',
+  rub: '₽',
+  brl: 'R$',
+  mxn: 'Mex$',
+  sgd: 'S$',
+  hkd: 'HK$',
+  nzd: 'NZ$',
+  sek: 'kr',
+  nok: 'kr',
+  dkk: 'kr',
+  pln: 'zł',
+  try: '₺',
+  zar: 'R',
+  btc: '₿',
+  eth: 'Ξ',
+};
+
+function getCurrencySymbol(currency: string): string {
+  return CURRENCY_SYMBOLS[currency.toLowerCase()] ?? currency.toUpperCase();
+}
+
 export function formatPriceConversion(
   fromSymbol: string,
   fromAmount: number,
@@ -361,11 +392,14 @@ export function formatPriceConversion(
   rate: number
 ): string {
   const converted = fromAmount * rate;
+  const symbol = getCurrencySymbol(toCurrency);
+  const fromSym = fromSymbol.toUpperCase();
+  const toCur = toCurrency.toUpperCase();
   return [
     'Price Conversion',
     '',
-    `${fromAmount} ${fromSymbol.toUpperCase()} = ${formatPrice(converted)} ${toCurrency.toUpperCase()}`,
-    `Exchange Rate: 1 ${fromSymbol.toUpperCase()} = ${formatPrice(rate)} ${toCurrency.toUpperCase()}`,
+    `${fromAmount} ${fromSym} = ${symbol}${formatPrice(converted)} ${toCur}`,
+    `Exchange Rate: 1 ${fromSym} = ${symbol}${formatPrice(rate)} ${toCur}`,
   ].join('\n');
 }
 

@@ -65,7 +65,7 @@ describe('handleGetPriceConversion', () => {
 
     const result = await handleGetPriceConversion({ symbol: 'BTC' });
     expect(result.content[0].text).toContain('Price Conversion');
-    expect(result.content[0].text).toContain('1 BTC = 50000.00 USD');
+    expect(result.content[0].text).toContain('1 BTC = $50000.00 USD');
   });
 
   it('should convert crypto to EUR', async () => {
@@ -76,7 +76,7 @@ describe('handleGetPriceConversion', () => {
       symbol: 'BTC',
       currency: 'eur',
     });
-    expect(result.content[0].text).toContain('1 BTC = 55000.00 EUR');
+    expect(result.content[0].text).toContain('1 BTC = €55000.00 EUR');
   });
 
   it('should handle custom amount', async () => {
@@ -87,7 +87,7 @@ describe('handleGetPriceConversion', () => {
       symbol: 'BTC',
       amount: 2,
     });
-    expect(result.content[0].text).toContain('2 BTC = 100000.00 USD');
+    expect(result.content[0].text).toContain('2 BTC = $100000.00 USD');
   });
 
   it('should return not-found for unknown symbol', async () => {
