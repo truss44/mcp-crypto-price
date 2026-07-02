@@ -234,9 +234,9 @@ Returns the latest technical indicators for any cryptocurrency:
 
 #### analysis-candlestick
 
-Retrieves OHLCV candlestick data from a specific exchange:
+Retrieves OHLCV candlestick data for a cryptocurrency:
 - Open, high, low, close, and volume for each candle
-- Configurable exchange (e.g. `binance`), quote currency (e.g. `usd`), and interval (`5m`, `15m`, `1h`, `6h`, `1d`)
+- Configurable interval (`5m`, `15m`, `30m`, `1h`, `2h`, `6h`, `12h`, `1d`)
 - Supports 1–30 days of historical candles
 
 ## Resources
@@ -273,7 +273,7 @@ The server exposes the following MCP prompts that clients can invoke:
 - "Search for cryptocurrencies matching 'sol'"
 - "Give me a global overview of the crypto market"
 - "Compare BTC, ETH, and SOL side by side"
-- "Show me 1-hour candlestick data for BTC on Binance over the last 3 days"
+- "Show me 1-hour candlestick data for BTC over the last 3 days"
 - "Convert 2.5 BTC to EUR"
 - "Get detailed info about the Ethereum asset"
 - "Generate a comprehensive analysis of a cryptocurrency covering price, market, and historical trends"
@@ -284,7 +284,7 @@ The server exposes the following MCP prompts that clients can invoke:
 - "Convert 100 SOL to GBP and show the exchange rate"
 - "Give me a full market snapshot: global metrics, top gainers, and BTC dominance"
 - "What are the best and worst performing cryptos in the last 24 hours?"
-- "Show me 15-minute candlestick data for ETH on Coinbase over the last 2 days"
+- "Show me 15-minute candlestick data for ETH over the last 2 days"
 - "Compare DeFi tokens: UNI, AAVE, COMP, and MKR"
 - "What's the VWAP and max supply of Bitcoin?"
 - "Search for layer-2 tokens and compare the top results"

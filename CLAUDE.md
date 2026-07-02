@@ -80,7 +80,7 @@ Tools are organized into four categories: `price-*`, `market-*`, `assets-*`, `an
 | `assets-compare` | `handleCompareCrypto` | `/assets` (multiple lookups) |
 | `analysis-historical` | `handleGetHistoricalAnalysis` | `/assets/{id}/history` |
 | `analysis-technical` | `handleGetTechnicalAnalysis` | `/ta/{id}/allLatest` |
-| `analysis-candlestick` | `handleGetCandlestickData` | `/assets/{id}/candles` |
+| `analysis-candlestick` | `handleGetCandlestickData` | `/ta/{id}/candlesticks` |
 
 ### Resources
 
