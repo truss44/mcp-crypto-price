@@ -179,6 +179,8 @@ export function renderHomepage(): string {
       .span-5 { grid-column: span 5; }
       .span-4 { grid-column: span 4; }
       .span-6 { grid-column: span 6; }
+      .span-8 { grid-column: span 8; }
+      .span-12 { grid-column: span 12; }
 
       .section-title {
         margin: 0 0 12px;
@@ -190,6 +192,37 @@ export function renderHomepage(): string {
         padding-left: 18px;
         color: var(--muted);
         line-height: 1.7;
+      }
+
+      .tool-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 12px;
+      }
+
+      .tool-card {
+        padding: 14px 16px;
+        border-radius: 18px;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.05);
+      }
+
+      .tool-card strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .tool-card span {
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.5;
+        display: block;
+      }
+
+      .tool-card code {
+        font-size: 0.8rem;
+        color: var(--accent);
+        margin-left: 6px;
       }
 
       .metrics {
@@ -245,7 +278,7 @@ export function renderHomepage(): string {
 
       @media (max-width: 920px) {
         .hero { grid-template-columns: 1fr; }
-        .span-7, .span-5, .span-4, .span-6 { grid-column: span 12; }
+        .span-7, .span-5, .span-4, .span-6, .span-8 { grid-column: span 12; }
       }
     </style>
   </head>
@@ -256,9 +289,10 @@ export function renderHomepage(): string {
           <div class="badge"><span class="badge-dot"></span><span>MCP cryptocurrency intelligence</span></div>
           <h1>Real-time crypto pricing, market analysis, and historical trend insights.</h1>
           <p class="lede">
-            <strong>${SERVER_CONFIG.name}</strong> is a Model Context Protocol tool for exploring cryptocurrency data
-            through CoinCap. It delivers current price data, market depth analysis, historical trend summaries,
-            and top-asset rankings through a clean MCP interface.
+            <strong>${SERVER_CONFIG.name}</strong> is a Model Context Protocol server for cryptocurrency data
+            powered by CoinCap. It provides 13 tools and 7 guided prompts covering real-time prices, market
+            analysis, historical trends, technical indicators, candlestick data, asset search, currency conversion,
+            global metrics, and side-by-side comparisons.
           </p>
           <div class="actions">
             <a class="button primary" href="${smitheryUrl}">Install on Smithery</a>
@@ -273,15 +307,62 @@ export function renderHomepage(): string {
       </section>
 
       <section class="grid" aria-label="Feature overview">
-        <article class="panel span-7">
-          <h2 class="section-title">What this MCP tool does</h2>
-          <ul class="list">
-            <li><strong>Get live crypto prices</strong> with 24-hour change, market cap, and trading volume.</li>
-            <li><strong>Analyze market structure</strong> across exchanges to understand liquidity and distribution.</li>
-            <li><strong>Review historical movement</strong> with configurable intervals and lookback windows.</li>
-            <li><strong>Inspect top assets</strong> ranked by market cap and activity.</li>
-            <li><strong>Use it from MCP clients</strong> like Claude, Cursor, or other compatible hosts.</li>
-          </ul>
+        <article class="panel span-12">
+          <h2 class="section-title">Tools &mdash; 13 MCP tools at your disposal</h2>
+          <div class="tool-grid">
+            <div class="tool-card">
+              <strong>Get Crypto Price<code>price-get</code></strong>
+              <span>Real-time price, 24h change, volume, and market cap for any cryptocurrency.</span>
+            </div>
+            <div class="tool-card">
+              <strong>Get Market Analysis<code>market-analysis</code></strong>
+              <span>Top 5 exchanges by volume, price per exchange, and volume distribution.</span>
+            </div>
+            <div class="tool-card">
+              <strong>Get Historical Analysis<code>analysis-historical</code></strong>
+              <span>Historical price data with trend analysis, high/low, and volatility metrics.</span>
+            </div>
+            <div class="tool-card">
+              <strong>Get Top Assets<code>assets-top</code></strong>
+              <span>Top cryptocurrencies ranked by market cap with price and 24h change.</span>
+            </div>
+            <div class="tool-card">
+              <strong>Get Technical Analysis<code>analysis-technical</code></strong>
+              <span>SMA, EMA, RSI, MACD, and VWAP indicators for momentum and trend analysis.</span>
+            </div>
+            <div class="tool-card">
+              <strong>Get Currency Rates<code>market-rates</code></strong>
+              <span>USD-based conversion rates for fiat currencies and cryptocurrencies.</span>
+            </div>
+            <div class="tool-card">
+              <strong>Get Exchanges<code>market-exchanges</code></strong>
+              <span>Top exchanges by 24h volume or details for a specific exchange.</span>
+            </div>
+            <div class="tool-card">
+              <strong>Search Crypto Assets<code>assets-search</code></strong>
+              <span>Search by name, symbol, or partial match with rank and price.</span>
+            </div>
+            <div class="tool-card">
+              <strong>Get Global Metrics<code>market-global</code></strong>
+              <span>Total market cap, 24h volume, Bitcoin dominance, and active crypto count.</span>
+            </div>
+            <div class="tool-card">
+              <strong>Compare Cryptocurrencies<code>assets-compare</code></strong>
+              <span>Side-by-side comparison of 2-5 cryptos: price, change, volume, cap, rank.</span>
+            </div>
+            <div class="tool-card">
+              <strong>Get Candlestick Data<code>analysis-candlestick</code></strong>
+              <span>OHLCV candlestick data for charting and technical analysis.</span>
+            </div>
+            <div class="tool-card">
+              <strong>Get Price Conversion<code>price-convert</code></strong>
+              <span>Convert any crypto amount to fiat using real-time exchange rates.</span>
+            </div>
+            <div class="tool-card">
+              <strong>Get Asset Info<code>assets-info</code></strong>
+              <span>Detailed metadata: rank, supply, max supply, VWAP, market cap, and volume.</span>
+            </div>
+          </div>
         </article>
 
         <article class="panel span-5">
@@ -298,6 +379,40 @@ export function renderHomepage(): string {
             <div class="metric">
               <strong>Remote endpoint</strong>
               <code>https://mcp-crypto-price.codemonkeyinnovations.com/mcp</code>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel span-7">
+          <h2 class="section-title">Prompts &mdash; 7 guided analysis templates</h2>
+          <div class="tool-grid">
+            <div class="tool-card">
+              <strong>Analyze Cryptocurrency</strong>
+              <span>Comprehensive analysis covering price, market, and historical trends.</span>
+            </div>
+            <div class="tool-card">
+              <strong>Compare Cryptocurrencies</strong>
+              <span>Side-by-side comparison of 2-5 cryptos with performance highlights.</span>
+            </div>
+            <div class="tool-card">
+              <strong>Market Overview</strong>
+              <span>Global metrics, top assets, and top exchanges in one summary.</span>
+            </div>
+            <div class="tool-card">
+              <strong>Crypto Conversion</strong>
+              <span>Convert a crypto amount to any fiat currency with real-time rates.</span>
+            </div>
+            <div class="tool-card">
+              <strong>Exchange Analysis</strong>
+              <span>Trading activity and volume distribution across exchanges.</span>
+            </div>
+            <div class="tool-card">
+              <strong>Technical Analysis</strong>
+              <span>Full technical breakdown: indicators, candlesticks, and historical trends.</span>
+            </div>
+            <div class="tool-card">
+              <strong>Crypto Screener</strong>
+              <span>Search and screen assets for the best opportunities.</span>
             </div>
           </div>
         </article>
