@@ -1,3 +1,9 @@
+## [5.0.4](https://github.com/truss44/mcp-crypto-price/compare/v5.0.3...v5.0.4) (2026-07-02)
+
+### Bug Fixes
+
+* update candlestick schema to match v3 API response shape ([9b1fc22](https://github.com/truss44/mcp-crypto-price/commit/9b1fc22b5792ef77b7bddff4d53e79626fa3a36a))
+
 ## [5.0.3](https://github.com/truss44/mcp-crypto-price/compare/v5.0.2...v5.0.3) (2026-07-02)
 
 ### Bug Fixes
