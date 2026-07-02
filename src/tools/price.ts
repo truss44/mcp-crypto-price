@@ -34,6 +34,15 @@ export async function handleGetPrice(args: unknown) {
             text: `Could not find cryptocurrency with symbol ${upperSymbol}`,
           },
         ],
+        structuredContent: {
+          name: '',
+          symbol: upperSymbol,
+          priceUsd: '',
+          changePercent24Hr: null,
+          volumeUsd24Hr: null,
+          marketCapUsd: null,
+          rank: null,
+        },
       };
     }
 
@@ -60,6 +69,15 @@ export async function handleGetPrice(args: unknown) {
               : `Failed to retrieve cryptocurrency data: ${String(error)}`,
         },
       ],
+      structuredContent: {
+        name: '',
+        symbol: '',
+        priceUsd: '',
+        changePercent24Hr: null,
+        volumeUsd24Hr: null,
+        marketCapUsd: null,
+        rank: null,
+      },
     };
   }
 }

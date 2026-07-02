@@ -22,12 +22,24 @@ export async function handleGetGlobalMetrics(args: unknown) {
         content: [
           { type: 'text', text: 'Failed to retrieve global market data' },
         ],
+        structuredContent: {
+          totalMarketCap: 0,
+          totalVolume: 0,
+          btcDominance: '',
+          activeCryptocurrencies: 0,
+        },
       };
     }
 
     if (!assetsData.data.length) {
       return {
         content: [{ type: 'text', text: 'No market data available' }],
+        structuredContent: {
+          totalMarketCap: 0,
+          totalVolume: 0,
+          btcDominance: '',
+          activeCryptocurrencies: 0,
+        },
       };
     }
 
@@ -67,6 +79,12 @@ export async function handleGetGlobalMetrics(args: unknown) {
             text: `Invalid input: ${error.issues.map((e) => e.message).join(', ')}`,
           },
         ],
+        structuredContent: {
+          totalMarketCap: 0,
+          totalVolume: 0,
+          btcDominance: '',
+          activeCryptocurrencies: 0,
+        },
       };
     }
     return {
@@ -79,6 +97,12 @@ export async function handleGetGlobalMetrics(args: unknown) {
               : `Failed to retrieve global market data: ${String(error)}`,
         },
       ],
+      structuredContent: {
+        totalMarketCap: 0,
+        totalVolume: 0,
+        btcDominance: '',
+        activeCryptocurrencies: 0,
+      },
     };
   }
 }

@@ -40,6 +40,14 @@ export async function handleGetMarketAnalysis(args: unknown) {
             text: `Could not find cryptocurrency with symbol ${upperSymbol}`,
           },
         ],
+        structuredContent: {
+          name: '',
+          symbol: upperSymbol,
+          priceUsd: '',
+          volumeUsd24Hr: null,
+          vwap24Hr: null,
+          topMarkets: [],
+        },
       };
     }
 
@@ -48,6 +56,14 @@ export async function handleGetMarketAnalysis(args: unknown) {
     if (!marketsData) {
       return {
         content: [{ type: 'text', text: 'Failed to retrieve market data' }],
+        structuredContent: {
+          name: asset.name,
+          symbol: asset.symbol,
+          priceUsd: asset.priceUsd,
+          volumeUsd24Hr: asset.volumeUsd24Hr,
+          vwap24Hr: asset.vwap24Hr,
+          topMarkets: [],
+        },
       };
     }
 
@@ -92,6 +108,14 @@ export async function handleGetMarketAnalysis(args: unknown) {
               : `Failed to retrieve data: ${String(error)}`,
         },
       ],
+      structuredContent: {
+        name: '',
+        symbol: '',
+        priceUsd: '',
+        volumeUsd24Hr: null,
+        vwap24Hr: null,
+        topMarkets: [],
+      },
     };
   }
 }

@@ -34,6 +34,7 @@ export async function handleGetTopAssets(args: unknown) {
     if (!assetsData) {
       return {
         content: [{ type: 'text', text: 'Failed to retrieve assets data' }],
+        structuredContent: { assets: [] },
       };
     }
 
@@ -42,6 +43,7 @@ export async function handleGetTopAssets(args: unknown) {
     if (!topAssets.length) {
       return {
         content: [{ type: 'text', text: 'No assets data available' }],
+        structuredContent: { assets: [] },
       };
     }
 
@@ -70,6 +72,7 @@ export async function handleGetTopAssets(args: unknown) {
               : `Failed to retrieve assets data: ${String(error)}`,
         },
       ],
+      structuredContent: { assets: [] },
     };
   }
 }

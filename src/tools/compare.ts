@@ -43,6 +43,7 @@ export async function handleCompareCrypto(args: unknown) {
             text: 'Please provide 2-5 cryptocurrency symbols to compare (e.g. "BTC,ETH,SOL")',
           },
         ],
+        structuredContent: { assets: [], notFound: symbolList },
       };
     }
 
@@ -66,6 +67,7 @@ export async function handleCompareCrypto(args: unknown) {
             text: `Could not find any of the specified cryptocurrencies: ${symbolList.join(', ')}`,
           },
         ],
+        structuredContent: { assets: [], notFound },
       };
     }
 
@@ -99,6 +101,7 @@ export async function handleCompareCrypto(args: unknown) {
             text: `Invalid input: ${error.issues.map((e) => e.message).join(', ')}`,
           },
         ],
+        structuredContent: { assets: [], notFound: [] },
       };
     }
     return {
@@ -111,6 +114,7 @@ export async function handleCompareCrypto(args: unknown) {
               : `Failed to compare cryptocurrencies: ${String(error)}`,
         },
       ],
+      structuredContent: { assets: [], notFound: [] },
     };
   }
 }

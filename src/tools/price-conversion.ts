@@ -43,6 +43,13 @@ export async function handleGetPriceConversion(args: unknown) {
             text: `Could not find cryptocurrency with symbol ${upperSymbol}`,
           },
         ],
+        structuredContent: {
+          fromSymbol: upperSymbol,
+          amount,
+          toCurrency: upperCurrency,
+          conversionRate: 0,
+          convertedAmount: 0,
+        },
       };
     }
 
@@ -51,6 +58,13 @@ export async function handleGetPriceConversion(args: unknown) {
     if (!rates) {
       return {
         content: [{ type: 'text', text: 'Failed to retrieve exchange rates' }],
+        structuredContent: {
+          fromSymbol: upperSymbol,
+          amount,
+          toCurrency: upperCurrency,
+          conversionRate: 0,
+          convertedAmount: 0,
+        },
       };
     }
 
@@ -64,6 +78,13 @@ export async function handleGetPriceConversion(args: unknown) {
             text: `Could not find exchange rate for currency "${currency}". Available currencies include: usd, eur, gbp, jpy, etc.`,
           },
         ],
+        structuredContent: {
+          fromSymbol: upperSymbol,
+          amount,
+          toCurrency: upperCurrency,
+          conversionRate: 0,
+          convertedAmount: 0,
+        },
       };
     }
 
@@ -101,6 +122,13 @@ export async function handleGetPriceConversion(args: unknown) {
             text: `Invalid input: ${error.issues.map((e) => e.message).join(', ')}`,
           },
         ],
+        structuredContent: {
+          fromSymbol: '',
+          amount: 0,
+          toCurrency: '',
+          conversionRate: 0,
+          convertedAmount: 0,
+        },
       };
     }
     return {
@@ -113,6 +141,13 @@ export async function handleGetPriceConversion(args: unknown) {
               : `Failed to convert price: ${String(error)}`,
         },
       ],
+      structuredContent: {
+        fromSymbol: '',
+        amount: 0,
+        toCurrency: '',
+        conversionRate: 0,
+        convertedAmount: 0,
+      },
     };
   }
 }

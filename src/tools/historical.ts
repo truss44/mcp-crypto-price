@@ -48,6 +48,17 @@ export async function handleGetHistoricalAnalysis(args: unknown) {
             text: `Could not find cryptocurrency with symbol ${upperSymbol}`,
           },
         ],
+        structuredContent: {
+          name: '',
+          symbol: upperSymbol,
+          periodHigh: 0,
+          periodLow: 0,
+          priceChangePercent: '',
+          currentPrice: 0,
+          startingPrice: 0,
+          priceRange: 0,
+          rangePercentage: '',
+        },
       };
     }
 
@@ -61,6 +72,17 @@ export async function handleGetHistoricalAnalysis(args: unknown) {
     if (!historyData) {
       return {
         content: [{ type: 'text', text: 'Failed to retrieve historical data' }],
+        structuredContent: {
+          name: asset.name,
+          symbol: asset.symbol,
+          periodHigh: 0,
+          periodLow: 0,
+          priceChangePercent: '',
+          currentPrice: 0,
+          startingPrice: 0,
+          priceRange: 0,
+          rangePercentage: '',
+        },
       };
     }
 
@@ -72,6 +94,17 @@ export async function handleGetHistoricalAnalysis(args: unknown) {
             text: 'No historical data available for the selected time period',
           },
         ],
+        structuredContent: {
+          name: asset.name,
+          symbol: asset.symbol,
+          periodHigh: 0,
+          periodLow: 0,
+          priceChangePercent: '',
+          currentPrice: 0,
+          startingPrice: 0,
+          priceRange: 0,
+          rangePercentage: '',
+        },
       };
     }
 
@@ -121,6 +154,17 @@ export async function handleGetHistoricalAnalysis(args: unknown) {
               : `Failed to retrieve historical data: ${String(error)}`,
         },
       ],
+      structuredContent: {
+        name: '',
+        symbol: '',
+        periodHigh: 0,
+        periodLow: 0,
+        priceChangePercent: '',
+        currentPrice: 0,
+        startingPrice: 0,
+        priceRange: 0,
+        rangePercentage: '',
+      },
     };
   }
 }

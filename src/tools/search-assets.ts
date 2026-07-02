@@ -39,6 +39,7 @@ export async function handleSearchAssets(args: unknown) {
     if (!results) {
       return {
         content: [{ type: 'text', text: 'Failed to search for assets' }],
+        structuredContent: { results: [] },
       };
     }
 
@@ -50,6 +51,7 @@ export async function handleSearchAssets(args: unknown) {
             text: `No cryptocurrencies found matching "${query}"`,
           },
         ],
+        structuredContent: { results: [] },
       };
     }
 
@@ -75,6 +77,7 @@ export async function handleSearchAssets(args: unknown) {
             text: `Invalid input: ${error.issues.map((e) => e.message).join(', ')}`,
           },
         ],
+        structuredContent: { results: [] },
       };
     }
     return {
@@ -87,6 +90,7 @@ export async function handleSearchAssets(args: unknown) {
               : `Failed to search for assets: ${String(error)}`,
         },
       ],
+      structuredContent: { results: [] },
     };
   }
 }

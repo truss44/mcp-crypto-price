@@ -38,6 +38,7 @@ export async function handleGetRates(args: unknown) {
               text: `Could not find rate for slug "${slug}". Try a slug like 'us-dollar', 'euro', or 'bitcoin'.`,
             },
           ],
+          structuredContent: { rates: [] },
         };
       }
 
@@ -62,6 +63,7 @@ export async function handleGetRates(args: unknown) {
     if (!rates) {
       return {
         content: [{ type: 'text', text: 'Failed to retrieve currency rates' }],
+        structuredContent: { rates: [] },
       };
     }
 
@@ -88,6 +90,7 @@ export async function handleGetRates(args: unknown) {
               : `Failed to retrieve rates: ${String(error)}`,
         },
       ],
+      structuredContent: { rates: [] },
     };
   }
 }
