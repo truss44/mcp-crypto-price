@@ -17,6 +17,8 @@ A Model Context Protocol (MCP) server that provides comprehensive cryptocurrency
 - **BREAKING**: CoinCap v2 API removed. Now uses v3 API exclusively. A `COINCAP_API_KEY` is required (free tier available at [pro.coincap.io/dashboard](https://pro.coincap.io/dashboard))
 - Streamable HTTP transport added (while keeping STDIO compatibility)
 - Smithery CLI scripts to build and run the HTTP server
+- **6 new tools**: `search-assets`, `get-global-metrics`, `compare-crypto`, `get-candlestick-data`, `get-price-conversion`, `get-asset-info`
+- **MCP best practices**: `isError` flag on validation errors, server description, and `asset://{symbol}` resource template
 
 ## Usage
 
@@ -190,6 +192,58 @@ Lists top cryptocurrency exchanges ranked by 24h volume:
 - Optional `exchangeId` parameter (e.g. `binance`) for single exchange details
 - Optional `limit` parameter (1–50, default 10)
 
+#### search-assets
+
+Searches for cryptocurrencies by name or symbol with fuzzy matching:
+- Returns matching assets with symbol, name, price, and rank
+- Configurable result count (1–50, default 10)
+- Example: search "bit" returns Bitcoin, Bitcoin Cash, BitTorrent, etc.
+
+#### get-global-metrics
+
+Provides an overview of the entire cryptocurrency market:
+- Total market capitalization across all assets
+- 24-hour trading volume
+- Number of active cryptocurrencies
+- Bitcoin dominance percentage
+- Top gainers and losers
+
+#### compare-crypto
+
+Compares 2–5 cryptocurrencies side by side:
+- Price, 24h change, market cap, volume, and rank for each asset
+- Comma-separated symbols (e.g. `BTC,ETH,SOL`)
+- Highlights best performer by 24h change
+
+#### get-candlestick-data
+
+Retrieves OHLCV candlestick data from a specific exchange:
+- Open, high, low, close, and volume for each candle
+- Configurable exchange (e.g. `binance`), quote currency (e.g. `usd`), and interval (`5m`, `15m`, `1h`, `6h`, `1d`)
+- Supports 1–30 days of historical candles
+
+#### get-price-conversion
+
+Converts a cryptocurrency amount into any fiat currency:
+- Uses real-time price data and USD-based exchange rates
+- Parameters: `symbol` (e.g. `BTC`), `amount` (default 1), `currency` (default `usd`)
+- Example: 2.5 BTC in EUR
+
+#### get-asset-info
+
+Returns detailed metadata for a single cryptocurrency:
+- ID, rank, symbol, and name
+- Price, 24h change, market cap, and volume
+- Circulating supply and max supply
+- VWAP (24h)
+
+## Resources
+
+The server exposes the following MCP resources:
+
+- **`info://server`** — Server name and version metadata
+- **`asset://{symbol}`** — Cryptocurrency asset information by symbol (e.g. `asset://BTC`), returned as JSON
+
 ## Sample Prompts
 
 - "What's the current price of Bitcoin?"
@@ -200,10 +254,12 @@ Lists top cryptocurrency exchanges ranked by 24h volume:
 - "What are the technical indicators for ETH right now?"
 - "What's the current EUR to USD exchange rate?"
 - "Which crypto exchanges have the highest 24h volume?"
-
-## Project Inspiration
-
-This project was inspired by Alex Andru's [coincap-mcp](https://github.com/QuantGeekDev/coincap-mcp) project.
+- "Search for cryptocurrencies matching 'sol'"
+- "Give me a global overview of the crypto market"
+- "Compare BTC, ETH, and SOL side by side"
+- "Show me 1-hour candlestick data for BTC on Binance over the last 3 days"
+- "Convert 2.5 BTC to EUR"
+- "Get detailed info about the Ethereum asset"
 
 ## License
 
