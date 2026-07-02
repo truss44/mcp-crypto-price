@@ -37,8 +37,7 @@ export const CandlestickOutputSchema = z.object({
 
 export async function handleGetCandlestickData(args: unknown) {
   try {
-    const { symbol, interval, days } =
-      GetCandlestickDataSchema.parse(args);
+    const { symbol, interval, days } = GetCandlestickDataSchema.parse(args);
     const upperSymbol = symbol.toUpperCase();
     const asset = await searchAsset(upperSymbol);
 
@@ -61,12 +60,7 @@ export async function handleGetCandlestickData(args: unknown) {
     const now = Date.now();
     const end = now - (now % 60000);
     const start = end - days * 24 * 60 * 60 * 1000;
-    const candlesData = await getCandles(
-      asset.id,
-      interval,
-      start,
-      end
-    );
+    const candlesData = await getCandles(asset.id, interval, start, end);
 
     if (!candlesData) {
       return {
