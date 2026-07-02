@@ -1,3 +1,9 @@
+## [4.0.1](https://github.com/truss44/mcp-crypto-price/compare/v4.0.0...v4.0.1) (2026-07-02)
+
+### Bug Fixes
+
+* upgrade CodeQL action to v4 to fix deprecation warning ([7826f4e](https://github.com/truss44/mcp-crypto-price/commit/7826f4edd98bc06c97f80b02dba816c114347d0f))
+
 ## [4.0.0](https://github.com/truss44/mcp-crypto-price/compare/v3.7.0...v4.0.0) (2026-07-02)
 
 ### ⚠ BREAKING CHANGES
