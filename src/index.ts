@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import type { CallToolResult } from '@modelcontextprotocol/sdk/spec.types.js';
+import { McpServer } from '@modelcontextprotocol/server';
+import { serveStdio } from '@modelcontextprotocol/server/stdio';
+import type { CallToolResult } from '@modelcontextprotocol/server';
 
 import { z } from 'zod';
 import path from 'node:path';
@@ -655,7 +655,7 @@ Identify which of the results have the strongest fundamentals and price performa
     }
   );
 
-  return server.server;
+  return server;
 }
 
 export default createServer;
@@ -666,12 +666,12 @@ async function main() {
       'COINCAP_API_KEY environment variable is required. Get your free API key at https://pro.coincap.io/dashboard'
     );
   }
-  const server = createServer({
-    config: { COINCAP_API_KEY: process.env.COINCAP_API_KEY },
-  });
-  const transport = new StdioServerTransport();
-  await server.connect(transport);
   console.error('Crypto Price MCP Server running on stdio');
+  await serveStdio(() =>
+    createServer({
+      config: { COINCAP_API_KEY: process.env.COINCAP_API_KEY! },
+    })
+  );
 }
 
 // Start stdio transport when:
