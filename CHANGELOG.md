@@ -1,3 +1,23 @@
+## [6.0.0](https://github.com/truss44/mcp-crypto-price/compare/v5.1.0...v6.0.0) (2026-08-12)
+
+### ⚠ BREAKING CHANGES
+
+* MCP SDK upgraded from v1 to v2 packages. Server now
+speaks the 2026-07-28 protocol revision with stateless compatibility
+for 2025-era clients. Requires Node.js >=22.14.0.
+
+- Replace @modelcontextprotocol/sdk with @modelcontextprotocol/server
+  and @modelcontextprotocol/node (v2 package split)
+- Remove unused hono dependency and its .npmrc override
+- Migrate stdio entry point to serveStdio() from @modelcontextprotocol/server/stdio
+- Migrate HTTP entry point to createMcpHandler() + toNodeHandler()
+  with legacy: stateless for backward compatibility
+- Change createServer() to return McpServer instead of low-level Server
+
+### Features
+
+* migrate to MCP SDK v2 and 2026-07-28 protocol ([5f865ba](https://github.com/truss44/mcp-crypto-price/commit/5f865baac66e32096db0f10645c3948f9d856843))
+
 ## [5.1.0](https://github.com/truss44/mcp-crypto-price/compare/v5.0.4...v5.1.0) (2026-07-02)
 
 ### Features
