@@ -1,6 +1,14 @@
 allowBuilds:
   unrs-resolver: true
 overrides:
-  js-yaml: ^4.1.2
+  brace-expansion: ^5.0.9
+  glob: ^11.1.0
+  minimatch: ^10.2.1
+  js-yaml: ^4.3.1
+  postcss: ^8.5.26
+  undici: ^6.28.0
+  nanoid: ^3.3.17
+  hono: ^4.12.34
+  '@hono/node-server': ^1.19.15
 minimumReleaseAgeExclude:
   - hono@4.12.21
