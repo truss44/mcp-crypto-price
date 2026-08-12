@@ -1,12 +1,22 @@
 #!/usr/bin/env node
 
 import http from 'node:http';
-import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
+import { createMcpHandler } from '@modelcontextprotocol/server';
+import { toNodeHandler } from '@modelcontextprotocol/node';
 import { createServer } from './index.js';
 import { SERVER_CONFIG } from './config/index.js';
 import { renderHomepage } from './homepage.js';
 
 const PORT = parseInt(process.env.PORT ?? '3000', 10);
+
+const mcpHandler = createMcpHandler(
+  () =>
+    createServer({
+      config: { COINCAP_API_KEY: process.env.COINCAP_API_KEY! },
+    }),
+  { legacy: 'stateless' }
+);
+const nodeMcpHandler = toNodeHandler(mcpHandler);
 
 async function handleMcp(
   req: http.IncomingMessage,
@@ -27,22 +37,8 @@ async function handleMcp(
     return;
   }
 
-  const transport = new StreamableHTTPServerTransport({
-    sessionIdGenerator: undefined,
-  });
-  const server = createServer({ config: { COINCAP_API_KEY: coincapApiKey } });
-  await server.connect(transport);
-
-  if (req.method === 'POST') {
-    const chunks: Buffer[] = [];
-    for await (const chunk of req) {
-      chunks.push(chunk as Buffer);
-    }
-    const body = JSON.parse(Buffer.concat(chunks).toString());
-    await transport.handleRequest(req, res, body);
-  } else {
-    await transport.handleRequest(req, res);
-  }
+  process.env.COINCAP_API_KEY = coincapApiKey;
+  await nodeMcpHandler(req, res);
 }
 
 const serverCard = {
