@@ -1,3 +1,9 @@
+## [6.0.1](https://github.com/truss44/mcp-crypto-price/compare/v6.0.0...v6.0.1) (2026-08-12)
+
+### Bug Fixes
+
+* **deps:** batch merge dependabot updates and fix all security vulnerabilities ([88459e8](https://github.com/truss44/mcp-crypto-price/commit/88459e8857ab3d0470380130ec6c02eed59eedde)), closes [#231](https://github.com/truss44/mcp-crypto-price/issues/231) [#228](https://github.com/truss44/mcp-crypto-price/issues/228)
+
 ## [6.0.0](https://github.com/truss44/mcp-crypto-price/compare/v5.1.0...v6.0.0) (2026-08-12)
 
 ### ⚠ BREAKING CHANGES
