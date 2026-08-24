@@ -26,6 +26,7 @@
 !.prettierrc
 !.prettierignore
 !.npmrc
+!.husky/
 
 # === Rules for root dir ===
 /core

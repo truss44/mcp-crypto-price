@@ -21,7 +21,7 @@
     "start": "node dist/http.js",
     "start:http": "node dist/http.js",
     "start:stdio": "node dist/index.js",
-    "prepare": "pnpm build",
+    "prepare": "husky",
     "watch": "tsc --watch",
     "inspector": "pnpm dlx @modelcontextprotocol/inspector dist/index.js",
     "test": "vitest run",
@@ -39,6 +39,8 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@commitlint/cli": "^21.2.2",
+    "@commitlint/config-conventional": "^21.2.2",
     "@eslint/js": "^10.0.1",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/exec": "^7.1.0",
@@ -49,6 +51,7 @@
     "@vitest/coverage-v8": "^4.1.9",
     "conventional-changelog-conventionalcommits": "^9.3.1",
     "eslint": "^10.6.0",
+    "husky": "^9.1.7",
     "prettier": "^3.9.4",
     "semantic-release": "^25.0.5",
     "shx": "^0.4.0",
