@@ -1,3 +1,9 @@
+## [6.0.2](https://github.com/truss44/mcp-crypto-price/compare/v6.0.1...v6.0.2) (2026-08-31)
+
+### Bug Fixes
+
+* **commitlint:** assign config to variable before default export ([82196e0](https://github.com/truss44/mcp-crypto-price/commit/82196e0c8bffc2018c13108338102f846f229812))
+
 ## [6.0.1](https://github.com/truss44/mcp-crypto-price/compare/v6.0.0...v6.0.1) (2026-08-12)
 
 ### Bug Fixes
