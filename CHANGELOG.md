@@ -1,3 +1,9 @@
+## [6.0.3](https://github.com/truss44/mcp-crypto-price/compare/v6.0.2...v6.0.3) (2026-09-06)
+
+### Bug Fixes
+
+* **deps:** use correct corepack hash and upgrade corepack in build configs ([6919e28](https://github.com/truss44/mcp-crypto-price/commit/6919e288104ce7392794851f7c4f04d8d3476460))
+
 ## [6.0.2](https://github.com/truss44/mcp-crypto-price/compare/v6.0.1...v6.0.2) (2026-08-31)
 
 ### Bug Fixes
