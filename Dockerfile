@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 
 # Install pnpm and dependencies
-RUN corepack enable && corepack prepare pnpm@12.3.4 --activate && pnpm install --ignore-scripts
+RUN npm install -g corepack@latest && corepack enable && corepack prepare pnpm@12.3.4 --activate && pnpm install --ignore-scripts
 
 # Copy source code
 COPY src ./src
@@ -30,7 +30,7 @@ COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/pnpm-lock.yaml ./pnpm-lock.yaml
 
 # Install pnpm and production dependencies without running scripts
-RUN corepack enable && corepack prepare pnpm@12.3.4 --activate && pnpm install --prod --ignore-scripts
+RUN npm install -g corepack@latest && corepack enable && corepack prepare pnpm@12.3.4 --activate && pnpm install --prod --ignore-scripts
 
 # Create non-root user
 RUN addgroup -g 1001 -S nodejs && \

@@ -85,5 +85,5 @@
     "url": "https://github.com/truss44/mcp-crypto-price/issues"
   },
   "homepage": "https://mcp-crypto-price.codemonkeyinnovations.com",
-  "packageManager": "pnpm@12.3.4+sha512.lhqkH7B32joEpEHZ+OFevAyW2o73ELLrZ7+e58sGEOq9SPH9hfUc/+c4RnhfoPh8VqOocqHYk/hEZ0G1zORUVw=="
+  "packageManager": "pnpm@12.3.4+sha512.961aa41fb077da3a04a441d9f8e15ebc0c96da8ef710b2eb67bf9ee7cb0610eabd48f1fd85f51cffe73846785fa0f87c56a3a872a1d893f8446741b5cce45457"
 }
