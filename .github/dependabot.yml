@@ -15,13 +15,13 @@ updates:
     
     # Control which updates to perform
     groups:
-      # Major version updates separate, minor and patch together
-      production:
-        dependency-type: "production"
+      # Group all minor/patch updates into one PR; major updates stay separate
+      dependencies:
+        patterns:
+          - "*"
         update-types:
           - "minor"
           - "patch"
-    
     commit-message:
       prefix: "deps"
       include: "scope"
