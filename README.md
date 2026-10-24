@@ -1,5 +1,5 @@
 # Crypto Price & Market Analysis MCP Server
-[![smithery badge](https://smithery.ai/badge/@truss44/mcp-crypto-price)](https://smithery.ai/server/@truss44/mcp-crypto-price) [![NPM Downloads](https://img.shields.io/npm/d18m/mcp-crypto-price)](https://www.npmjs.com/package/mcp-crypto-price)
+[![LightNow capabilities](https://lightnow.ai/badge/io.github.truss44/mcp-crypto-price)](https://lightnow.ai/servers/io.github.truss44/mcp-crypto-price) [![NPM Downloads](https://img.shields.io/npm/d18m/mcp-crypto-price)](https://www.npmjs.com/package/mcp-crypto-price)
 
 <a href="https://glama.ai/mcp/servers/jpqoejojnc">
   <img width="380" height="200" src="https://glama.ai/mcp/servers/jpqoejojnc/badge" />
