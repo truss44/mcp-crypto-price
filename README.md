@@ -1,5 +1,5 @@
 # Crypto Price & Market Analysis MCP Server
-[![smithery badge](https://smithery.ai/badge/@truss44/mcp-crypto-price)](https://smithery.ai/server/@truss44/mcp-crypto-price) [![NPM Downloads](https://img.shields.io/npm/d18m/mcp-crypto-price)](https://www.npmjs.com/package/mcp-crypto-price)
+[![NPM Downloads](https://img.shields.io/npm/d18m/mcp-crypto-price)](https://www.npmjs.com/package/mcp-crypto-price)
 
 <a href="https://glama.ai/mcp/servers/jpqoejojnc">
   <img width="380" height="200" src="https://glama.ai/mcp/servers/jpqoejojnc/badge" />
@@ -16,7 +16,7 @@ A Model Context Protocol (MCP) server that provides comprehensive cryptocurrency
 
 - **BREAKING**: CoinCap v2 API removed. Now uses v3 API exclusively. A `COINCAP_API_KEY` is required (free tier available at [pro.coincap.io/dashboard](https://pro.coincap.io/dashboard))
 - Streamable HTTP transport added (while keeping STDIO compatibility)
-- Smithery CLI scripts to build and run the HTTP server
+- Runs fully standalone over STDIO and Streamable HTTP - no external registry or runtime required
 - **6 new tools**: `assets-search`, `market-global`, `assets-compare`, `analysis-candlestick`, `price-convert`, `assets-info`
 - **Hierarchical tool naming**: All tools organized into category-prefixed names (`price-*`, `market-*`, `assets-*`, `analysis-*`)
 - **Output schemas**: All tools now declare `outputSchema` with `structuredContent` for type-safe responses
@@ -62,7 +62,7 @@ If your MCP client requires launching via `cmd.exe` on Windows:
 ### Development scripts
 
 ```bash
-pnpm dev          # Development (HTTP server with hot reload via Smithery CLI)
+pnpm watch         # Development: recompile on change (tsc --watch); pair with `node --watch dist/http.js` for HTTP hot reload
 pnpm build         # Compile TypeScript → dist/
 pnpm format        # Format source files with Prettier
 pnpm lint          # Check for lint errors (ESLint + typescript-eslint)
@@ -77,10 +77,11 @@ pnpm inspector     # Open MCP inspector for interactive debugging
 
 You can run the server over HTTP for environments that support MCP over HTTP streaming.
 
-- Dev server (recommended during development):
+- During development, rebuild and restart on change:
 
 ```bash
-pnpm dev
+pnpm watch                    # terminal 1: recompile TypeScript
+node --watch dist/http.js     # terminal 2: restart the HTTP server on rebuild
 ```
 
 - Build and run the HTTP server:
@@ -103,7 +104,7 @@ pnpm build
 pnpm start:stdio
 ```
 
-The server listens on port 3000 by default (override with `PORT`). For clients that connect over HTTP (e.g. Smithery, Claude.ai), pass your API key as a query parameter:
+The server listens on port 3000 by default (override with `PORT`). For clients that connect over HTTP (e.g. Claude.ai, Cursor), pass your API key as a query parameter:
 
 ```
 http://localhost:3000/mcp?COINCAP_API_KEY=YOUR_API_KEY_HERE
@@ -126,13 +127,21 @@ This server uses the CoinCap v3 API, which requires an API key. A **free tier** 
 
 Without a valid API key, all tools will return an error with instructions on how to obtain one.
 
-## Note for Smithery CLI users
+## Remote MCP clients
 
-This MCP server works directly via `pnpm dlx` (configs above) and does not require Smithery.
+This server runs standalone - clients connect to it directly, with no registry or proxy in between.
 
-If you do use the Smithery CLI, authenticate with `smithery auth login` or by setting `SMITHERY_API_KEY` in your environment. Recent versions of the Smithery CLI do not support passing API keys via `--key` (or older `--profile` patterns).
+- **Claude Code** (native Streamable HTTP):
 
-Launch Claude Desktop to start using the crypto analysis tools.
+```bash
+claude mcp add --transport http mcp-crypto-price "https://mcp-crypto-price.codemonkeyinnovations.com/mcp?COINCAP_API_KEY=YOUR_API_KEY"
+```
+
+- **Claude.ai / Claude Desktop**: add a Custom Connector under Settings → Connectors with the remote URL above.
+- **Cursor** and other clients with remote MCP support: point them at the same `/mcp` URL.
+- **stdio-only clients**: bridge to the remote endpoint with `npx -y mcp-remote "https://mcp-crypto-price.codemonkeyinnovations.com/mcp?COINCAP_API_KEY=YOUR_API_KEY"`, or run locally via `npx -y mcp-crypto-price` with `COINCAP_API_KEY` set (see Usage above).
+
+Launch your MCP client to start using the crypto analysis tools.
 
 ## Tools
 

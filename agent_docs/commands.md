@@ -3,7 +3,7 @@
 Requires **Node.js 22.14+**.
 
 ```bash
-pnpm dev              # HTTP server with hot reload (Smithery CLI)
+pnpm watch            # Recompile on change; pair with `node --watch dist/http.js` for HTTP hot reload
 pnpm build            # Compile TypeScript → dist/
 pnpm start:http       # Start HTTP server (dist/http.js)
 pnpm start:stdio      # Start STDIO server (dist/index.js)

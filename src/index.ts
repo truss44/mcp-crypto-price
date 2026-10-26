@@ -52,36 +52,7 @@ import {
   AssetInfoOutputSchema,
 } from './tools/index.js';
 
-export const configSchema = z.object({
-  COINCAP_API_KEY: z
-    .string()
-    .describe(
-      'API key for CoinCap v3 API. Free tier available at https://pro.coincap.io/dashboard'
-    ),
-  CACHE_TTL_SECONDS: z
-    .number()
-    .int()
-    .min(10)
-    .max(3600)
-    .default(60)
-    .optional()
-    .describe(
-      'How long to cache API responses in seconds (default: 60). Lower values return fresher data; higher values reduce API usage.'
-    ),
-});
-
-export function createServer({
-  config,
-}: {
-  config: z.infer<typeof configSchema>;
-}) {
-  if (config.COINCAP_API_KEY) {
-    process.env.COINCAP_API_KEY = config.COINCAP_API_KEY;
-  }
-  if (config?.CACHE_TTL_SECONDS != null) {
-    process.env.CACHE_TTL_SECONDS = String(config.CACHE_TTL_SECONDS);
-  }
-
+export function createServer() {
   const server = new McpServer({
     name: SERVER_CONFIG.name,
     version: SERVER_CONFIG.version,
@@ -658,8 +629,6 @@ Identify which of the results have the strongest fundamentals and price performa
   return server;
 }
 
-export default createServer;
-
 async function main() {
   if (!process.env.COINCAP_API_KEY) {
     throw new Error(
@@ -667,11 +636,7 @@ async function main() {
     );
   }
   console.error('Crypto Price MCP Server running on stdio');
-  await serveStdio(() =>
-    createServer({
-      config: { COINCAP_API_KEY: process.env.COINCAP_API_KEY! },
-    })
-  );
+  await serveStdio(() => createServer());
 }
 
 // Start stdio transport when:
@@ -694,7 +659,7 @@ const isEntrypoint =
   path.resolve(process.argv[1]) === path.resolve(thisFilePath);
 
 const isDirectRun =
-  isEntrypoint || process.argv[1]?.includes('mcp-crypto-price');
+  isEntrypoint || path.basename(process.argv[1] ?? '') === 'mcp-crypto-price';
 
 if (process.env.MCP_TRANSPORT === 'stdio' || isDirectRun) {
   main().catch((error) => {

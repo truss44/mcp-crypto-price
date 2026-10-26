@@ -15,7 +15,7 @@ MCP client → transport (stdio or HTTP) → src/index.ts (createServer)
 
 ## Key design points
 
-- **`src/index.ts`** exports `createServer(config)` (used by Smithery HTTP transport); runs STDIO when invoked as CLI or when `MCP_TRANSPORT=stdio`.
+- **`src/index.ts`** exports `createServer()`, the shared MCP server factory used by both transports; runs STDIO when invoked as CLI or when `MCP_TRANSPORT=stdio`.
 - **`src/services/coincap.ts`** — all CoinCap v3 API calls. Requires `COINCAP_API_KEY`. Results cached in-memory 60s (`CACHE_TTL`).
 - **`src/tools/`** — one file per MCP tool. Each exports a Zod schema (`*Schema`) and handler (`handle*(args)`). Handlers wrap Zod `.parse()` in `try/catch` returning `isError: true` on validation failures. Registered in `src/index.ts`.
 - **`src/services/formatters.ts`** — pure formatting functions for tool output text.

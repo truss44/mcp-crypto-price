@@ -7,7 +7,6 @@
     "name": "Tracey Russell"
   },
   "type": "module",
-  "module": "src/index.ts",
   "bin": {
     "mcp-crypto-price": "./dist/index.js"
   },
@@ -34,30 +33,30 @@
     "release": "semantic-release"
   },
   "dependencies": {
-    "@modelcontextprotocol/node": "^2.0.0",
-    "@modelcontextprotocol/server": "^2.0.0",
-    "zod": "^4.6.5"
+    "@modelcontextprotocol/node": "^2.1.2",
+    "@modelcontextprotocol/server": "^2.4.0",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
-    "@commitlint/cli": "^21.2.2",
-    "@commitlint/config-conventional": "^21.2.2",
+    "@commitlint/cli": "^21.2.4",
+    "@commitlint/config-conventional": "^21.2.4",
     "@eslint/js": "^10.0.1",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/exec": "^7.1.0",
     "@semantic-release/git": "^10.0.1",
-    "@semantic-release/github": "^12.0.9",
-    "@semantic-release/npm": "^13.1.5",
-    "@types/node": "^25.9.7",
-    "@vitest/coverage-v8": "^4.1.11",
+    "@semantic-release/github": "^12.0.10",
+    "@semantic-release/npm": "^13.2.0",
+    "@types/node": "^25.9.9",
+    "@vitest/coverage-v8": "^4.1.12",
     "conventional-changelog-conventionalcommits": "^9.3.1",
-    "eslint": "^10.10.0",
+    "eslint": "^10.13.0",
     "husky": "^9.1.7",
-    "prettier": "^3.9.8",
+    "prettier": "^3.9.10",
     "semantic-release": "^25.0.9",
     "shx": "^0.4.0",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.70.0",
-    "vitest": "^4.1.11"
+    "typescript-eslint": "^8.72.0",
+    "vitest": "^4.1.12"
   },
   "engines": {
     "node": ">=22.14.0"

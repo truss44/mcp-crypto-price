@@ -18,7 +18,8 @@ function getLogoDataUrl(): string {
 export function renderHomepage(): string {
   const logoUrl = getLogoDataUrl();
   const githubUrl = 'https://github.com/truss44/mcp-crypto-price';
-  const smitheryUrl = 'https://smithery.ai/servers/truss44/mcp-crypto-price';
+  const npmUrl = 'https://www.npmjs.com/package/mcp-crypto-price';
+  const mcpEndpoint = 'https://mcp-crypto-price.codemonkeyinnovations.com/mcp';
   const coincapDocsUrl = 'https://pro.coincap.io/api-docs';
   const coincapMethodologyUrl = 'https://www.coincap.io/methodology';
 
@@ -295,8 +296,8 @@ export function renderHomepage(): string {
             global metrics, and side-by-side comparisons.
           </p>
           <div class="actions">
-            <a class="button primary" href="${smitheryUrl}">Install on Smithery</a>
-            <a class="button secondary" href="${githubUrl}">View on GitHub</a>
+            <a class="button primary" href="${githubUrl}">View on GitHub</a>
+            <a class="button secondary" href="${npmUrl}">npm package</a>
             <a class="button secondary" href="${coincapDocsUrl}">CoinCap API Docs</a>
           </div>
         </div>
@@ -369,16 +370,19 @@ export function renderHomepage(): string {
           <h2 class="section-title">Install and connect</h2>
           <div class="metrics">
             <div class="metric">
-              <strong>Smithery</strong>
-              Install or connect via the server listing: <code>smithery.ai/servers/truss44/mcp-crypto-price</code>
+              <strong>Local (stdio)</strong>
+              Run via npx with your API key in the environment:
+              <code>COINCAP_API_KEY=YOUR_KEY npx -y mcp-crypto-price</code>
             </div>
             <div class="metric">
-              <strong>CLI example</strong>
-              <code>pnpm dlx @smithery/cli install mcp-crypto-price --client claude</code>
+              <strong>Remote (Streamable HTTP)</strong>
+              Point any remote-capable MCP client at
+              <code>${mcpEndpoint}?COINCAP_API_KEY=YOUR_KEY</code>
             </div>
             <div class="metric">
-              <strong>Remote endpoint</strong>
-              <code>https://mcp-crypto-price.codemonkeyinnovations.com/mcp</code>
+              <strong>stdio-only clients</strong>
+              Bridge to the remote endpoint:
+              <code>npx -y mcp-remote ${mcpEndpoint}?COINCAP_API_KEY=YOUR_KEY</code>
             </div>
           </div>
         </article>
@@ -441,10 +445,10 @@ export function renderHomepage(): string {
               </div>
               <span>↗</span>
             </a>
-            <a class="link-card" href="${smitheryUrl}">
+            <a class="link-card" href="${npmUrl}">
               <div>
-                <strong>Smithery server page</strong><br />
-                <span>Install and discover this MCP server</span>
+                <strong>npm package</strong><br />
+                <span>Install and run this MCP server via npx</span>
               </div>
               <span>↗</span>
             </a>
