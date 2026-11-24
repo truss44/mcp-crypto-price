@@ -67,7 +67,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           DEBUG: semantic-release:*
-        run: pnpm dlx semantic-release
+        run: pnpm exec semantic-release
 
       - name: Update 'latest' tag to most recent release
         env:
