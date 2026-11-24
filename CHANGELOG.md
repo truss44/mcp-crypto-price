@@ -1,3 +1,9 @@
+## [6.0.4](https://github.com/truss44/mcp-crypto-price/compare/v6.0.3...v6.0.4) (2026-11-24)
+
+### Bug Fixes
+
+* **deps:** patch @hono/node-server and minimatch advisories ([bb7e137](https://github.com/truss44/mcp-crypto-price/commit/bb7e1378485a53c2b85f6642f14ec61b34d3d920))
+
 ## [6.0.3](https://github.com/truss44/mcp-crypto-price/compare/v6.0.2...v6.0.3) (2026-09-06)
 
 ### Bug Fixes
